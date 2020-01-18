@@ -99,7 +99,7 @@
     },
     "NO_P_M_SPAM": {
       "description": "Set to True if you want to block users that are spamming your PMs.",
-      "value": "ANYTHING"
+      "value": "True"
     },
     "MAX_FLOOD_IN_P_M_s": {
       "description": "Define the number of consecutive messages a new user can send to your P.M. This should be a valid Integer.",
@@ -126,8 +126,8 @@
       "required": false
     },
     "UB_BLACK_LIST_CHAT": {
-      "description": "set blacklist_chats where you do not want userbot features",
-      "value": "-1001220993104 -1001365798550 -1001158304289",
+      "description": "Set blacklist_chats where you do not want userbot features",
+      "value": "",
       "required": false
     },
     "TZ": {
