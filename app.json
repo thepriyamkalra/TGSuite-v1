@@ -146,31 +146,25 @@
       "description": "Get your credentials from https://da.gd/so63O",
       "required": false
     },
-    },
     "REPO_LINK": {
       "description": "Set the link to your repo here to obtain it in telegram with .get repo",
       "required": false
-    },
     },
     "PACK_NAME": {
       "description": "Set a sticker pack name to be used when making a sticker pack with .kang",
       "required": false
     },
-    },
     "LYDIA_API": {
       "description": "Set your lydia api id to able to use lydia ai in telegram",
       "required": false
     },
-	},
     "PACKS_CONTENT": {
       "description": "Set the content to be displayed when .get packs is executed in telegram",
       "required": false
     },
-    },
     "HEROKU_LINK": {
       "description": "Set the link to your heroku webpage here to obtain it in telegram with .get heroku",
       "required": false
-    },
     },
     "ANIM_PACK_NAME": {
       "description": "Set an animated sticker pack name to be used when making a sticker pack with .kang",
