@@ -38,7 +38,7 @@ async def _(event):
         return
     args = event.pattern_match.group(1)
     if args == " ":
-      input = ""
+      args = ""
     if not event.is_reply:
         await event.edit("Reply to a photo to add to my personal sticker pack.")
         return
