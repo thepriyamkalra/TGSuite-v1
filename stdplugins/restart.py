@@ -15,11 +15,11 @@ import time
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Restarting.\n████░░░░")
+    await event.edit("Restarting...\n█████░░░")
     time.sleep(1)
-    await event.edit("Restarting.\n██████░░")
+    await event.edit("Restarting...\n████████")
     time.sleep(1)
-    await event.edit("Restarted.\n████████\nSend .alive or .ping to check if i am online.")
+    await event.edit("Restart Complete!\nSend .alive or .ping to check if i am online.")
     await borg.disconnect()
     # https://archive.is/im3rt
     os.execl(sys.executable, sys.executable, *sys.argv)

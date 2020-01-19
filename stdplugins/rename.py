@@ -61,7 +61,7 @@ async def _(event):
             os.remove(downloaded_file_name)
             ms_two = (end_two - end).seconds
             total_ms = int(ms_one) + int(ms_two)
-            await event.edit(f"Uploaded rename file ```{input_str}``` in {ms_two} seconds!")
+            await event.edit(f"Uploaded renamed file ```{input_str}``` in {ms_two} seconds!")
 
         else:
             await event.edit("File {} not found.".format(input_str))
