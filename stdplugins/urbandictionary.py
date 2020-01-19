@@ -13,7 +13,7 @@ async def _(event):
     if event.fwd_from:
         return
     str = event.pattern_match.group(1)
-    await event.edit("Searching UrbanDictionary for {str}..")
+    await event.edit(f"Searching UrbanDictionary for {str}..")
     try:
         mean = urbandict.define(str)
         if len(mean) > 0:
