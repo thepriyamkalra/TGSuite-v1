@@ -36,13 +36,13 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if os.path.exists(input_str):
         start = datetime.now()
-        # await event.edit("Processing ...")
+        # await event.edit("Processing...")
         lst_of_files = sorted(get_lst_of_files(input_str, []))
         logger.info(lst_of_files)
         u = 0
         await event.edit(
-            "Found {} files. ".format(len(lst_of_files)) + \
-            "Uploading will start soon. " + \
+            "Found {} files. ".format(len(lst_of_files)) +
+            "Uploading will start soon. " +
             "Please wait!"
         )
         thumb = None
@@ -141,7 +141,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.reply("Uploading file...")
+    mone = await event.edit("Searching for required file")
     input_str = event.pattern_match.group(1)
     thumb = None
     if os.path.exists(thumb_image_path):
@@ -164,7 +164,7 @@ async def _(event):
         end = datetime.now()
         # os.remove(input_str)
         ms = (end - start).seconds
-        await mone.edit("Uploaded file in {} seconds.".format(ms))
+        await mone.edit(f"Uploaded {input_str} in {ms} seconds.")
     else:
         await mone.edit("404: File Not Found")
 
@@ -173,7 +173,8 @@ def get_video_thumb(file, output=None, width=90):
     metadata = extractMetadata(createParser(file))
     p = subprocess.Popen([
         'ffmpeg', '-i', file,
-        '-ss', str(int((0, metadata.get('duration').seconds)[metadata.has('duration')] / 2)),
+        '-ss', str(int((0, metadata.get('duration').seconds)
+                       [metadata.has('duration')] / 2)),
         '-filter:v', 'scale={}:-1'.format(width),
         '-vframes', '1',
         output,

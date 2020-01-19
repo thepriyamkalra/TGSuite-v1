@@ -32,13 +32,11 @@ from uniborg.util import admin_cmd
 pack_name = Config.PACK_NAME
 anim_pack_name = Config.ANIM_PACK_NAME
 
+
 @borg.on(admin_cmd(pattern="kang ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
-    args = event.pattern_match.group(1)
-    if args == " ":
-      args = ""
     if not event.is_reply:
         await event.edit("Reply to a photo to add to my personal sticker pack.")
         return
@@ -46,12 +44,13 @@ async def _(event):
     sticker_emoji = "🔥"
     input_str = event.pattern_match.group(1)
     if input_str:
-        sticker_emoji = "🔥"
+        sticker_emoji = input_str
 
     me = borg.me
     userid = event.from_id
-    packname = f"{pack_name} {args}"
-    packshortname = f"Uniborg_Pack{args}_{userid}"  # format: Uni_Borg_userid
+    packname = f"{pack_name}"
+    # format: Uni_Borg_userid
+    packshortname = f"Uniborg_Pack{pack_name[-1]}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@UniBorg_Sticker.png"
@@ -60,9 +59,9 @@ async def _(event):
     if is_a_s:
         file_ext_ns_ion = "AnimatedSticker.tgs"
         uploaded_sticker = await borg.upload_file(file, file_name=file_ext_ns_ion)
-        packname = f"{anim_pack_name} {args}"
+        packname = f"{anim_pack_name}"
         # format: Uni_Borg_Packx_userid
-        packshortname = f"Uni_Borg_Pack{args}_{userid}_as"
+        packshortname = f"Uni_Borg_Pack{packname[-1]}_{userid}_as"
     elif not is_message_image(reply_message):
         await event.edit("Invalid message type")
         return
@@ -72,7 +71,7 @@ async def _(event):
             sticker.seek(0)
             uploaded_sticker = await borg.upload_file(sticker, file_name=file_ext_ns_ion)
 
-    await event.edit("```Using Black Magic to kang this sticker...```")
+    await event.edit("```Using black magic to kang this sticker...```")
 
     async with borg.conversation("@Stickers") as bot_conv:
         now = datetime.datetime.now()

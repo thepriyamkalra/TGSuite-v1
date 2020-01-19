@@ -8,18 +8,18 @@ import asyncio
 import os
 import sys
 from uniborg.util import admin_cmd
+import time
 
 
 @borg.on(admin_cmd("restart"))
 async def _(event):
     if event.fwd_from:
         return
-    await asyncio.sleep(2)
-    await event.edit("Restarting./n████░░░░")
-    await asyncio.sleep(2)
-    await event.edit("Restarting./n██████░░")
-    await asyncio.sleep(2)
-    await event.edit("Restarted./nSend .alive or .ping to check if i am online./n████████")
+    await event.edit("Restarting...\n█████░░░")
+    time.sleep(1)
+    await event.edit("Restarting...\n████████")
+    time.sleep(1)
+    await event.edit("Restart Complete!\nSend .alive or .ping to check if i am online.")
     await borg.disconnect()
     # https://archive.is/im3rt
     os.execl(sys.executable, sys.executable, *sys.argv)
