@@ -42,7 +42,7 @@ async def _(event):
         end = random.choice(ends)
         insult = start + " " + adjective_start + " " + \
             adjective_mid + (" " if adjective_mid else "") + noun + end
-        log_insults += insult + "\n"
+        log_insults += f"```{insult}```\n\n"
         reply_msg = await event.get_reply_message()
         if reply_msg:
             user_id = reply_msg.from_id
@@ -52,5 +52,5 @@ async def _(event):
         time.sleep(2)
     await borg.send_message(
         LOGGER,
-        f"Insulted ```{user_id}``` with:\n```{log_insults}```"
+        f"Insulted ```{user_id}``` with:\n{log_insults}"
     )
