@@ -45,12 +45,12 @@ async def _(event):
         log_insults += f"```{insult}```\n\n"
         reply_msg = await event.get_reply_message()
         if reply_msg:
-            user_id = reply_msg.from_id
+            user_id = f"```{reply_msg.from_id}```"
         else:
             user_id = "Unknown user"
         await event.edit(insult)
         time.sleep(2)
     await borg.send_message(
         LOGGER,
-        f"Insulted ```{user_id}``` with:\n{log_insults}"
+        f"Insulted [{user_id}] with:\n\n{log_insults}"
     )
