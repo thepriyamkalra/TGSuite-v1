@@ -1,7 +1,7 @@
 # For UniBorg
 # By Priyam Kalra
 # Syntax (.kang <pack_number>)
-
+from sql_helpers.global_variables_sql import PACK_NAME, ANIM_PACK_NAME
 from telethon import events
 from telethon.tl import functions, types
 from io import BytesIO
@@ -28,10 +28,6 @@ from telethon.tl.types import (
 )
 from uniborg.util import admin_cmd
 
-# need to define these in the enviroment config for the sticker pack name to be displayed
-pack_name = Config.PACK_NAME
-anim_pack_name = Config.ANIM_PACK_NAME
-
 
 @borg.on(admin_cmd(pattern="kang ?(.*)"))
 async def _(event):
@@ -48,9 +44,9 @@ async def _(event):
 
     me = borg.me
     userid = event.from_id
-    packname = f"{pack_name}"
+    packname = f"{PACK_NAME}"
     # format: Uni_Borg_userid
-    packshortname = f"Uniborg_Pack{pack_name[-1]}_{userid}"
+    packshortname = f"Uniborg_Pack{PACK_NAME[-1]}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@UniBorg_Sticker.png"
@@ -59,7 +55,7 @@ async def _(event):
     if is_a_s:
         file_ext_ns_ion = "AnimatedSticker.tgs"
         uploaded_sticker = await borg.upload_file(file, file_name=file_ext_ns_ion)
-        packname = f"{anim_pack_name}"
+        packname = f"{ANIM_PACK_NAME}"
         # format: Uni_Borg_Packx_userid
         packshortname = f"Uni_Borg_Pack{packname[-1]}_{userid}_as"
     elif not is_message_image(reply_message):
