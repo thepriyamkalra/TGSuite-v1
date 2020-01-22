@@ -8,6 +8,7 @@ import asyncio
 from telethon.tl import functions, types
 import random
 from sql_helpers.global_variables_sql import LOGGER, SUDO_USERS
+import sys
 import time
 
 
@@ -51,7 +52,9 @@ async def _(event):
             user_id = "Unknown user"
             noformat_userid = "Unknown user"
         if noformat_userid in SUDO_USERS:
-            await event.edit("I am not going to insult the KING")
+            await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
+            sys.exit()
+            # probably not needed but meh
             break
         else:
             await event.edit(insult)

@@ -78,8 +78,8 @@ async def _(event):
     else:
         return False
     if to_ban_id in SUDO_USERS:
-        await event.edit("I am not going to ban the KING.")
-        return
+        await event.edit("**Wait! WHAT?!\nDid you just try to ban my creator?!?!\nBYE!**")
+        sys.exit()
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
@@ -124,8 +124,8 @@ async def _(event):
     else:
         return False
     if to_ban_id in SUDO_USERS:
-        await event.edit("I am not going to demote the KING.")
-        return
+        await event.edit("**Wait! WHAT?!\nDid you just try to demote my creator?!?!\nBYE!**")
+        sys.exit()
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
@@ -169,8 +169,8 @@ async def _(event):
     else:
         return False
     if to_ban_id in SUDO_USERS:
-        await event.edit("I am not going to mute the KING.")
-        return
+        await event.edit("**Wait! WHAT?!\nDid you just try to mute my creator?!?!\nBYE!**")
+        sys.exit()
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
@@ -334,8 +334,8 @@ async def _(event):
     else:
         return False
     if to_ban_id in SUDO_USERS:
-        await event.edit("I am not going to kick the KING.")
-        return
+        await event.edit("**Wait! WHAT?!\nDid you just try to kick my creator?!?!\nBYE!**")
+        sys.exit()
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
