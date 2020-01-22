@@ -8,6 +8,7 @@ import asyncio
 from datetime import datetime
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SUDO_USERS
+import sys
 
 
 @borg.on(admin_cmd(pattern="promote ?(.*)"))
