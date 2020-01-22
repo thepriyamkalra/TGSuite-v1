@@ -73,15 +73,15 @@ async def _(prg):
             )
 
 
-# To be used in future project, syntax module to get help on any module
+# content to be displayed with .syntax notes [WIP]
 
 SYNTAX.update({
     "notes": "\
-# <notename>\
-\nUsage: Gets the note with name notename\
-\n\n.save <notename> <notedata>\
-\nUsage: Saves notedata as a note with the name notename\
-\n\n.clear <notename>\
-\nUsage: Deletes the note with name notename.\
+**.get <notename>**\
+\nUsage: Gets the note with name <notename>\
+\n\n**.save <notename>** (as a reply to message to save)\
+\nUsage: Saves target message as a note with the name <notename>\
+\n\n**.clear <notename>**\
+\nUsage: Deletes the note with name <notename>.\
 "
 })

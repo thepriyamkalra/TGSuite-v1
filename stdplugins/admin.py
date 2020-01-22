@@ -1,5 +1,5 @@
 # For UniBorg
-# Syntax (.promote <optional_rank>, .demote, .ban, .unban, .mute, .unmute, .kick as a reply to a user's msg) 
+# Syntax (.promote <optional_rank>, .demote, .ban, .unban, .mute, .unmute, .kick as a reply to a user's msg)
 from telethon import events
 from telethon.tl import functions, types
 from telethon.tl.functions.channels import EditAdminRequest, EditBannedRequest
@@ -7,16 +7,18 @@ from telethon.tl.types import ChatAdminRights, ChatBannedRights
 import asyncio
 from datetime import datetime
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SUDO_USERS
+
 
 @borg.on(admin_cmd(pattern="promote ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)    
+    input_str = event.pattern_match.group(1)
     if input_str != "":
-      admin_rank = input_str
+        admin_rank = input_str
     else:
-      admin_rank = ""
+        admin_rank = ""
     start = datetime.now()
     to_promote_id = None
     rights = ChatAdminRights(
@@ -56,7 +58,7 @@ banned_rights = ChatBannedRights(
 
 @borg.on(admin_cmd("(ban) ?(.*)"))
 async def _(event):
-	
+
     if event.fwd_from:
         return
     start = datetime.now()
@@ -75,14 +77,18 @@ async def _(event):
         to_ban_id = int(input_str)
     else:
         return False
-    try:
-        await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
-    except (Exception) as exc:
-        await event.edit(str(exc))
+    if to_ban_id in SUDO_USERS:
+        await event.edit("I am not going to ban the KING.")
+        return
     else:
-        await event.edit(f"Gone, ```{to_ban_id}``` is gone!")
-        
-        
+        try:
+            await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
+        except (Exception) as exc:
+            await event.edit(str(exc))
+        else:
+            await event.edit(f"Gone, ```{to_ban_id}``` is gone!")
+
+
 demoted_rights = ChatBannedRights(
     until_date=None,
     view_messages=None,
@@ -93,11 +99,12 @@ demoted_rights = ChatBannedRights(
     send_games=True,
     send_inline=None,
     embed_links=None
-    )
+)
+
 
 @borg.on(admin_cmd("(demote) ?(.*)"))
 async def _(event):
-	
+
     if event.fwd_from:
         return
     start = datetime.now()
@@ -106,7 +113,7 @@ async def _(event):
     input_cmd = event.pattern_match.group(1)
     if input_cmd == "demote":
         rights = demoted_rights
-    	
+
     input_str = event.pattern_match.group(2)
     reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
@@ -116,13 +123,17 @@ async def _(event):
         to_ban_id = int(input_str)
     else:
         return False
-    try:
-        await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
-    except (Exception) as exc:
-        await event.edit(str(exc))
+    if to_ban_id in SUDO_USERS:
+        await event.edit("I am not going to demote the KING.")
+        return
     else:
-        await event.edit(f"Oh boy, ```{to_ban_id}``` has been demoted!")
-        
+        try:
+            await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
+        except (Exception) as exc:
+            await event.edit(str(exc))
+        else:
+            await event.edit(f"Oh boy, ```{to_ban_id}``` has been demoted!")
+
 muted_rights = ChatBannedRights(
     until_date=None,
     view_messages=None,
@@ -133,11 +144,12 @@ muted_rights = ChatBannedRights(
     send_games=True,
     send_inline=True,
     embed_links=True
-    )
+)
+
 
 @borg.on(admin_cmd("(mute) ?(.*)"))
 async def _(event):
-	
+
     if event.fwd_from:
         return
     start = datetime.now()
@@ -146,7 +158,7 @@ async def _(event):
     input_cmd = event.pattern_match.group(1)
     if input_cmd == "mute":
         rights = muted_rights
-    	
+
     input_str = event.pattern_match.group(2)
     reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
@@ -156,13 +168,18 @@ async def _(event):
         to_ban_id = int(input_str)
     else:
         return False
-    try:
-        await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
-    except (Exception) as exc:
-        await event.edit(str(exc))
+    if to_ban_id in SUDO_USERS:
+        await event.edit("I am not going to mute the KING.")
+        return
     else:
-        await event.edit(f"Successfully taped ```{to_ban_id}```!")
-        
+        try:
+            await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
+        except (Exception) as exc:
+            await event.edit(str(exc))
+        else:
+            await event.edit(f"Successfully taped ```{to_ban_id}```!")
+
+
 @borg.on(admin_cmd("pin ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -185,7 +202,7 @@ async def _(event):
             await event.delete()
     else:
         await event.edit("Reply to a message to pin it.")
-        
+
 unmuted_rights = ChatBannedRights(
     until_date=None,
     view_messages=None,
@@ -197,6 +214,7 @@ unmuted_rights = ChatBannedRights(
     send_inline=None,
     embed_links=None
 )
+
 
 @borg.on(admin_cmd("(unmute) ?(.*)"))
 async def _(event):
@@ -210,7 +228,7 @@ async def _(event):
     input_cmd = event.pattern_match.group(1)
     if input_cmd == "unmute":
         rights = unmuted_rights
-    	
+
     input_str = event.pattern_match.group(2)
     reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
@@ -220,6 +238,7 @@ async def _(event):
         to_ban_id = int(input_str)
     else:
         return False
+
     try:
         await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
     except (Exception) as exc:
@@ -251,7 +270,7 @@ async def _(event):
     input_cmd = event.pattern_match.group(1)
     if input_cmd == "unban":
         rights = unbanned_rights
-    	
+
     input_str = event.pattern_match.group(2)
     reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
@@ -267,7 +286,7 @@ async def _(event):
         await event.edit(str(exc))
     else:
         await event.edit(f"Well, ```{to_ban_id}``` can join now!")
-        
+
 kicked_rights1 = ChatBannedRights(
     until_date=None,
     view_messages=True,
@@ -295,7 +314,7 @@ kicked_rights2 = ChatBannedRights(
 
 @borg.on(admin_cmd("(kick) ?(.*)"))
 async def _(event):
-	
+
     if event.fwd_from:
         return
     start = datetime.now()
@@ -314,13 +333,17 @@ async def _(event):
         to_ban_id = int(input_str)
     else:
         return False
-    try:
-        await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
-    except (Exception) as exc:
-        await event.edit(str(exc))
-    try:
-        await borg(EditBannedRequest(event.chat_id, to_ban_id, rights2))
-    except (Exception) as exc:
-        await event.edit(str(exc))
+    if to_ban_id in SUDO_USERS:
+        await event.edit("I am not going to kick the KING.")
+        return
     else:
-        await event.edit(f"```{to_ban_id}``` has been yeeted!")
+        try:
+            await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
+        except (Exception) as exc:
+            await event.edit(str(exc))
+        try:
+            await borg(EditBannedRequest(event.chat_id, to_ban_id, rights2))
+        except (Exception) as exc:
+            await event.edit(str(exc))
+        else:
+            await event.edit(f"```{to_ban_id}``` has been yeeted!")
