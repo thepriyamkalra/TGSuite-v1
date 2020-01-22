@@ -34,6 +34,7 @@ async def _(event):
         args = int(args)
     except Exception as error:
         await event.edit(error)
+    reply_msg = await event.get_reply_message()
     if reply_msg:
         user_id = f"```{reply_msg.from_id}```"
     else:
