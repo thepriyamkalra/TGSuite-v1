@@ -124,7 +124,7 @@ async def _(event):
         to_ban_id = int(input_str)
     else:
         return False
-   if to_ban_id in SUDO_USERS:
+    if to_ban_id in SUDO_USERS:
        await event.edit("I am not going to demote the KING.")
        sys.exit()
     else:
