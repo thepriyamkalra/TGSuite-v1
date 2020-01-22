@@ -7,7 +7,6 @@ from telethon.tl.types import ChatAdminRights, ChatBannedRights
 import asyncio
 from datetime import datetime
 from uniborg.util import admin_cmd
-import sys
 from sql_helpers.global_variables_sql import SUDO_USERS
 
 
@@ -80,7 +79,7 @@ async def _(event):
         return False
     if to_ban_id in SUDO_USERS:
         await event.edit("I am not going to ban the KING.")
-        sys.exit()
+        return
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
@@ -125,8 +124,8 @@ async def _(event):
     else:
         return False
     if to_ban_id in SUDO_USERS:
-       await event.edit("I am not going to demote the KING.")
-       sys.exit()
+        await event.edit("I am not going to demote the KING.")
+        return
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
@@ -171,7 +170,7 @@ async def _(event):
         return False
     if to_ban_id in SUDO_USERS:
         await event.edit("I am not going to mute the KING.")
-        sys.exit()
+        return
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
@@ -336,7 +335,7 @@ async def _(event):
         return False
     if to_ban_id in SUDO_USERS:
         await event.edit("I am not going to kick the KING.")
-        sys.exit()
+        return
     else:
         try:
             await borg(EditBannedRequest(event.chat_id, to_ban_id, rights))
