@@ -34,31 +34,29 @@ async def _(event):
         args = int(args)
     except Exception as error:
         await event.edit(error)
-    reply_msg = await event.get_reply_message()
-    if reply_msg:
-        user_id = f"```{reply_msg.from_id}```"
-    else:
-        user_id = "Unknown user"
-    if user_id in SUDO_USERS:
-        await event.edit("I am not going to insult the KING.")
-        return
-    else:
-      for insulting in range(args):
-          start = random.choice(starts)
-          adjective_start = random.choice(adjectives_start)
-          adjective_mid = random.choice(adjectives_mid)
-          noun = random.choice(nouns)
-          end = random.choice(ends)
-          insult = start + " " + adjective_start + " " + \
-              adjective_mid + (" " if adjective_mid else "") + noun + end
-          log_insults += f"```{insult}```\n\n"
-          reply_msg = await event.get_reply_message()
-          if reply_msg:
-              user_id = f"```{reply_msg.from_id}```"
-          else:
-              user_id = "Unknown user"
-              time.sleep(2)   
-          await borg.send_message(
-              LOGGER,
-              f"Insulted [{user_id}] with:\n\n{log_insults}"
-          )
+    for insulting in range(args):
+        start = random.choice(starts)
+        adjective_start = random.choice(adjectives_start)
+        adjective_mid = random.choice(adjectives_mid)
+        noun = random.choice(nouns)
+        end = random.choice(ends)
+        insult = start + " " + adjective_start + " " + \
+            adjective_mid + (" " if adjective_mid else "") + noun + end
+        log_insults += f"```{insult}```\n\n"
+        reply_msg = await event.get_reply_message()
+        if reply_msg:
+            user_id = f"```{reply_msg.from_id}```"
+            noformat_userid = reply_msg.from_id
+        else:
+            user_id = "Unknown user"
+            noformat_userid = "Unknown user"
+        if noformat_userid in SUDO_USERS:
+            await event.edit("I am not going to insult the KING")
+            break
+        else:
+            await event.edit(insult)
+            time.sleep(2)
+        await borg.send_message(
+            LOGGER,
+            f"Insulted [{user_id}] with:\n\n{log_insults}"
+       )
