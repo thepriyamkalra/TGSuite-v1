@@ -13,8 +13,8 @@ async def _(event):
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     await event.edit("Pong!\n{}".format(ms))
-    
-    
+
+
 SYNTAX.update({
     "ping": "\
 **Requested Module --> ping**\
