@@ -1,3 +1,4 @@
+"""
 # For UniBorg
 # Syntax .lock (msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url)
 
@@ -240,3 +241,4 @@ SYNTAX.update({
 \n\Usage: Locks a specified lockable.\
 "
 })
+"""
