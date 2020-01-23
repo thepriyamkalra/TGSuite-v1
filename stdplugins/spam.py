@@ -1,12 +1,13 @@
 # For UniBorg
 # By Priyam Kalra
-# Syntax (.spam <number of msgs [limit = 1000]> <text> )
+# Syntax (.spam <number of msgs [limit = 999]> <text>)
 
 from asyncio import wait
 from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(events.NewMessage(pattern=r"\.spam", outgoing=True))
@@ -22,3 +23,14 @@ async def spammer(e):
     for spam in range(counter):
         await e.delete()
         await e.reply(spam_message)
+
+
+
+SYNTAX.update({
+    "spam": "\
+**Requested Module --> spam**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.spam <number of msgs> <text>```\
+\nUsage: Spam a specified message upto 999 times.\
+"
+})

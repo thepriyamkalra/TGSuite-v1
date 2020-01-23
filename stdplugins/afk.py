@@ -4,6 +4,7 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
+from sql_helpers.global_variables_sql import LOGGER, SYNTAX
 
 
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
@@ -17,7 +18,7 @@ async def set_not_afk(event):
     if ".afk" not in current_message and "yes" in borg.storage.USER_AFK:  # pylint:disable=E0602
         try:
             await borg.send_message(  # pylint:disable=E0602
-                Config.PRIVATE_GROUP_BOT_API_ID,  # pylint:disable=E0602
+                LOGGER,  # pylint:disable=E0602
                 "Set AFK mode to False"
             )
         except Exception as e:  # pylint:disable=C0103,W0703
@@ -54,7 +55,7 @@ async def _(event):
         await asyncio.sleep(5)
         try:
             await borg.send_message(  # pylint:disable=E0602
-                Config.PRIVATE_GROUP_BOT_API_ID,  # pylint:disable=E0602
+                LOGGER,  # pylint:disable=E0602
                 f"Set AFK mode to True, and Reason is {reason}"
             )
         except Exception as e:  # pylint:disable=C0103,W0703
@@ -114,3 +115,12 @@ async def on_afk(event):
         if event.chat_id in borg.storage.last_afk_message:  # pylint:disable=E0602
             await borg.storage.last_afk_message[event.chat_id].delete()  # pylint:disable=E0602
         borg.storage.last_afk_message[event.chat_id] = msg  # pylint:disable=E0602
+
+SYNTAX.update({
+    "afk": "\
+**Requested Module --> afk**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.afk <optional_reason>```\
+\nUsage: Changed afk mode to **true**.\
+"
+})

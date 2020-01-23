@@ -26,7 +26,7 @@ import telethon
 from PIL import Image
 from io import BytesIO
 from uniborg.util import admin_cmd
-
+from sql_helpers.global_variables_sql import SYNTAX
 logger = logging.getLogger(__name__)
 
 
@@ -224,3 +224,13 @@ def get_markdown(reply):
 
         markdown.append(md_item)
     return markdown
+
+
+SYNTAX.update({
+    "quote": "\
+**Requested Module --> quote**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.quote``` [as a reply to a target message]\
+\nUsage: Quote the target message.\
+"
+})

@@ -56,7 +56,7 @@ async def _(getnt):
     notes = get_notes(getnt.chat_id)
     for note in notes:
         if notename == note.keyword:
-            await getnt.reply(f"**Required Note:** ```{notename}```\n\n{note.reply}")
+            await getnt.reply(note.reply)
             return
 
 
@@ -77,11 +77,11 @@ async def _(prg):
 
 SYNTAX.update({
     "notes": "\
-**.get <notename>**\
+```.get <notename>```\
 \nUsage: Gets the note with name <notename>\
-\n\n**.save <notename>** (as a reply to message to save)\
+\n\n```.save <notename>``` (as a reply to message to save)\
 \nUsage: Saves target message as a note with the name <notename>\
-\n\n**.clear <notename>**\
+\n\n```.clear <notename>```\
 \nUsage: Deletes the note with name <notename>.\
 "
 })

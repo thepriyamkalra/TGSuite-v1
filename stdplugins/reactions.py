@@ -5,6 +5,7 @@ from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd(pattern="oof ?(.*)"))
@@ -110,5 +111,40 @@ async def _(event):
 ............\..............( 
 ..............\.............\...`
     """)
-
-            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+SYNTAX.update({
+    "reactions": "\
+**Requested Module --> reactions**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.oof```, ```.sed``` [as a reply to a target message]\
+\nUsage: Just some funny little animations ;)\
+\n\n```.ascii <ascii_art_name>```\
+\nAs of now only ```mf``` ascii art is included, more to be added in the future.\
+"
+})          

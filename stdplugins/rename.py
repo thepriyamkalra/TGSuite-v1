@@ -15,6 +15,7 @@ from telethon.tl.types import DocumentAttributeVideo
 from telethon.errors import MessageNotModifiedError
 import time
 from uniborg.util import progress, humanbytes, time_formatter, admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("rename (.*)"))
@@ -67,3 +68,14 @@ async def _(event):
             await event.edit("File {} not found.".format(input_str))
     else:
         await event.edit("Syntax // .rnupload file.name as reply to a Telegram media")
+        
+        
+        
+SYNTAX.update({
+    "rename": "\
+**Requested Module --> rename**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.rename <new_file_name>``` [as a reply to a target file]\
+\nUsage: Renames the target file to <new_file_name>.\
+"
+})

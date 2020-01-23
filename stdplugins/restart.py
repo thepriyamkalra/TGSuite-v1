@@ -9,7 +9,7 @@ import os
 import sys
 from uniborg.util import admin_cmd
 import time
-
+from sql_helpers.global_variables_sql import SYNTAX
 
 @borg.on(admin_cmd("restart"))
 async def _(event):
@@ -25,3 +25,13 @@ async def _(event):
     os.execl(sys.executable, sys.executable, *sys.argv)
     # You probably don't need it but whatever
     quit()
+    
+    
+SYNTAX.update({
+    "restart": "\
+**Requested Module --> restart**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.restart```\
+\nUsage: Restart your userbot.\
+"
+})

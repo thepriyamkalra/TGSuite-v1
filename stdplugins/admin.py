@@ -7,7 +7,7 @@ from telethon.tl.types import ChatAdminRights, ChatBannedRights
 import asyncio
 from datetime import datetime
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SUDO_USERS
+from sql_helpers.global_variables_sql import SUDO_USERS, SYNTAX
 import sys
 
 
@@ -348,3 +348,24 @@ async def _(event):
             await event.edit(str(exc))
         else:
             await event.edit(f"```{to_ban_id}``` has been yeeted!")
+
+SYNTAX.update({
+    "admin": "\
+**Requested Module --> admin**\
+\nDetailed usage of fuction(s):\
+\n\n```.ban <userid>``` (or as a reply to a message of targer user)\
+\nUsage: bans target user.\
+\n\n```.unban <userid>``` (or as a reply to a message of targer user)\
+\nUsage: unbans target user.\
+\n\n```.mute <userid>``` (or as a reply to a message of targer user)\
+\nUsage: mutes target user.\
+\n\n```.unmute <userid>``` (or as a reply to a message of targer user)\
+\nUsage: unmutes target user.\
+\n\n```.promote <optional_rank>``` (must be a reply to a message of targer user)\
+\nUsage: promotes target user.\
+\n\n```.demote <userid>``` (or as a reply to a message of targer user)\
+\nUsage: demotes target user.\
+\n\n```.kick <userid>``` (or as a reply to a message of targer user)\
+\nUsage: kicks target user.\
+"
+})

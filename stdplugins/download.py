@@ -11,6 +11,7 @@ from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd(pattern="localdl ?(.*)", allow_sudo=True))
@@ -85,3 +86,14 @@ async def _(event):
             await mone.edit("Incorrect URL\n {}".format(input_str))
     else:
         await mone.edit("Reply to a message to download to my local server.")
+
+
+
+SYNTAX.update({
+    "download": "\
+**Requested Module --> download**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.localdl (as a reply to a telegram media file)```\
+\nUsage: Downloads the target file to the temporary local download directory.\
+"
+})

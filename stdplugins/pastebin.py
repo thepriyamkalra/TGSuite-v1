@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 import requests
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 def progress(current, total):
@@ -53,3 +54,14 @@ async def _(event):
         await event.edit("Pasted to {} in {} seconds. Goto Original URL: {}".format(url, ms, nurl))
     else:
         await event.edit("Pasted to {} in {} seconds".format(url, ms))
+        
+        
+        
+SYNTAX.update({
+    "pastebin": "\
+**Requested Module --> pastebin**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.paste (as a reply to the msg you want to paste)```\
+\nUsage: Pastes the target message to del.dog.\
+"
+})

@@ -7,7 +7,7 @@ from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
 import random
-from sql_helpers.global_variables_sql import LOGGER, SUDO_USERS
+from sql_helpers.global_variables_sql import LOGGER, SUDO_USERS, SYNTAX
 import sys
 import time
 
@@ -63,3 +63,14 @@ async def _(event):
             LOGGER,
             f"Insulted [{user_id}] with:\n\n{log_insults}"
        )
+       
+       
+       
+SYNTAX.update({
+    "insult": "\
+**Requested Module --> insult**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.insult <optional_number_of_insults>``` [optionally as a reply to target user][default = 5]\
+\nUsage: Insults target user.\
+"
+})

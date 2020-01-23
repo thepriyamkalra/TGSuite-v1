@@ -3,7 +3,7 @@
 import sys
 from telethon import events, functions, __version__
 from uniborg.util import admin_cmd
-
+from sql_helpers.global_variables_sql import SYNTAX
 
 @borg.on(admin_cmd(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
 async def _(event):
@@ -37,3 +37,13 @@ async def _(event):
     else:
         await event.reply(help_string + "\n\n" + s_help_string)
         await event.delete()
+        
+        
+SYNTAX.update({
+    "alive": "\
+**Requested Module --> alive**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.alive```\
+\nUsage: Returns userbot's system stats.\
+"
+})

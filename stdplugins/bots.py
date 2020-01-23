@@ -3,6 +3,7 @@
 from telethon import events
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("bots ?(.*)"))
@@ -31,3 +32,13 @@ async def _(event):
     except Exception as e:
         mentions += " " + str(e) + "\n"
     await event.edit(mentions)
+    
+    
+SYNTAX.update({
+    "bots": "\
+**Requested Module --> bots**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.bots```\
+\nUsage: Prints all the bots in the current chat.\
+"
+})

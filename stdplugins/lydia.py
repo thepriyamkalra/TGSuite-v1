@@ -14,6 +14,7 @@ import coffeehouse as cf
 import asyncio
 import io
 from sql_helpers.lydia_ai_sql import get_s, get_all_s, add_s, remove_s
+from sql_helpers.global_variables_sql import SYNTAX
 from time import time
 from uniborg.util import admin_cmd
 
@@ -103,3 +104,16 @@ async def on_new_message(event):
                     await event.reply(output)
             except cf.exception.CoffeeHouseError as e:
                 logger.info(str(e))
+
+SYNTAX.update({
+    "lydia": "\
+**Requested Module --> lydia**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.enableai (as a reply to target user)```\
+\nUsage: Enables LydiaAI for the target user in the current chat.\
+\n\n```.disableai (as a reply to target user)```\
+\nUsage: Disables LydiaAI for the target user in the current chat.\
+\n\n```.listai (as a reply to target user)```\
+\nUsage: Lists all users on which LydiaAI is enabled.\
+"
+})

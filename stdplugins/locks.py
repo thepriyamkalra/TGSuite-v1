@@ -4,6 +4,7 @@
 from telethon import events, functions, types
 from sql_helpers.locks_sql import update_lock, is_locked, get_locks
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("lock( (?P<target>\S+)|$)"))
@@ -228,3 +229,14 @@ async def _(event):
                 ban_reason_msg = await event.reply(
                     "!warn [user](tg://user?id={}) Please Do Not Add BOTs to this chat.".format(users_added_by)
                 )
+
+
+SYNTAX.update({
+    "locks": "\
+**Requested Module --> locks**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.lock <specify_item_to_lock>```\
+\nList of items:\n~msg\n~media\n~sticker\n~gif\n~gamee\n~ainline\n~gpoll\n~adduser\n~cpin\n~changeinfo\n~bots\n~commands\n~email\n~forward\n~url\
+\n\Usage: Locks a specified lockable.\
+"
+})

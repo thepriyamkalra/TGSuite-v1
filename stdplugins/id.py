@@ -4,7 +4,7 @@
 from telethon import events
 from telethon.utils import pack_bot_file_id
 from uniborg.util import admin_cmd
-
+from sql_helpers.global_variables_sql import SYNTAX
 
 @borg.on(admin_cmd("id"))
 async def _(event):
@@ -20,3 +20,13 @@ async def _(event):
             await event.edit("Current Chat ID: `{}`\nFrom User ID: `{}`".format(str(event.chat_id), str(r_msg.from_id)))
     else:
         await event.edit("Current Chat ID: `{}`".format(str(event.chat_id)))
+        
+        
+SYNTAX.update({
+    "id": "\
+**Requested Module --> id**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.id (as a reply to target user)```\
+\nUsage: Prints the current chat id and target user id.\
+"
+})

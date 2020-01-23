@@ -1,7 +1,7 @@
 # For UniBorg
 # By Priyam Kalra
 # Syntax (.kang <pack_number>)
-from sql_helpers.global_variables_sql import PACK_NAME, ANIM_PACK_NAME
+from sql_helpers.global_variables_sql import PACK_NAME, ANIM_PACK_NAME, SYNTAX
 from telethon import events
 from telethon.tl import functions, types
 from io import BytesIO
@@ -339,3 +339,14 @@ def zipdir(path, ziph):
         for file in files:
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
+            
+            
+            
+SYNTAX.update({
+    "kang": "\
+**Requested Module --> kang**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.kang <optional_emoji>```\
+\nUsage: Adds sticker to your own sticker pack! [NAME = env variables ANIM_PACK_NAME, PACK_NAME]\
+"
+})

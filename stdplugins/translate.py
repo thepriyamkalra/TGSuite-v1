@@ -4,6 +4,7 @@
 import emoji
 from googletrans import Translator
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("tr ?(.*)"))
@@ -40,3 +41,13 @@ async def _(event):
         await event.edit(output_str)
     except Exception as exc:
         await event.edit(str(exc))
+
+
+SYNTAX.update({
+    "translate": "\
+**Requested Module --> translate**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.tr <language_name>``` [as a reply to target message]\
+\nUsage: Translate target message to another language.\
+"
+})
