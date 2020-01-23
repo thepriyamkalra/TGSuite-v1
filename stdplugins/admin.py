@@ -352,7 +352,7 @@ async def _(event):
 SYNTAX.update({
     "admin": "\
 **Requested Module --> admin**\
-\nDetailed usage of fuction(s):\
+\n\n**Detailed usage of fuction(s)**:\
 \n\n```.ban <userid>``` (or as a reply to a message of targer user)\
 \nUsage: bans target user.\
 \n\n```.unban <userid>``` (or as a reply to a message of targer user)\

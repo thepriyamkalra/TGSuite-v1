@@ -111,33 +111,8 @@ async def _(event):
 ............\..............( 
 ..............\.............\...`
     """)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
 SYNTAX.update({
     "reactions": "\
 **Requested Module --> reactions**\
@@ -145,6 +120,7 @@ SYNTAX.update({
 \n\n```.oof```, ```.sed``` [as a reply to a target message]\
 \nUsage: Just some funny little animations ;)\
 \n\n```.ascii <ascii_art_name>```\
+\nUsage: Prints the target ascii art ;)\
 \nAs of now only ```mf``` ascii art is included, more to be added in the future.\
 "
 })          

@@ -237,4 +237,4 @@ async def _(event):
                 )
 
 
-SYNTAX.update({"locks": "**Requested Module --> locks**\n\n**Detailed usage of fuction(s):**\n\n```.lock <specify_item_to_lock>```\nList of items:msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url\nUsage: Locks a specified lockable."})
+SYNTAX.update({"locks": "**Requested Module --> locks**\n\n**Detailed usage of fuction(s):**\n\n```.lock <specify_item_to_lock>```\nUsage: Locks a specified lockable.\nList of items:\nmsg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url"})
