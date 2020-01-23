@@ -1,4 +1,3 @@
-"""
 # For UniBorg
 # Syntax .lock (msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url)
 
@@ -232,13 +231,4 @@ async def _(event):
                 )
 
 
-SYNTAX.update({
-    "locks": "\
-**Requested Module --> locks**\
-\n\n**Detailed usage of fuction(s):**\
-\n\n```.lock <specify_item_to_lock>```\
-\nList of items:\n~msg\n~media\n~sticker\n~gif\n~gamee\n~ainline\n~gpoll\n~adduser\n~cpin\n~changeinfo\n~bots\n~commands\n~email\n~forward\n~url\
-\n\Usage: Locks a specified lockable.\
-"
-})
-"""
+SYNTAX.update({"locks": "**Requested Module --> locks**\n\n**Detailed usage of fuction(s):**\n\n```.lock <specify_item_to_lock>```\nList of items:msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url\nUsage: Locks a specified lockable."})
