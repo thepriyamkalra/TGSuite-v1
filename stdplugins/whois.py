@@ -7,6 +7,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("whois ?(.*)"))
@@ -135,3 +136,14 @@ async def get_full_user(event):
                 return replied_user, None
             except Exception as e:
                 return None, e
+                
+                
+                
+SYNTAX.update({
+    "whois": "\
+**Requested Module --> whois**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.whois``` [as a reply to a message of target user]\
+\nUsage: Get statistics of the target user.\
+"
+})

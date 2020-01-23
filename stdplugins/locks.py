@@ -4,6 +4,7 @@
 from telethon import events, functions, types
 from sql_helpers.locks_sql import update_lock, is_locked, get_locks
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("lock( (?P<target>\S+)|$)"))
@@ -149,7 +150,8 @@ async def check_incoming_messages(event):
                 await event.delete()
             except Exception as e:
                 await event.reply(
-                    "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
+                    "I don't seem to have ADMIN permission here. \n`{}`".format(
+                        str(e))
                 )
                 update_lock(peer_id, "commands", False)
     if is_locked(peer_id, "forward"):
@@ -158,7 +160,8 @@ async def check_incoming_messages(event):
                 await event.delete()
             except Exception as e:
                 await event.reply(
-                    "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
+                    "I don't seem to have ADMIN permission here. \n`{}`".format(
+                        str(e))
                 )
                 update_lock(peer_id, "forward", False)
     if is_locked(peer_id, "email"):
@@ -173,7 +176,8 @@ async def check_incoming_messages(event):
                 await event.delete()
             except Exception as e:
                 await event.reply(
-                    "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
+                    "I don't seem to have ADMIN permission here. \n`{}`".format(
+                        str(e))
                 )
                 update_lock(peer_id, "email", False)
     if is_locked(peer_id, "url"):
@@ -188,7 +192,8 @@ async def check_incoming_messages(event):
                 await event.delete()
             except Exception as e:
                 await event.reply(
-                    "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
+                    "I don't seem to have ADMIN permission here. \n`{}`".format(
+                        str(e))
                 )
                 update_lock(peer_id, "url", False)
 
@@ -220,11 +225,16 @@ async def _(event):
                         ))
                     except Exception as e:
                         await event.reply(
-                            "I don't seem to have ADMIN permission here. \n`{}`".format(str(e))
+                            "I don't seem to have ADMIN permission here. \n`{}`".format(
+                                str(e))
                         )
                         update_lock(event.chat_id, "bots", False)
                         break
             if Config.G_BAN_LOGGER_GROUP is not None and is_ban_able:
                 ban_reason_msg = await event.reply(
-                    "!warn [user](tg://user?id={}) Please Do Not Add BOTs to this chat.".format(users_added_by)
+                    "!warn [user](tg://user?id={}) Please Do Not Add BOTs to this chat.".format(
+                        users_added_by)
                 )
+
+
+SYNTAX.update({"locks": "**Requested Module --> locks**\n\n**Detailed usage of fuction(s):**\n\n```.lock <specify_item_to_lock>```\nUsage: Locks a specified lockable.\nList of items:\nmsg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url"})

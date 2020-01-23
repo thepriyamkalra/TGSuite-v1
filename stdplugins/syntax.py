@@ -18,4 +18,4 @@ async def _(event):
             else:
                 await event.edit("Please specify a valid module.")
         else:
-            await event.edit("Please specify a module.")
+            await event.edit("Please specify a module.\n**Tip: Get a list of all modules using .modules**")

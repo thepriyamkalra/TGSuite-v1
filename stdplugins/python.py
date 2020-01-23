@@ -11,6 +11,7 @@ import asyncio
 import sys
 import io
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd(pattern="py"))
@@ -73,3 +74,13 @@ async def aexec(code, event):
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
     return await locals()['__aexec'](event)
+    
+    
+SYNTAX.update({
+    "python": "\
+**Requested Module --> python**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.python <python_code>```\
+\nUsage: Evaluate python code.\
+"
+})

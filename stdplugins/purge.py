@@ -1,9 +1,10 @@
-"""Purge your messages without the admins seeing it in Recent Actions"""
+# For UniBorg
+# Syntax (.purge as a reply to a msg)
+
 from telethon import events
 import asyncio
 from uniborg.util import admin_cmd
-# For UniBorg
-# Syntax (.purge as a reply to a msg)
+from sql_helpers.global_variables_sql import SYNTAX
 @borg.on(admin_cmd("purge ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -32,3 +33,13 @@ async def _(event):
             await event.delete()
         else:
             await event.edit("**PURGE** Failed!")
+            
+            
+SYNTAX.update({
+    "purge": "\
+**Requested Module --> purge**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.purge (as a reply to a msg)```\
+\nUsage: Purge all msgs until the target message.\
+"
+})

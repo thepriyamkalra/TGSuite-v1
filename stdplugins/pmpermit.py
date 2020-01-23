@@ -6,6 +6,7 @@ import json
 from telethon import events
 from telethon.tl import functions, types
 from sql_helpers.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
+from sql_helpers.global_variables_sql import SYNTAX
 from uniborg.util import admin_cmd
 
 
@@ -112,3 +113,16 @@ async def approve_p_m(event):
             await event.delete()
     else:
         await event.edit(APPROVED_PMs)
+
+
+
+SYNTAX.update({
+    "pmpermit": "\
+**Requested Module --> pmpermit**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.approve```\
+\nUsage: Approve a user in PMs.\
+\n\n```.block```\
+\nUsage: Block a user from your PMs.\
+"
+})

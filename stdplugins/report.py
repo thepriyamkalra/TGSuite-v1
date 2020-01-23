@@ -3,6 +3,7 @@
 from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("admins ?(.*)"))
@@ -52,3 +53,13 @@ async def _(event):
         await event.delete()
     else:
         await event.edit(mentions)
+        
+        
+SYNTAX.update({
+    "report": "\
+**Requested Module --> report**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.report``` [as a reply to a target message]\
+\nUsage: Report the target message to the admins.\
+"
+})

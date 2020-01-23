@@ -1,11 +1,12 @@
 # For UniBorg
-# Syntax .flip
+# Syntax .coinflip
 from telethon import events
 import random, re
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
-@borg.on(admin_cmd("flip ?(.*)"))
+@borg.on(admin_cmd("coinflip ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -29,3 +30,14 @@ async def _(event):
             await event.edit("**Tails**.")
     else:
         await event.edit("¯\_(ツ)_/¯")
+        
+        
+        
+SYNTAX.update({
+    "coinflip": "\
+**Requested Module --> coinflip**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.coinflip <optional_choice>```\
+\nUsage: Flips a virtual coin and prints the outcome, test your lcuk!\
+"
+})

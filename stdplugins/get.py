@@ -5,7 +5,7 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
-from sql_helpers.global_variables_sql import REPOLINK, DEPLOYLINK, PACKS
+from sql_helpers.global_variables_sql import REPOLINK, DEPLOYLINK, PACKS, SYNTAX
 from uniborg.util import admin_cmd
 
 
@@ -24,3 +24,17 @@ async def _(event):
         await event.edit(f"**Found the following sticker pack data:**\n{PACKS}")
     else:
         pass
+        
+        
+SYNTAX.update({
+    "get": "\
+**Requested Module --> get**\
+\nDetailed usage of fuction(s):\
+\n\n```.get repo```\
+\nUsage: Prints github repoistory link defined in the env variable [REPO_LINK].\
+\n\n```.get heroku```\
+\nUsage: Prints the heroku deploy link defined in the env variable [DEPLOY_LINK].\
+\n\n```.get packs```\
+\nUsage: Prints the sticker pack data defined in the env variable [PACKS_CONTENT].\
+"
+})

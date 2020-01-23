@@ -1,6 +1,7 @@
 from telethon import events
 from datetime import datetime
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("ping"))
@@ -12,3 +13,13 @@ async def _(event):
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     await event.edit("Pong!\n{}".format(ms))
+
+
+SYNTAX.update({
+    "ping": "\
+**Requested Module --> ping**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.ping```\
+\nUsage: Check your internet connection's ping speed.\
+"
+})

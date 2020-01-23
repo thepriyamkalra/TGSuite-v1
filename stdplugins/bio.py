@@ -6,6 +6,7 @@ import time
 from telethon.tl import functions
 from telethon.errors import FloodWaitError
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 DEL_TIME_OUT = 70
@@ -40,3 +41,13 @@ async def _(event):
             #     "Changed Profile Picture"
             # )
         await asyncio.sleep(DEL_TIME_OUT)
+
+
+SYNTAX.update({
+    "bio": "\
+**Requested Module --> bio**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.bio <text_to_set_as_bio>```\
+\nUsage: Updates the user's bio to <text_to_set_as_bio>.\
+"
+})

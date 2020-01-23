@@ -6,6 +6,7 @@
 from telethon import events
 import urbandict
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX
 
 
 @borg.on(admin_cmd("search (.*)"))
@@ -31,3 +32,14 @@ async def _(event):
             await event.edit("No result found for **" + str + "**")
     except:
         await event.edit("No result found for **" + str + "**")
+        
+        
+        
+SYNTAX.update({
+    "urbandictionary": "\
+**Requested Module --> urbandictionary**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.search <keyword>```\
+\nUsage: Search UrbanDictionary for a selected keyword.\
+"
+})
