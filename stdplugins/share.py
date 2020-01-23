@@ -31,7 +31,7 @@ def get_lst_of_files(input_directory, output_lst):
 
 
 
-@borg.on(admin_cmd(pattern="plugin (.*)", allow_sudo=True))
+@borg.on(admin_cmd(pattern="share (.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
