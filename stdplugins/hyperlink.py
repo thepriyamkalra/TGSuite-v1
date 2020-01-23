@@ -20,7 +20,7 @@ SYNTAX.update({
     "hyperlink": "\
 **Requested Module --> hyperlink**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.hyperlink <paste_link_here>```\
+\n\n```.link <paste_link_here>```\
 \nUsage: Generated a hyperlink using the provided link.\
 "
 })
