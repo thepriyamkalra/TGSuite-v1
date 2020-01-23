@@ -14,7 +14,7 @@ from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import progress, admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX,MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULES_LIST
 
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -88,4 +88,4 @@ SYNTAX.update({
 "
 })
 
-MODULE_LIST.append("share")
+MODULES_LIST.append("share")
