@@ -31,6 +31,7 @@ async def _(event):
     )
     stdout, stderr = await process.communicate()
     e = stderr.decode()
+    if not e:
         e = "No Error"
     o = stdout.decode()
     if not o:
