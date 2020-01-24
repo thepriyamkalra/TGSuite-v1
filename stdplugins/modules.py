@@ -7,11 +7,6 @@ import asyncio
 from telethon.tl import functions, types
 from sql_helpers.global_variables_sql import MODULE_LIST
 
-if MODULE_LIST:
-    MODULE_LIST = sorted(MODULE_LIST)
-else:
-    pass
-
 
 @borg.on(admin_cmd(pattern="modules ?(.*)"))
 async def _(event):
