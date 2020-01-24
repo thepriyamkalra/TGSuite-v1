@@ -3,13 +3,15 @@
 # Based on the note module made by RaphielGang (https://da.gd/X4Mnf)
 # Syntax (.save <notename>, .get <notename>, .clear <notename>, .clearall)
 
-from sql_helpers.global_variables_sql import LOGGER, SYNTAX
+from sql_helpers.global_variables_sql import LOGGER, SYNTAX, MODULE_NAME
 from sql_helpers.notes_sql import get_notes, rm_note, add_note, rm_all_notes
 from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
 
+
+MODULE_LIST.append("notes")
 
 @borg.on(admin_cmd(pattern="saved ?(.*)"))
 async def _(svd):

@@ -2,7 +2,10 @@ from telethon import events
 import asyncio
 from datetime import datetime
 from telethon.tl.types import User, Chat, Channel
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("stat")
 
 @borg.on(events.NewMessage(pattern=r"\.stat", outgoing=True))
 async def _(event):

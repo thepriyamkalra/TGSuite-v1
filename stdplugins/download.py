@@ -11,7 +11,9 @@ from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+MODULE_LIST.append("download")
 
 
 @borg.on(admin_cmd(pattern="localdl ?(.*)", allow_sudo=True))

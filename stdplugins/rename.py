@@ -15,7 +15,9 @@ from telethon.tl.types import DocumentAttributeVideo
 from telethon.errors import MessageNotModifiedError
 import time
 from uniborg.util import progress, humanbytes, time_formatter, admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+MODULE_LIST.append("rename")
 
 
 @borg.on(admin_cmd("rename (.*)"))

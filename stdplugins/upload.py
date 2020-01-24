@@ -14,7 +14,10 @@ from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import progress, admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("upload")
 
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -182,7 +185,6 @@ def get_video_thumb(file, output=None, width=90):
     ], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     if not p.returncode and os.path.lexists(file):
         return output
-
 
 
 SYNTAX.update({

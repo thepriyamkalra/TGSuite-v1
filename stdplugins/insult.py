@@ -7,10 +7,11 @@ from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
 import random
-from sql_helpers.global_variables_sql import LOGGER, SUDO_USERS, SYNTAX
+from sql_helpers.global_variables_sql import LOGGER, SUDO_USERS, SYNTAX, MODULE_LIST
 import sys
 import time
 
+MODULE_LIST.append("insult")
 
 @borg.on(admin_cmd(pattern="insult ?(.*)"))
 async def _(event):

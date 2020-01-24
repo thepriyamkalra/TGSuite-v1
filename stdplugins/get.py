@@ -5,9 +5,11 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
-from sql_helpers.global_variables_sql import REPOLINK, DEPLOYLINK, PACKS, SYNTAX
+from sql_helpers.global_variables_sql import REPOLINK, DEPLOYLINK, PACKS, SYNTAX, MODULE_LIST
 from uniborg.util import admin_cmd
 
+
+MODULE_LIST.append("get")
 
 @borg.on(admin_cmd(pattern="get ?(.*)"))
 async def _(event):

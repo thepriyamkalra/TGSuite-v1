@@ -20,15 +20,16 @@ import logging
 import requests
 import base64
 import json
-import os 
+import os
 import telethon
 
 from PIL import Image
 from io import BytesIO
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 logger = logging.getLogger(__name__)
 
+MODULE_LIST.append("quotes")
 
 if 1 == 1:
     strings = {
@@ -52,11 +53,11 @@ if 1 == 1:
         "channel": "Channel"
     }
 
-    config = dict({"api_token": os.environ.get("API_TOKEN"), 
-                                          "api_url": "http://api.antiddos.systems",
-                                          "username_colors": ["#fb6169", "#faa357", "#b48bf2", "#85de85",
-                                                              "#62d4e3", "#65bdf3", "#ff5694"],
-                                          "default_username_color": "#b48bf2"})
+    config = dict({"api_token": os.environ.get("API_TOKEN"),
+                   "api_url": "http://api.antiddos.systems",
+                   "username_colors": ["#fb6169", "#faa357", "#b48bf2", "#85de85",
+                                       "#62d4e3", "#65bdf3", "#ff5694"],
+                   "default_username_color": "#b48bf2"})
     client = borg
 
     @borg.on(admin_cmd(pattern="quote(.*)"))
@@ -83,7 +84,7 @@ if 1 == 1:
         if isinstance(message.to_id, telethon.tl.types.PeerChannel):
             try:
                 user = await client(telethon.tl.functions.channels.GetParticipantRequest(message.chat_id,
-                                                                                              reply.from_id))
+                                                                                         reply.from_id))
                 if isinstance(user.participant, telethon.tl.types.ChannelParticipantCreator):
                     admintitle = user.participant.rank or strings["creator"]
                 elif isinstance(user.participant, telethon.tl.types.ChannelParticipantAdmin):
@@ -94,7 +95,8 @@ if 1 == 1:
         elif isinstance(message.to_id, telethon.tl.types.PeerChat):
             chat = await client(telethon.tl.functions.messages.GetFullChatRequest(reply.to_id))
             participants = chat.full_chat.participants.participants
-            participant = next(filter(lambda x: x.user_id == reply.from_id, participants), None)
+            participant = next(filter(lambda x: x.user_id ==
+                                      reply.from_id, participants), None)
             if isinstance(participant, telethon.tl.types.ChatParticipantCreator):
                 admintitle = strings["creator"]
             elif isinstance(participant, telethon.tl.types.ChatParticipantAdmin):
@@ -114,13 +116,15 @@ if 1 == 1:
             elif reply.fwd_from.from_name:
                 username = reply.fwd_from.from_name
             elif reply.forward.sender:
-                username = telethon.utils.get_display_name(reply.forward.sender)
+                username = telethon.utils.get_display_name(
+                    reply.forward.sender)
             elif reply.forward.chat:
                 username = telethon.utils.get_display_name(reply.forward.chat)
 
         pfp = await client.download_profile_photo(profile_photo_url, bytes)
         if pfp is not None:
-            profile_photo_url = "data:image/png;base64, " + base64.b64encode(pfp).decode()
+            profile_photo_url = "data:image/png;base64, " + \
+                base64.b64encode(pfp).decode()
 
         if user_id is not None:
             username_color = config["username_colors"][user_id % 7]
@@ -228,7 +232,7 @@ def get_markdown(reply):
 
 SYNTAX.update({
     "quote": "\
-**Requested Module --> quote**\
+**Requested Module --> quotes**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.quote``` [as a reply to a target message]\
 \nUsage: Quote the target message.\

@@ -4,7 +4,12 @@
 from telethon import events
 import asyncio
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("purge")
+
+
 @borg.on(admin_cmd("purge ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -33,8 +38,8 @@ async def _(event):
             await event.delete()
         else:
             await event.edit("**PURGE** Failed!")
-            
-            
+
+
 SYNTAX.update({
     "purge": "\
 **Requested Module --> purge**\

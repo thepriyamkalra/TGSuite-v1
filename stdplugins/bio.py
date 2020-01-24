@@ -6,7 +6,10 @@ import time
 from telethon.tl import functions
 from telethon.errors import FloodWaitError
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("bio")
 
 
 DEL_TIME_OUT = 70

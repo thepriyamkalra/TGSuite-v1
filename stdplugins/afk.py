@@ -4,13 +4,14 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
-from sql_helpers.global_variables_sql import LOGGER, SYNTAX
+from sql_helpers.global_variables_sql import LOGGER, SYNTAX, MODULE_LIST
 
 
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
 borg.storage.last_afk_message = {}  # pylint:disable=E0602
 
+MODULE_LIST.append("afk")
 
 @borg.on(events.NewMessage(outgoing=True))  # pylint:disable=E0602
 async def set_not_afk(event):

@@ -3,7 +3,9 @@
 from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+MODULE_LIST.append("report")
 
 
 @borg.on(admin_cmd("admins ?(.*)"))
@@ -35,12 +37,14 @@ async def _(event):
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
             if not x.deleted:
                 if isinstance(x.participant, ChannelParticipantCreator):
-                    mentions += "\n 👑 [{}](tg://user?id={}) `{}`".format(x.first_name, x.id, x.id)
+                    mentions += "\n 👑 [{}](tg://user?id={}) `{}`".format(
+                        x.first_name, x.id, x.id)
         mentions += "\n"
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
             if not x.deleted:
                 if isinstance(x.participant, ChannelParticipantAdmin):
-                    mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(x.first_name, x.id, x.id)
+                    mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
+                        x.first_name, x.id, x.id)
             else:
                 mentions += "\n `{}`".format(x.id)
     except Exception as e:
@@ -53,8 +57,8 @@ async def _(event):
         await event.delete()
     else:
         await event.edit(mentions)
-        
-        
+
+
 SYNTAX.update({
     "report": "\
 **Requested Module --> report**\

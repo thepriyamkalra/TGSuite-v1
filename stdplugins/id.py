@@ -4,7 +4,10 @@
 from telethon import events
 from telethon.utils import pack_bot_file_id
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("id")
 
 @borg.on(admin_cmd("id"))
 async def _(event):

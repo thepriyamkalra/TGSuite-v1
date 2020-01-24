@@ -7,9 +7,10 @@ from telethon.tl.types import ChatAdminRights, ChatBannedRights
 import asyncio
 from datetime import datetime
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SUDO_USERS, SYNTAX
+from sql_helpers.global_variables_sql import SUDO_USERS, SYNTAX, MODULE_LIST
 import sys
 
+MODULE_LIST.append("admin")
 
 @borg.on(admin_cmd(pattern="promote ?(.*)"))
 async def _(event):

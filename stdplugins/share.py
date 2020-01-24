@@ -14,8 +14,10 @@ from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from telethon.tl.types import DocumentAttributeAudio
 from uniborg.util import progress, admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX, MODULES_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
+
+MODULE_LIST.append("share")
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
@@ -28,7 +30,6 @@ def get_lst_of_files(input_directory, output_lst):
             return get_lst_of_files(current_file_name, output_lst)
         output_lst.append(current_file_name)
     return output_lst
-
 
 
 @borg.on(admin_cmd(pattern="share (.*)", allow_sudo=True))
@@ -78,7 +79,6 @@ def get_video_thumb(file, output=None, width=90):
         return output
 
 
-
 SYNTAX.update({
     "share": "\
 **Requested Module --> share**\
@@ -87,5 +87,3 @@ SYNTAX.update({
 \nUsage: Share a specified module.\
 "
 })
-
-MODULES_LIST.append("share")

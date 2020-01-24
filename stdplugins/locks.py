@@ -4,7 +4,9 @@
 from telethon import events, functions, types
 from sql_helpers.locks_sql import update_lock, is_locked, get_locks
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+MODULE_LIST.append("locks")
 
 
 @borg.on(admin_cmd("lock( (?P<target>\S+)|$)"))

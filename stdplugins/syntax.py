@@ -5,7 +5,10 @@ from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("syntax")
 
 @borg.on(admin_cmd(pattern="syntax ?(.*)"))
 async def _(event):

@@ -1,7 +1,7 @@
 # For UniBorg
 # By Priyam Kalra
 # Syntax (.kang <pack_number>)
-from sql_helpers.global_variables_sql import PACK_NAME, ANIM_PACK_NAME, SYNTAX
+from sql_helpers.global_variables_sql import PACK_NAME, ANIM_PACK_NAME, SYNTAX, MODULE_LIST
 from telethon import events
 from telethon.tl import functions, types
 from io import BytesIO
@@ -28,6 +28,9 @@ from telethon.tl.types import (
 )
 from uniborg.util import admin_cmd
 
+
+
+MODULE_LIST.append("kang")
 
 @borg.on(admin_cmd(pattern="kang ?(.*)"))
 async def _(event):

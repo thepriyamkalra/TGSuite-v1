@@ -11,7 +11,10 @@ import asyncio
 import sys
 import io
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("python")
 
 
 @borg.on(admin_cmd(pattern="py"))
@@ -50,7 +53,8 @@ async def _(event):
     else:
         evaluation = "Success"
 
-    final_output = "**CODE**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(cmd, evaluation)
+    final_output = "**CODE**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(
+        cmd, evaluation)
 
     if len(final_output) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(final_output)) as out_file:
@@ -74,8 +78,8 @@ async def aexec(code, event):
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
     return await locals()['__aexec'](event)
-    
-    
+
+
 SYNTAX.update({
     "python": "\
 **Requested Module --> python**\

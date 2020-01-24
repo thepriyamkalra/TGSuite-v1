@@ -7,8 +7,9 @@ from datetime import datetime
 import os
 import requests
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
+MODULE_LIST.append("pastebin")
 
 def progress(current, total):
     logger.info("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))

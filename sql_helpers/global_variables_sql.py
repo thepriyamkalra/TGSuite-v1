@@ -9,7 +9,7 @@ ANIM_PACK_NAME = Config.ANIM_PACK_NAME
 DEPLOYLINK = Config.HEROKU_LINK
 REPOLINK = Config.REPO_LINK
 PACKS = Config.PACKS_CONTENT
-# add modules to the list using MODULES_LIST.append(MODULE_NAME)
-MODULES_LIST = ["admin", "afk", "alive", "bio", "coinflip", "download", "get", "hyperlink", "id", "insult", "kang", "locks", "lydia", "notes", "pastebin", "ping", "pmpermit", "point", "purge", "python", "quotes", "reactions", "rename", "report", "spam", "stat", "translate", "type", "upload", "urbandictionary", "whois"]
+# add modules to this list using MODULES_LIST.append(MODULE_NAME)
+MODULE_LIST = []
 # add syntax to this dictionary using SYNTAX.update
 SYNTAX = {}

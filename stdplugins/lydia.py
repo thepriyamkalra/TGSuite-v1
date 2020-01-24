@@ -14,9 +14,12 @@ import coffeehouse as cf
 import asyncio
 import io
 from sql_helpers.lydia_ai_sql import get_s, get_all_s, add_s, remove_s
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 from time import time
 from uniborg.util import admin_cmd
+
+MODULE_LIST.append("lydia")
+
 
 if Config.LYDIA_API is not None:
     api_key = Config.LYDIA_API

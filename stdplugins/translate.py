@@ -4,7 +4,10 @@
 import emoji
 from googletrans import Translator
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+
+
+MODULE_LIST.append("translate")
 
 
 @borg.on(admin_cmd("tr ?(.*)"))
