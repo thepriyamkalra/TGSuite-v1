@@ -8,7 +8,7 @@ import json
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
-MODULE_LIST.append("dgad")
+MODULE_LIST.append("dagd")
 
 
 @borg.on(admin_cmd(pattern="shorten (.*)"))
