@@ -32,7 +32,13 @@ async def _(event):
             if not response.text.startswith("**Hi!**"):
                 await event.edit(f"{response.text}")
                 return
-            response = await silently_send_message(bot_conv, quote)
+            if input_str:
+              response = await silently_send_message(bot_conv, quote)
+            elif reply:
+              response = bot_conv.wait_event(events.NewMessage(incoming=True,from_users=1031952739))
+              await borg.forward_messages(bot, quote)
+              response = await response
+              response = response.message
             if response.text.startswith("Command"):
                 await event.edit(f"Invalid message type.")
                 return
