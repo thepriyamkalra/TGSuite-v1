@@ -1,5 +1,5 @@
 # For UniBorg
-# Syntax .get (repo, heroku, packs)
+# Syntax .print (repo, heroku, packs)
 import sys
 import asyncio
 import datetime
@@ -9,9 +9,9 @@ from sql_helpers.global_variables_sql import REPOLINK, DEPLOYLINK, PACKS, SYNTAX
 from uniborg.util import admin_cmd
 
 
-MODULE_LIST.append("get")
+MODULE_LIST.append("print")
 
-@borg.on(admin_cmd(pattern="get ?(.*)"))
+@borg.on(admin_cmd(pattern="print ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -29,14 +29,14 @@ async def _(event):
         
         
 SYNTAX.update({
-    "get": "\
-**Requested Module --> get**\
+    "print": "\
+**Requested Module --> print**\
 \nDetailed usage of fuction(s):\
-\n\n```.get repo```\
+\n\n```.print repo```\
 \nUsage: Prints github repoistory link defined in the env variable [REPO_LINK].\
-\n\n```.get heroku```\
+\n\n```.print heroku```\
 \nUsage: Prints the heroku deploy link defined in the env variable [DEPLOY_LINK].\
-\n\n```.get packs```\
+\n\n```.print packs```\
 \nUsage: Prints the sticker pack data defined in the env variable [PACKS_CONTENT].\
 "
 })
