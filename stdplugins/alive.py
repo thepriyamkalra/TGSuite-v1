@@ -21,7 +21,7 @@ async def _(event):
     help_string = """Your bot is running.
 ```Python {}```
 ```Telethon {}```
-
+``` Made With Love :) ```
 """.format(
         sys.version,
         __version__
