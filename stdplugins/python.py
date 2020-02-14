@@ -17,12 +17,12 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("python")
 
 
-@borg.on(admin_cmd(pattern="py"))
+@borg.on(admin_cmd(pattern="py ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
-    await event.edit("Hmm, nice code..")
-
+    await event.edit("Hmm, processing..")
+    
     cmd = event.pattern_match.group(1)
     if not cmd:
     	abe = await event.get_reply_message()
