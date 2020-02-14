@@ -87,6 +87,5 @@ SYNTAX.update({
 \n\n```.python <python_code>```\
 \n ``` .py <reply to any python code>```\
 \nUsage: Evaluate python code.\
-
 "
 })
