@@ -22,7 +22,7 @@ async def _(event):
     if event.fwd_from:
         return
     await event.edit("Hmm, processing..")
-    
+
     cmd = event.pattern_match.group(1)
     if not cmd:
     	abe = await event.get_reply_message()
@@ -53,7 +53,7 @@ async def _(event):
     else:
         evaluation = "Success"
 
-    final_output = "**CODE**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(
+    final_output = "**CODE**:\n `{}` \n\n **OUTPUT**: \n`{}` \n\n ".format(
         cmd, evaluation)
 
     if len(final_output) > Config.MAX_MESSAGE_SIZE_LIMIT:
@@ -85,6 +85,8 @@ SYNTAX.update({
 **Requested Module --> python**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.python <python_code>```\
+\n ``` .py <reply to any python code>```\
 \nUsage: Evaluate python code.\
+
 "
 })
