@@ -1,39 +1,51 @@
 # For UniBorg
 # By Priyam Kalra
-# Syntax (.spam <number of msgs [limit = 999]> <text>)
+# Syntax (.spam <number of msgs> <text>)
 
 from asyncio import wait
 from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
 from telethon.tl import functions, types
+from time import sleep
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
 MODULE_LIST.append("spam")
 
 
-@borg.on(events.NewMessage(pattern=r"\.spam", outgoing=True))
-async def spammer(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        message = e.text
-        if type(message[8]) == str:
-            counter = int(message[6:8])
-            spam_message = str(e.text[8:])
-        else:
-            counter = int(message[6:9])
-            spam_message = str(e.text[9:])
-    for spam in range(counter):
-        await e.delete()
-        await e.reply(spam_message)
-
-
+@borg.on(admin_cmd(pattern="spam ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    input = str(event.pattern_match.group(1))
+    input_split = input.split()
+    try:
+        count = str(input_split[0])
+    except ValueError:
+        await event.edit("Invalid Syntax!\nTip: Use ```.syntax spam``` for help.")
+        return
+    if input.startswith(count):
+        strip = len(count)
+        text = input[strip:]
+    else:
+        await event.edit("Fatal Error!\nPlease contact the developer of this module [@A_FRICKING_GAMER] for support.")
+        return
+    if text and count != None:
+        for spam in range(int(count)):
+            await event.reply(text)
+        msg = await event.reply(f"Task complete, spammed input text {count} times!")
+        sleep(5)
+        await msg.delete()
+    else:
+        await event.edit("Unexpected Error! Aborting..")
+        return
 
 SYNTAX.update({
     "spam": "\
 **Requested Module --> spam**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.spam <number of msgs> <text>```\
-\nUsage: Spam a specified message upto 999 times.\
+\nUsage: Spam a specified message upto the TG API limit (probably non existent but meh).\
 "
 })

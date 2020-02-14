@@ -36,7 +36,7 @@ async def _(event):
         reply_message = await event.get_reply_message()
         to_download_directory = Config.TMP_DOWNLOAD_DIRECTORY
         await event.edit(f"Download complete!\nRenaming downloaded file to {input_str}..")
-        time.sleep(1)
+        time.sleep(0.25)
         downloaded_file_name = os.path.join(to_download_directory, file_name)
         downloaded_file_name = await borg.download_media(
             reply_message,
@@ -45,7 +45,7 @@ async def _(event):
         end = datetime.now()
         ms_one = (end - start).seconds
         await event.edit("File renamed successfully!\nUploading renamed file..\nThis may take a while depending on the file size.")
-        time.sleep(1)
+        time.sleep(.35)
         if os.path.exists(downloaded_file_name):
             c_time = time.time()
             await borg.send_file(
@@ -70,9 +70,8 @@ async def _(event):
             await event.edit("File {} not found.".format(input_str))
     else:
         await event.edit("Syntax // .rnupload file.name as reply to a Telegram media")
-        
-        
-        
+
+
 SYNTAX.update({
     "rename": "\
 **Requested Module --> rename**\
