@@ -9,9 +9,9 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/Priyam005/The_TG_Bot",
+  "repository": "https://github.com/authoritydmc/The-TG-Bot-2.0",
   "website": "",
-  "success_url": "https://t.me/A_FRICKING_GAMER",
+  "success_url": "https://t.me/authoritydmc",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable environment variables.",
