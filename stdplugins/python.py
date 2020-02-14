@@ -23,15 +23,10 @@ async def _(event):
         return
     await event.edit("Hmm, nice code..")
 
-    try:
-        cmd = event.text.split(" ", maxsplit=1)[1]
-    except Exception:
-        cmd= "print(\"please provide the code\")"
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
-	    previous_message = await event.get_reply_message()
-        cmd = previous_message.message
+    cmd = event.pattern_match.group(1)
+    if not cmd:
+    	abe = await event.get_reply_message()
+    	cmd = abe.text
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
