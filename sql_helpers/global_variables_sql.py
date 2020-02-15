@@ -10,6 +10,30 @@ DEPLOYLINK = Config.HEROKU_LINK
 REPOLINK = Config.REPO_LINK
 PACKS = Config.PACKS_CONTENT
 # add modules to this list using MODULES_LIST.append(MODULE_NAME)
-MODULE_LIST = []
 # add syntax to this dictionary using SYNTAX.update
 SYNTAX = {}
+class MODULE_LISTS(list):
+    def __init__(self):
+        self.MODULES=[]
+    def append(self,item):
+        self.MODULES.append(item)
+        
+    def __str__(self):
+        self.MODULES.sort()
+        return str(self.MODULES)
+    def __len__(self):
+        return len(self.MODULES)
+    def __delitem__(self, index):
+        self.MODULES.__delitem__(index - 1)
+
+    def insert(self, index, value):
+        self.MODULES.insert(index - 1, value)
+
+    def __setitem__(self, index, value):
+        self.MODULES.__setitem__(index - 1, value)
+
+    def __getitem__(self, index):
+        return self.MODULES.__getitem__(index - 1)
+    def __iter__(self):
+        return (item for item in self.MODULES.__iter__() )
+MODULE_LIST=MODULE_LISTS()
