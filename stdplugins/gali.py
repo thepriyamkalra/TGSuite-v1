@@ -21,7 +21,7 @@ async def _(event):
     animal = ["मच्छर ","\
 हाथी","गिरगिट", "गैंडा","खरगोश","बंदर ","लंगूर","सॉढ","सियार","बतख","गोरिल्ला"," नेवला","खटमल","घोंघा","छछून्‍दर"]
     parts=["लुंड ","झाट","चुत","गांड ","गांड का कीड़ा","औलाद","दामाद","भाई"]
-    man_slang=["बहनचोद","मादरचोद","बहिन के लौड़े","बहिन के टक्के","बेटीचोद ","भैंस की औलाद "]
+    man_slang=["बहनचोद","मादरचोद","बहिन के लौड़े","बहिन के टक्के","बेटीचोद "]
     starts = ["क्या रे", "तुम", "अबे सुन चूतिये ", "साले ",
               "वो उलटी दिमाग के पैदाइश साले "]
     ends = ["!!!!", "!", ""]
@@ -41,7 +41,7 @@ async def _(event):
         animal_ch=random.choice(animal)
         man_slang_ch = random.choice(man_slang)
         end = random.choice(ends)
-        insult = start+" "+animal_ch+" के "+parts_ch+" "+man_slang_ch+" "+end
+        insult = start+","+animal_ch+" के "+parts_ch+"\n"+man_slang_ch+" "+end
         insults+="\n"+insult
         log_insults += f"```{insult}```\n\n"
         reply_msg = await event.get_reply_message()
