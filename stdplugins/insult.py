@@ -54,15 +54,15 @@ async def _(event):
         else:
             user_id = "Unknown user"
             noformat_userid = "Unknown user"
-        if noformat_userid in SUDO_USERS:
-            await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
-            sys.exit()
+    if noformat_userid in SUDO_USERS:
+        await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
+        sys.exit()
             # probably not needed but meh
-            break
-        else:
-            await event.edit(insults)
-            time.sleep(2)
-        await borg.send_message(
+        break
+    else:
+        await event.edit(insults)
+        time.sleep(2)
+    await borg.send_message(
             LOGGER,
             f"Insulted [{user_id}] with:\n\n{log_insults}"
        )
