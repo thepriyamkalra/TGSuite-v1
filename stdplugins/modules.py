@@ -15,10 +15,10 @@ async def _(event):
         return
     modules = "**List of available modules:**\n"
     MODULE_LIST.sort()
-    prev=""
+    prev="1"
     for module in MODULE_LIST:
         if prev[0]!=module[0]:
-            modules+=f"\n\n\t\t\t{module[0]}\n\n"
+            modules+=f"\n\n\t\t\t{module[0].upper()}\n\n"
         modules += f"~ ```{module}```\n"
         prev=module
     modules += "**Tip --> Use .syntax <module_name> for more info. :>:**"
