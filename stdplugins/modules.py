@@ -1,5 +1,6 @@
 # For UniBorg
 # By Priyam Kalra
+# modified by @authoritydmc
 # Syntax (.modules)
 from telethon import events
 from uniborg.util import admin_cmd
@@ -12,10 +13,13 @@ from sql_helpers.global_variables_sql import MODULE_LIST
 async def _(event):
     if event.fwd_from:
         return
-    counter = 0
     modules = "**List of available modules:**\n"
+    MODULE_LIST.sort()
+    prev="1"
     for module in MODULE_LIST:
-        modules += f"~ ```{MODULE_LIST[counter]}```\n"
-        counter += 1
-    modules += "**Tip --> Use .syntax <module_name> for more info.**"
+        if prev[0]!=module[0]:
+            modules+=f"\n\n\t{module[0].upper()}\n\n"
+        modules += f"~ ```{module}```\n"
+        prev=module
+    modules += "\n\n**Tip --> Use .syntax <module_name> for more info.**"
     await event.edit(modules)
