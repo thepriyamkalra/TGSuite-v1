@@ -37,6 +37,17 @@ async def _(event):
         args = int(args)
     except Exception as error:
         await event.edit(error)
+    reply_msg = await event.get_reply_message()
+    if reply_msg:
+        user_id = f"```{reply_msg.from_id}```"
+        noformat_userid = reply_msg.from_id
+    else:
+        user_id = "Unknown user"
+        noformat_userid = "Unknown user"
+    if noformat_userid in SUDO_USERS:
+        await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
+        sys.exit()
+
     for insulting in range(args):
         start = random.choice(starts)
         adjective_start = random.choice(adjectives_start)
@@ -47,21 +58,12 @@ async def _(event):
             adjective_mid + (" " if adjective_mid else "") + noun + end
         insults+="\n"+insult
         log_insults += f"```{insult}```\n\n"
-        reply_msg = await event.get_reply_message()
-        if reply_msg:
-            user_id = f"```{reply_msg.from_id}```"
-            noformat_userid = reply_msg.from_id
-        else:
-            user_id = "Unknown user"
-            noformat_userid = "Unknown user"
-    if noformat_userid in SUDO_USERS:
-        await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
-        sys.exit()
+        
+
             # probably not needed but meh
-        break
-    else:
-        await event.edit(insults)
-        time.sleep(2)
+
+    await event.edit(insults)
+    time.sleep(2)
     await borg.send_message(
             LOGGER,
             f"Insulted [{user_id}] with:\n\n{log_insults}"
