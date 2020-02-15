@@ -14,6 +14,6 @@ async def _(event):
         return
     modules = "**List of available modules:**\n"
     for module in MODULE_LIST:
-        modules += f"~ ```{MODULE_LIST}```\n"
+        modules += f"~ ```{module}```\n"
     modules += "**Tip --> Use .syntax <module_name> for more info.**"
     await event.edit(modules)
