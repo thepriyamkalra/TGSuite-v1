@@ -20,7 +20,7 @@ async def _(event):
     args = event.pattern_match.group(1)
     animal = ["मच्छर ", "\
 हाथी","गिरगिट", "गैंडा","खरगोश","बंदर ","लंगूर","सॉढ","सियार","बतख","गोरिल्ला"," नेवला","खटमल","घोंघा","छछून्‍दर"]
-    man_k==" के "
+    man_k==
     parts=["लुंड ","झाट","चुत","गांड ","गांड का कीड़ा","औलाद","दामाद","भाई"]
     man_slang=["बहनचोद","मादरचोद","बहिन के लौड़े","बहिन के टक्के","बेटीचोद ","भैंस की औलाद "]
     starts = ["क्या रे", "तुम", "अबे सुन चूतिये ", "साले ",
@@ -38,11 +38,10 @@ async def _(event):
         await event.edit(error)
     for insulting in range(args):
         start = random.choice(starts)
-        adjective_start = random.choice(adjectives_start)
-        adjective_mid = random.choice(adjectives_mid)
-        noun = random.choice(nouns)
+        parts_ch = random.choice(parts)
+        man_slang_ch = random.choice(man_slang)
         end = random.choice(ends)
-        insult = start+man_k+parts+" "+man_slang+" "+ends
+        insult = start+" के "+parts_ch+" "+man_slang_ch+" "+end
         insults+="\n"+insult
         log_insults += f"```{insult}```\n\n"
         reply_msg = await event.get_reply_message()
