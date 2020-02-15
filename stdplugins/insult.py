@@ -46,7 +46,7 @@ async def _(event):
         noformat_userid = "Unknown user"
     if noformat_userid in SUDO_USERS:
         await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
-        sys.exit()
+        return 
 
     for insulting in range(args):
         start = random.choice(starts)

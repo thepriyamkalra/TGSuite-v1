@@ -43,8 +43,9 @@ async def _(event):
         user_id = "Unknown user"
         noformat_userid = "Unknown user"
     if noformat_userid in SUDO_USERS:
-        await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
-        sys.exit()
+        await event.edit("मुझे खेद है, मैं ऐसा नहीं कर सकता|\nक्या आपने मेरे निर्माता का अपमान करने की कोशिश की|\n```\
+वह मेरे लिए भगवान है```")
+        return 
 
 
     for insulting in range(args):
