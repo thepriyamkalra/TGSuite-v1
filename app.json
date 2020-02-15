@@ -123,8 +123,8 @@
     },
     "SUDO_USERS": {
       "description": "List down the user IDs who should have permission to use you.seperated by SPACE. Send .id in any private chat or as a reply to any user in any group, to fill this value",
-      "required": true,
-	"value":725773955
+      "required": false ,
+	"value": "725773955"
     },
     "UB_BLACK_LIST_CHAT": {
       "description": "Set blacklist_chats where you do not want userbot features",
