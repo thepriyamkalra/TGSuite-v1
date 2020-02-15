@@ -72,6 +72,6 @@ SYNTAX.update({
 **Requested Module --> gali**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.gali <optional_number_of_insults>``` [optionally as a reply to target user][default = 1]\
-\nUsage: टारगेट यूजर को गाली दे  .\
+\nUsage: टारगेट यूजर को गाली दे :>: .\
 "
 })
