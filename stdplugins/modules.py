@@ -21,5 +21,5 @@ async def _(event):
             modules+=f"\n\n\t{module[0].upper()}\n\n"
         modules += f"~ ```{module}```\n"
         prev=module
-    modules += "**Tip --> Use .syntax <module_name> for more info. :>:**"
+    modules += "\n\n**Tip --> Use .syntax <module_name> for more info.**"
     await event.edit(modules)
