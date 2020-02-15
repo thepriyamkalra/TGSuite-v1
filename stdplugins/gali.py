@@ -1,7 +1,7 @@
 # For UniBorg
-# By Priyam Kalra
+# By authoritydmc
 # Based on the insult module made by Hackintosh for friendly telegram bot (https://da.gd/RG2hfe)
-# Syntax (.insult <no_of_times_to_insult>)
+# Syntax (.gali <no_of_times_to_insult>)
 from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
@@ -11,21 +11,20 @@ from sql_helpers.global_variables_sql import LOGGER, SUDO_USERS, SYNTAX, MODULE_
 import sys
 import time
 
-MODULE_LIST.append("insult")
+MODULE_LIST.append("gali")
 
-@borg.on(admin_cmd(pattern="insult ?(.*)"))
+@borg.on(admin_cmd(pattern="gali ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     args = event.pattern_match.group(1)
-    adjectives_start = ["salty", "fat", "fucking", "shitty",
-                        "stupid", "retarded", "self conscious", "tiny"]
-    adjectives_mid = ["little", "vitamin D deficient",
-                      "idiotic", "incredibly stupid"]
-    nouns = ["cunt", "pig", "pedophile", "beta male", "bottom", "retard", "ass licker", "cunt nugget",
-             "PENIS", "dickhead", "flute", "idiot", "motherfucker", "loner", "creep"]
-    starts = ["You're a", "You", "Fuck off you", "Actually die you", "Listen up you",
-              "What the fuck is wrong with you, you"]
+    animal = ["मच्छर ", "\
+हाथी","गिरगिट", "गैंडा","खरगोश","बंदर ","लंगूर","सॉढ","सियार","बतख","गोरिल्ला"," नेवला","खटमल","घोंघा","छछून्‍दर"]
+    man_k==" के "
+    parts=["लुंड ","झाट","चुत","गांड ","गांड का कीड़ा","औलाद","दामाद","भाई"]
+    man_slang=["बहनचोद","मादरचोद","बहिन के लौड़े","बहिन के टक्के","बेटीचोद ","भैंस की औलाद "]
+    starts = ["क्या रे", "तुम", "अबे सुन चूतिये ", "साले ",
+              "वो उलटी दिमाग के पैदाइश साले "]
     ends = ["!!!!", "!", ""]
     log_insults = ""
     insults=""
@@ -43,8 +42,7 @@ async def _(event):
         adjective_mid = random.choice(adjectives_mid)
         noun = random.choice(nouns)
         end = random.choice(ends)
-        insult = start + " " + adjective_start + " " + \
-            adjective_mid + (" " if adjective_mid else "") + noun + end
+        insult = start+man_k+parts+" "+man_slang+" "+ends
         insults+="\n"+insult
         log_insults += f"```{insult}```\n\n"
         reply_msg = await event.get_reply_message()
@@ -55,7 +53,8 @@ async def _(event):
             user_id = "Unknown user"
             noformat_userid = "Unknown user"
         if noformat_userid in SUDO_USERS:
-            await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
+            await event.edit("मुझे क्षमा करें, मैं ऐसा नहीं कर सकता |\n क्या आपने मेरे निर्माता का अपमान करने की कोशिश की।\
+वह मेरे लिए भगवान है")
             sys.exit()
             # probably not needed but meh
             break
@@ -70,10 +69,10 @@ async def _(event):
        
        
 SYNTAX.update({
-    "insult": "\
-**Requested Module --> insult**\
+    "gali": "\
+**Requested Module --> gali**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.insult <optional_number_of_insults>``` [optionally as a reply to target user][default = 1]\
-\nUsage: Insults target user.\
+\n\n```.gali <optional_number_of_insults>``` [optionally as a reply to target user][default = 1]\
+\nUsage: टारगेट यूजर को गाली दे  .\
 "
 })
