@@ -14,8 +14,8 @@ async def _(event):
     if event.fwd_from:
         return
     modules = "**List of available modules:**\n"
-
-    for module in MODULE_LIST.sort():
+    MODULE_LIST.sort()
+    for module in MODULE_LIST:
         modules += f"~ ```{module}```\n"
     modules += "**Tip --> Use .syntax <module_name> for more info. :>:**"
     await event.edit(modules)
