@@ -1,5 +1,6 @@
 # For UniBorg
 # By Priyam Kalra
+# modified by @authoritydmc
 # Syntax (.modules)
 from telethon import events
 from uniborg.util import admin_cmd
@@ -13,7 +14,8 @@ async def _(event):
     if event.fwd_from:
         return
     modules = "**List of available modules:**\n"
-    for module in MODULE_LIST:
+
+    for module in MODULE_LIST.sort():
         modules += f"~ ```{module}```\n"
-    modules += "**Tip --> Use .syntax <module_name> for more info.**"
+    modules += "**Tip --> Use .syntax <module_name> for more info. :>:**"
     await event.edit(modules)

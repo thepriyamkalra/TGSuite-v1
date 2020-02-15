@@ -32,4 +32,4 @@ class MODULE_LISTS(list):
         return self.MODULES.__getitem__(index - 1)
     def __iter__(self):
         return iter(self.MODULES)
-MODULE_LIST=MODULE_LISTS()
+MODULE_LIST=[]
