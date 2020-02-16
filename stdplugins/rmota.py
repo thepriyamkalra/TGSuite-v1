@@ -23,7 +23,7 @@ async def _(event):
     else:
         await event.edit("**ERROR: Please enter a valid device model name!**")
         return
-    bot = "@Realme_3ProBot"
+    bot = "@realmeupdaterbot"
     await event.edit(f"```Looking for latest OTA for {model}...```")
 
     async with borg.conversation(bot) as bot_conv:
