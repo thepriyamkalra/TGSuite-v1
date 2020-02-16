@@ -17,7 +17,7 @@ from uniborg.util import progress, admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
-MODULE_LIST.append("load")
+#MODULE_LIST.append("load")
 
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
@@ -187,11 +187,11 @@ def get_video_thumb(file, output=None, width=90):
         return output
 
 
-SYNTAX.update({
-    "load": "\
-**Requested Module --> load**\
-\n\n**Detailed usage of fuction(s):**\
-\n\n```.load <name of plugin >```\
-\nUsage: reply to a python plugin to load the  plugin .\
-"
-})
+# SYNTAX.update({
+#     "load": "\
+# **Requested Module --> load**\
+# \n\n**Detailed usage of fuction(s):**\
+# \n\n```.load <name of plugin >```\
+# \nUsage: reply to a python plugin to load the  plugin .\
+# "
+# })
