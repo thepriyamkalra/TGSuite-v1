@@ -1,5 +1,5 @@
 {
-  "name": "The_TG_Bot",
+  "name": "BeastBot REBORN",
   "description": "Modular Telegram userbot based on @Uniborg!",
   "logo": "https://telegra.ph/file/dbb990b02b9375fafd29a.png",
   "keywords": [
@@ -9,7 +9,7 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/authoritydmc/The-TG-Bot-2.0",
+  "repository": "https://github.com/authoritydmc/BEASTBOT-REBORN",
   "website": "",
   "success_url": "https://t.me/authoritydmc",
   "env": {
@@ -39,7 +39,7 @@
       "required": false
     },
     "PRIVATE_CHANNEL_BOT_API_ID": {
-      "description": "Send .get_id in any channel to fill this value. ReQuired for @Manuel15 inspiration to work!",
+      "description": "Send .id in any channel to fill this value. ReQuired for @Manuel15 inspiration to work!",
       "value": "-100",
       "required": false
     },
@@ -154,7 +154,8 @@
     },
     "PACK_NAME": {
       "description": "Set a sticker pack name to be used when making a sticker pack with .kang",
-      "required": false
+      "required": false,
+	"value":"king kobra"
     },
     "LYDIA_API": {
       "description": "Set your lydia api id to able to use lydia ai in telegram",
@@ -170,7 +171,8 @@
     },
     "ANIM_PACK_NAME": {
       "description": "Set an animated sticker pack name to be used when making a sticker pack with .kang",
-      "required": false
+      "required": false,
+	"value":"king kobra"
     },
     "G_DRIVE_CLIENT_SECRET": {
       "description": "Get your credentials from https://da.gd/so63O",
