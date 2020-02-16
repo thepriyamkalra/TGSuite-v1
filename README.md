@@ -1,4 +1,4 @@
-# The_TG_Bot
+# BEAST_BOT REBORN V 1.0
 
 Customized #UniBorg based on telethon.
 
