@@ -29,8 +29,6 @@ async def monito_p_m_s(event):
     current_message_text = event.message.message.lower()
     if current_message_text == PREVIOUS_MSG:
     	CONTINOUS_MSG_COUNT+=1
-        # userbot's should not reply to other userbot's
-        # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
         return False
     PREVIOUS_MSG=current_message_text
     if Config.NO_P_M_SPAM and not sender.bot:
@@ -40,7 +38,7 @@ async def monito_p_m_s(event):
             logger.info(borg.storage.PM_WARNS)
             if chat.id not in borg.storage.PM_WARNS:
                 borg.storage.PM_WARNS.update({chat.id: 0})
-            if borg.storage.PM_WARNS[chat.id] == Config.MAX_FLOOD_IN_P_M_s:
+            if borg.storage.PM_WARNS[chat.id] == Config.MAX_FLOOD_IN_P_M_s or CONTINOUS_MSG_COUNT >= Config.MAX_FLOOD_IN_P_M_s:
                 r = await event.reply(UNIBORG_USER_BOT_WARN_ZERO)
                 await asyncio.sleep(3)
                 await borg(functions.contacts.BlockRequest(chat.id))
