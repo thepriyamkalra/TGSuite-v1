@@ -182,7 +182,7 @@ async def _(event):
             await event.edit(f"Successfully taped ```{to_ban_id}```!")
 
 
-@borg.on(admin_cmd("pin ?(.*)"))
+@borg.on(admin_cmd("pin"))
 async def _(event):
     if event.fwd_from:
         return
