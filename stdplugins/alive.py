@@ -22,7 +22,7 @@ async def _(event):
 ```Python {}```
 ```Telethon {}```
 ``` Made With Love :) ```\n
-Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT_REBORN)
+Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
 """.format(
         sys.version,
         __version__
