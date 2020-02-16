@@ -6,7 +6,7 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("ping")
 
 
-@borg.on(admin_cmd("^.ping"))
+@borg.on(admin_cmd("ping"))
 async def _(event):
     if event.fwd_from:
         return
