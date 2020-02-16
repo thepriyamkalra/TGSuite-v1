@@ -19,11 +19,11 @@ async def _(event):
     else:
         s_help_string = ""
     help_string = """BEAST bot is running.
-```Python {}```
-```Telethon {}```
-``` Made With Love :) ```\n
-Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
-""".format(
+        ```Python {}```
+    ```Telethon {}```
+    ```Made With Love :) ```\n
+    Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
+    """.format(
         sys.version,
         __version__
     )
@@ -49,6 +49,6 @@ SYNTAX.update({
 **Requested Module --> alive**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.alive```\
-\nUsage: Returns userbot's system stats.\
+\nUsage: Returns userbot's system stats...\
 "
 })
