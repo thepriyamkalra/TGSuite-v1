@@ -33,6 +33,8 @@ async def _(event):
         args = 1
     try:
         args = int(args)
+        if args >99:
+        	args=99
     except Exception as error:
         await event.edit(error)
     reply_msg = await event.get_reply_message()
@@ -56,6 +58,8 @@ async def _(event):
         end = random.choice(ends)
         insult = start+","+animal_ch+" के "+parts_ch+"\n"+man_slang_ch+" "+end
         insults+="\n"+insult
+        await event.edit(insult)
+        time.sleep(1)
         log_insults += f"```{insult}```\n\n"
     #send message now
     await event.edit(insults)
