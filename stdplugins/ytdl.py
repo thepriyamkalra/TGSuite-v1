@@ -83,9 +83,11 @@ def time_formatter(milliseconds: int) -> str:
 @borg.on(admin_cmd(pattern="yt(a|v) (.*)"))
 async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
+
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
-
+    if not url :
+        url=await v_url.get_reply_message()
     await v_url.edit("`Preparing to download...`")
 
     if type == "a":
@@ -216,3 +218,19 @@ async def download_video(v_url):
         os.remove(f"{ytdl_data['id']}.mp4")
         await v_url.delete()
         
+SYNTAX.update({
+    "yta": "\
+**Requested Module --> yta**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.yta <url> [or as a reply to a message to download]```\
+\nUsage: Download the youtube video as in video format\
+"
+})
+SYNTAX.update({
+    "ytv": "\
+**Requested Module --> ytv**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.ytv <url> [or as a reply to a message to download]```\
+\nUsage: Download the youtube video as in video format\
+"
+})

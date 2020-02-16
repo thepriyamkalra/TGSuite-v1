@@ -67,7 +67,7 @@ async def send_plug_in(event):
     await event.delete()
 
 
-@borg.on(util.admin_cmd(pattern="load"))  # pylint:disable=E0602
+@borg.on(util.admin_cmd(pattern="load (.*)"))  # pylint:disable=E0602
 async def install_plug_in(event):
     if event.fwd_from:
         return
