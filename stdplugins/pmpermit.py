@@ -26,10 +26,10 @@ MeanWhile You can Check My Social Accounts. :)```\n
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
     sender = await event.get_sender()
-    current_message_text = event.message.message.lower()
-    if current_message_text == PREVIOUS_MSG:
-    	CONTINOUS_MSG_COUNT+=1
-        return False
+    # current_message_text = event.message.message.lower()
+    # if current_message_text == PREVIOUS_MSG:
+    # 	CONTINOUS_MSG_COUNT+=1
+    #     return False
     PREVIOUS_MSG=current_message_text
     if Config.NO_P_M_SPAM and not sender.bot:
         chat = await event.get_chat()
