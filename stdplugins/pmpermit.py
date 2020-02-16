@@ -14,7 +14,7 @@ MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
 borg.storage.PREV_REPLY_MESSAGE = {}
 CONTINOUS_MSG_COUNT=0 #for bot and spam protection
-PREVIOUS_MSG="" #for bot verification
+ #for bot verification
 UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
@@ -27,13 +27,6 @@ MeanWhile You can Check My Social Accounts. :)```\n
 async def monito_p_m_s(event):
     sender = await event.get_sender()
     current_message_text = event.message.message.lower()
-    if current_message_text == PREVIOUS_MSG :#for bot protection
-        CONTINOUS_MSG_COUNT +=1
-        if CONTINOUS_MSG_COUNT >= Config.MAX_FLOOD_IN_P_M_s:
-                await event.reply(UNIBORG_USER_BOT_WARN_ZERO)
-                await asyncio.sleep(3)
-                await borg(functions.contacts.BlockRequest(chat.id))
-        return False
     PREVIOUS_MSG=current_message_text
     if Config.NO_P_M_SPAM and not sender.bot:
         chat = await event.get_chat()
@@ -42,7 +35,7 @@ async def monito_p_m_s(event):
             logger.info(borg.storage.PM_WARNS)
             if chat.id not in borg.storage.PM_WARNS:
                 borg.storage.PM_WARNS.update({chat.id: 0})
-            if borg.storage.PM_WARNS[chat.id] == Config.MAX_FLOOD_IN_P_M_s or CONTINOUS_MSG_COUNT >= Config.MAX_FLOOD_IN_P_M_s:
+            if borg.storage.PM_WARNS[chat.id] == Config.MAX_FLOOD_IN_P_M_s:
                 r = await event.reply(UNIBORG_USER_BOT_WARN_ZERO)
                 await asyncio.sleep(3)
                 await borg(functions.contacts.BlockRequest(chat.id))
@@ -50,7 +43,8 @@ async def monito_p_m_s(event):
                     await borg.storage.PREV_REPLY_MESSAGE[chat.id].delete()
                 borg.storage.PREV_REPLY_MESSAGE[chat.id] = r
                 return
-            r = await event.reply(UNIBORG_USER_BOT_NO_WARN)
+            if borg.storage.PM_WARNS[chat.id] < 2:
+                r = await event.reply(UNIBORG_USER_BOT_NO_WARN)
             borg.storage.PM_WARNS[chat.id] += 1
             if chat.id in borg.storage.PREV_REPLY_MESSAGE:
                 await borg.storage.PREV_REPLY_MESSAGE[chat.id].delete()
