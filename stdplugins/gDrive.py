@@ -25,15 +25,15 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("ugdrive(upload to Gdrive)")
 
 # Path to token json file, it should be in same directory as script
-G_DRIVE_TOKEN_FILE = Var.TEMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"
+G_DRIVE_TOKEN_FILE = Config.TEMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"
 # Copy your credentials from the APIs Console
-CLIENT_ID = Var.G_DRIVE_CLIENT_ID
-CLIENT_SECRET = Var.G_DRIVE_CLIENT_SECRET
+CLIENT_ID = Config.G_DRIVE_CLIENT_ID
+CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
 # Check https://developers.google.com/drive/scopes for all available scopes
 OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 # Redirect URI for installed apps, can be left as is
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
-parent_id = Var.GDRIVE_FOLDER_ID
+parent_id = Config.GDRIVE_FOLDER_ID
 G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 
 
@@ -46,8 +46,8 @@ async def _(event):
         await mone.edit("This module requires credentials from https://da.gd/so63O. Aborting!")
         return False
     input_str = event.pattern_match.group(1)
-    if not os.path.isdir(Var.TEMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(Var.TEMP_DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(Config.TEMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(Config.TEMP_DOWNLOAD_DIRECTORY)
     required_file_name = None
     start = datetime.now()
     if event.reply_to_msg_id and not input_str:
@@ -57,7 +57,7 @@ async def _(event):
             await mone.edit("Downloading to Local...")
             downloaded_file_name = await bot.download_media(
                 reply_message,
-                Var.TEMP_DOWNLOAD_DIRECTORY
+                Config.TEMP_DOWNLOAD_DIRECTORY
             )
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
@@ -88,7 +88,7 @@ async def _(event):
             http = authorize(G_DRIVE_TOKEN_FILE, storage)
             f = open(G_DRIVE_TOKEN_FILE, "r")
             token_file_data = f.read()
-            await event.client.send_message(int(Var.PRIVATE_GROUP_ID), "Please add Var AUTH_TOKEN_DATA with the following as the value:\n\n`" + token_file_data + "`")
+            await event.client.send_message(int(Config.PRIVATE_GROUP_ID), "Please add Config AUTH_TOKEN_DATA with the following as the value:\n\n`" + token_file_data + "`")
         # Authorize, get file parameters, upload file and print out result URL for download
         http = authorize(G_DRIVE_TOKEN_FILE, None)
         file_name, mime_type = file_ops(required_file_name)
@@ -117,7 +117,7 @@ async def sch(event):
         http = authorize(G_DRIVE_TOKEN_FILE, storage)
         f = open(G_DRIVE_TOKEN_FILE, "r")
         token_file_data = f.read()
-        await event.client.send_message(int(Var.PRIVATE_GROUP_ID), "Please add Var AUTH_TOKEN_DATA with the following as the value:\n\n`" + token_file_data + "`")
+        await event.client.send_message(int(Config.PRIVATE_GROUP_ID), "Please add Config AUTH_TOKEN_DATA with the following as the value:\n\n`" + token_file_data + "`")
         # Authorize, get file parameters, upload file and print out result URL for download
     http = authorize(G_DRIVE_TOKEN_FILE, None)    
     input_str = event.pattern_match.group(1).strip()
@@ -159,16 +159,16 @@ async def _(event):
     if CLIENT_ID is None or CLIENT_SECRET is None:
         await event.edit("This module requires credentials from https://da.gd/so63O. Aborting!")
         return
-    if Var.PRIVATE_GROUP_ID is None:
-        await event.edit("Please set the required environment variable `PRIVATE_GROUP_ID` for this plugin to work")
+    if Config.PRIVATE_GROUP_ID is None:
+        await event.edit("Please set the required environment Configiable `PRIVATE_GROUP_ID` for this plugin to work")
         return
     input_str = event.pattern_match.group(1)
     if os.path.isdir(input_str):
         # TODO: remove redundant code
         #
-        if Var.AUTH_TOKEN_DATA is not None:
+        if Config.AUTH_TOKEN_DATA is not None:
             with open(G_DRIVE_TOKEN_FILE, "w") as t_file:
-                t_file.write(Var.AUTH_TOKEN_DATA)
+                t_file.write(Config.AUTH_TOKEN_DATA)
         # Check if token file exists, if not create it by requesting authorization code
         storage = None
         if not os.path.isfile(G_DRIVE_TOKEN_FILE):
@@ -176,7 +176,7 @@ async def _(event):
         http = authorize(G_DRIVE_TOKEN_FILE, storage)
         f = open(G_DRIVE_TOKEN_FILE, "r")
         token_file_data = f.read()
-        await event.client.send_message(int(Var.PRIVATE_GROUP_ID), "Please add Var AUTH_TOKEN_DATA with the following as the value:\n\n`" + token_file_data + "`")
+        await event.client.send_message(int(Config.PRIVATE_GROUP_ID), "Please add Config AUTH_TOKEN_DATA with the following as the value:\n\n`" + token_file_data + "`")
         # Authorize, get file parameters, upload file and print out result URL for download
         # first, create a sub-directory
         await event.edit("Uploading `{}` to G-Drive...".format(input_str))
@@ -244,11 +244,11 @@ async def create_token_file(token_file, event):
         redirect_uri=REDIRECT_URI
     )
     authorize_url = flow.step1_get_authorize_url()
-    async with bot.conversation(int(Var.PRIVATE_GROUP_ID)) as conv:
+    async with bot.conversation(int(Config.PRIVATE_GROUP_ID)) as conv:
         await conv.send_message(f"Go to the following link in your browser: {authorize_url} and reply the code")
         response = conv.wait_event(events.NewMessage(
             outgoing=True,
-            chats=int(Var.PRIVATE_GROUP_ID)
+            chats=int(Config.PRIVATE_GROUP_ID)
         ))
         response = await response
         code = response.message.message.strip()
