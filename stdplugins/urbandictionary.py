@@ -8,10 +8,10 @@ import urbandict
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
-MODULE_LIST.append("urbandictionary")
+MODULE_LIST.append("ud (urbandictionary)")
 
 
-@borg.on(admin_cmd("search (.*)"))
+@borg.on(admin_cmd("ud (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -37,10 +37,10 @@ async def _(event):
 
 
 SYNTAX.update({
-    "urbandictionary": "\
+    "ud": "\
 **Requested Module --> urbandictionary**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.search <keyword>```\
+\n\n```.ud <keyword>```\
 \nUsage: Search UrbanDictionary for a selected keyword.\
 "
 })
