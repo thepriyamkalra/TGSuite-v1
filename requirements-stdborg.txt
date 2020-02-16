@@ -16,7 +16,6 @@ git+https://github.com/ahupp/python-magic
 gitpython
 google-api-python-client
 google-auth-oauthlib
-google_images_download
 google_images_download>=2.7.1
 googletrans
 googletrans>=2.4.0
