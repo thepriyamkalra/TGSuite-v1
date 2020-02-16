@@ -49,6 +49,6 @@ SYNTAX.update({
 **Requested Module --> alive**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.alive```\
-\nUsage: Returns userbot's system stats...\
+\nUsage: Returns userbot's system stats..   .\
 "
 })

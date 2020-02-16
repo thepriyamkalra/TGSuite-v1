@@ -1,3 +1,4 @@
+asyncurban
 aiofiles
 aiohttp
 aria2p
