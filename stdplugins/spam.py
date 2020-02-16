@@ -20,6 +20,7 @@ async def _(event):
         return
     input = str(event.pattern_match.group(1))
     input_split = input.split()
+    chat = event.chat_id
     try:
         count = str(input_split[0])
     except ValueError:
@@ -37,9 +38,15 @@ async def _(event):
         msg = await event.reply(f"Task complete, spammed input text {count} times!")
         sleep(5)
         await msg.delete()
+        status = f"SPAMMED\n```{text}```\n in {chat} ```{count}``` times."
+        await log(status)
     else:
         await event.edit("Unexpected Error! Aborting..")
         return
+
+async def log(text):
+    LOGGER = Config.PRIVATE_GROUP_BOT_API_ID
+    await borg.send_message(LOGGER, text)
 
 SYNTAX.update({
     "spam": "\

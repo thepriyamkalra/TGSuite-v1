@@ -3,7 +3,7 @@
 # Based on the note module made by RaphielGang (https://da.gd/X4Mnf)
 # Syntax (.save <notename>, .get <notename>, .clear <notename>, .clearall)
 
-from sql_helpers.global_variables_sql import LOGGER, SYNTAX, MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 from sql_helpers.notes_sql import get_notes, rm_note, add_note, rm_all_notes
 from telethon import events
 from uniborg.util import admin_cmd
@@ -81,11 +81,12 @@ async def _(prg):
         rm_all_notes(str(prg.chat_id))
         time.sleep(5)
         await prg.delete()
-        if LOGGER:
-            await borg.send_message(
-                LOGGER, f"**Successfully purged all notes at** ```{prg.chat_id}```"
-            )
+        status = f"**Successfully purged all notes at** ```{prg.chat_id}```"
+        await log(status)
 
+async def log(text):
+    LOGGER = Config.PRIVATE_GROUP_BOT_API_ID
+    await borg.send_message(LOGGER, text)
 
 SYNTAX.update({
     "notes": "\
