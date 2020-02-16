@@ -23,19 +23,20 @@ import httplib2
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 MODULE_LIST.append("ugdrive(upload to Gdrive)")
-
+try:
 # Path to token json file, it should be in same directory as script
-G_DRIVE_TOKEN_FILE = Config.TEMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"
+    G_DRIVE_TOKEN_FILE = Config.TEMP_DOWNLOAD_DIRECTORY + "/auth_token.txt"
 # Copy your credentials from the APIs Console
-CLIENT_ID = Config.G_DRIVE_CLIENT_ID
-CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
+    CLIENT_ID = Config.G_DRIVE_CLIENT_ID
+    CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
 # Check https://developers.google.com/drive/scopes for all available scopes
-OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
+    OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 # Redirect URI for installed apps, can be left as is
-REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
-parent_id = Config.GDRIVE_FOLDER_ID
-G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
-
+    REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
+    parent_id = Config.GDRIVE_FOLDER_ID
+    G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
+except e:
+    return
 
 @command(pattern="^.ugdrive ?(.*)")
 async def _(event):
