@@ -45,10 +45,10 @@ async def monito_p_m_s(event):
                 return
             if borg.storage.PM_WARNS[chat.id] < 2:
                 r = await event.reply(UNIBORG_USER_BOT_NO_WARN)
+                if chat.id in borg.storage.PREV_REPLY_MESSAGE:
+                    await borg.storage.PREV_REPLY_MESSAGE[chat.id].delete()
+                borg.storage.PREV_REPLY_MESSAGE[chat.id] = r
             borg.storage.PM_WARNS[chat.id] += 1
-            if chat.id in borg.storage.PREV_REPLY_MESSAGE:
-                await borg.storage.PREV_REPLY_MESSAGE[chat.id].delete()
-            borg.storage.PREV_REPLY_MESSAGE[chat.id] = r
 
 
 @borg.on(admin_cmd("approve ?(.*)"))
