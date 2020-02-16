@@ -7,7 +7,9 @@ import os
 import shutil
 from re import findall
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
+MODULE_LIST.append("img (google image search)")
 
 @borg.on(admin_cmd("img ?(.*)"))
 async def img_sampler(event):
