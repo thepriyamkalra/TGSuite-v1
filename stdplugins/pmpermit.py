@@ -27,7 +27,7 @@ MeanWhile You can Check My Social Accounts. :)```\n
 async def monito_p_m_s(event):
     sender = await event.get_sender()
     current_message_text = event.message.message.lower()
-    if PREVIOUS_MSG == current_message_text :#for bot protection
+    if current_message_text == PREVIOUS_MSG :#for bot protection
         CONTINOUS_MSG_COUNT +=1
         if CONTINOUS_MSG_COUNT >= Config.MAX_FLOOD_IN_P_M_s:
                 await event.reply(UNIBORG_USER_BOT_WARN_ZERO)
