@@ -34,7 +34,7 @@ async def _(event):
     plain_txt = get(f"https://www.startpage.com/do/search?cmd=process_search&query={match}", 'html').text
     soup = BeautifulSoup(plain_txt, "lxml")
     msg = ""
-    for result in soup.find_all('a', {'class': 'w-gl__result-title'}):s/googs/goog
+    for result in soup.find_all('a', {'class': 'w-gl__result-title'}):
         title = result.text
         link = result.get('href')
         msg += f"**{title}**{link}\n"
