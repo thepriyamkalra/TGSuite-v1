@@ -20,8 +20,8 @@ async def _(event):
         s_help_string = ""
     help_string = """BEAST bot is running.
         ```Python {}```
-    ```Telethon {}```
-    ```Made With Love :) ```\n
+        ```Telethon {}```
+        ```Made With Love :) v1.0 ```\n
     Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
     """.format(
         sys.version,
