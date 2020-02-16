@@ -106,10 +106,12 @@ class Uniborg(TelegramClient):
         if self.config.TG_BOT_USER_NAME_BF_HER is not None:
             mod.tgbot = self.tgbot
 
-
-        spec.loader.exec_module(mod)
-        self._plugins[shortname] = mod
-        self._logger.info(f"Successfully loaded plugin {shortname}")
+        try:
+            spec.loader.exec_module(mod)
+            self._plugins[shortname] = mod
+            self._logger.info(f"Successfully loaded plugin {shortname}")
+        except e:
+            self._logger.info(f"Failed loading plugin {shortname}")
 
     def remove_plugin(self, shortname):
         name = self._plugins[shortname].__name__

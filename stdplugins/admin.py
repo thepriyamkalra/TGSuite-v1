@@ -12,7 +12,7 @@ import sys
 
 MODULE_LIST.append("admin")
 
-@borg.on(admin_cmd(pattern="promote ?(.*)"))
+@borg.on(admin_cmd(pattern="promote ?(.*)",allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return

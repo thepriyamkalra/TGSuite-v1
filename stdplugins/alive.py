@@ -18,10 +18,7 @@ async def _(event):
         s_help_string = borg._plugins[splugin_name].__doc__
     else:
         s_help_string = ""
-    help_string = """BEAST bot is running.
-        ```Python {}```
-        ```Telethon {}```
-        ```Made With Love :) v1.0 ```\n
+    help_string = """BEAST bot is running.\n```Python {}\n``````Telethon {}\n``````Made With Love :) v1.0 ```\n
     Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
     """.format(
         sys.version,
