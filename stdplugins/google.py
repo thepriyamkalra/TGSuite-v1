@@ -25,7 +25,7 @@ def progress(current, total):
 
 @borg.on(admin_cmd("go (.*)"))
 async def _(event):
-    await event.edit("`UniBorg is Getting Information From Google Please Wait... ✍️🙇`")
+    await event.edit("`BEASTBOT is Getting Information From Google Please Wait... ✍️🙇`")
     match_ = event.pattern_match.group(1)
     match = quote_plus(match_)
     if not match:
@@ -34,7 +34,7 @@ async def _(event):
     plain_txt = get(f"https://www.startpage.com/do/search?cmd=process_search&query={match}", 'html').text
     soup = BeautifulSoup(plain_txt, "lxml")
     msg = ""
-    for result in soup.find_all('a', {'class': 'w-gl__result-title'}):
+    for result in soup.find_all('a', {'class': 'w-gl__result-title'}):s/googs/goog
         title = result.text
         link = result.get('href')
         msg += f"**{title}**{link}\n"
@@ -62,7 +62,7 @@ async def _(event):
         "output_directory": Config.TMP_DOWNLOAD_DIRECTORY
     }
     paths = response.download(arguments)
-    lst = paths[input_str]
+    lst = paths
     await borg.send_file(
         event.chat_id,
         lst,
