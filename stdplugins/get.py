@@ -19,7 +19,7 @@ async def _(event):
     animation_ttl = range(0, 16)
     input_str = event.pattern_match.group(1)
     if input_str == "repo":
-        await event.edit(f"**Click** [here]({REPOLINK}) **to goto the custom github repo.**")
+        await event.edit(f"Checkout  my Repo [ @GITHUB]({REPOLINK}) ")
     elif input_str == "heroku":
         await event.edit(f"**Click** [here]({DEPLOYLINK}) **to goto the heroku deploy page.**")
     elif input_str == "packs":
