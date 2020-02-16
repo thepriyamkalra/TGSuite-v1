@@ -15,9 +15,10 @@ from urllib.parse import quote_plus
 from urllib.error import HTTPError
 from google_images_download import google_images_download
 from gsearch.googlesearch import search
-from userbot.utils import admin_cmd
+from uniborg.util import admin_cmd
 
 
+MODULE_LIST.append("google")
 def progress(current, total):
     logger.info("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
@@ -130,3 +131,15 @@ async def _(event):
 
 More Info: Open this <a href="{the_location}">Link</a> in {ms} seconds""".format(**locals())
     await event.edit(OUTPUT_STR, parse_mode="HTML", link_preview=False)
+SYNTAX.update({
+    "google": "\
+**Requested Module --> google**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.google <optional_choice>```\
+\nPowered by @Google\
+Available Commands:\
+.google <query>\
+.google image <query>\
+.google reverse search\
+"
+})

@@ -2,7 +2,7 @@
 Syntax: .github USERNAME"""
 from telethon import events
 import requests
-from userbot.utils import admin_cmd
+from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 MODULE_LIST.append("github")
