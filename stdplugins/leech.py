@@ -8,10 +8,16 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("leech")
 
 cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true"
-aria2_is_running = os.system(cmd)
-aria2 = aria2p.API(aria2p.Client(
-    host="http://localhost", port=6800, secret=""))
 
+aria2_is_running = os.system(cmd)
+
+aria2 = aria2p.API(
+    aria2p.Client(
+        host="http://localhost",
+        port=6800,
+        secret=""
+    )
+)
 
 EDIT_SLEEP_TIME_OUT = 10
 
@@ -21,23 +27,15 @@ async def magnet_download(event):
     if event.fwd_from:
         return
     var = event.pattern_match.group(1)
-    if var is None:
-        var = await event.get_reply_message()
-        var = str(var.text)
-    if var is not None:
-        var = str(var)
-        if var.startswith("magnet:"):
-            pass
-        else:
-            return await event.edit("Please provide a valid magnet link!")
-    else:
-        return await event.edit("Please provide a valid magnet link!")
+    print(var)
     uris = [var]
     # Add URL Into Queue
     try:
         download = aria2.add_uris(uris, options=None, position=None)
-    except:
-        return
+    except Exception as e:
+        await log(str(e))
+        return await event.delete()
+
     gid = download.gid
     complete = None
     await progress_status(gid=gid, event=event, previous=None)
@@ -48,47 +46,47 @@ async def magnet_download(event):
     while complete != True:
         file = aria2.get_download(gid)
         complete = file.is_complete
-        msg = f"Fetching [METADATA] for ```{file.name}```"
-        await event.edit(msg)
-        await asyncio.sleep(10)
-    await event.edit("Fetched [METADATA], now ready to leech torrent..")
+        try:
+            msg = "**Leeching:** "+str(file.name) + "\n**Speed:** " + str(file.download_speed_string())+"\n**Progress:** "+str(
+                file.progress_string())+"\n**Total Size:** "+str(file.total_length_string())+"\n**ETA:**  "+str(file.eta_string())+"\n\n"
+            await event.edit(msg)
+            await asyncio.sleep(10)
+        except Exception as e:
+            await log(str(e))
+            pass
+
+    await event.edit(f"```{file.name}``` leeched successfully!")
 
 
 async def progress_status(gid, event, previous):
-    ERROR = f"Failed to leech torrent!"
     try:
         file = aria2.get_download(gid)
-        ERROR = f"Failed to leech ```{file.name}``!"
         if not file.is_complete:
             if not file.error_message:
-                msg = f"Leeching ```{str(file.name)}```\nProgress info available in logger.."
-                progress = f"```{file.name}``` leech info:\n\n**Speed:** {str(file.download_speed_string())}\n**Progress:** {str(file.progress_string())}\n**Total Size:** {str(file.total_length_string())}\n**ETA:** {str(file.eta_string())}\n\n"
-                await log(progress)
+                msg = "Leeching: `"+str(file.name) + "`\nSpeed: " + str(file.download_speed_string())+"\nProgress: "+str(file.progress_string(
+                ))+"\nTotal Size: "+str(file.total_length_string())+"\nStatus: "+str(file.status)+"\nETA:  "+str(file.eta_string())+"\n\n"
                 if previous != msg:
                     await event.edit(msg)
                     previous = msg
             else:
-                await log(ERROR)
+                logger.info(str(file.error_message))
+                await log("Error : `{}`".format(str(file.error_message)))
                 return
             await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
             await progress_status(gid, event, previous)
-
         else:
-            await event.edit(f"```{file.name}``` leeched successfully, starting upload..")
+            await event.edit(f"```{file.name}``` leeched successfully!")
             return
     except Exception as e:
         if " not found" in str(e) or "'file'" in str(e):
-            await log(ERROR)
-            await event.edit(ERROR)
+            await log(str(e))
+            return await event.delete()
         elif " depth exceeded" in str(e):
             file.remove(force=True)
-            await event.edit(ERROR)
-            await log(ERROR)
-
+            await log(str(e))
         else:
-            await event.edit(ERROR)
-            await log(ERROR)
-            return
+            await log(str(e))
+            return await event.delete()
 
 
 async def log(text):
@@ -99,7 +97,9 @@ async def log(text):
 async def check_metadata(gid):
     file = aria2.get_download(gid)
     new_gid = file.followed_by_ids[0]
+    logger.info("Changing GID "+gid+" to "+new_gid)
     return new_gid
+
 
 SYNTAX.update({
     "leech": "\
