@@ -7,7 +7,7 @@ from telethon import events, errors, custom
 from sql_helpers.global_variables_sql import MODULE_LIST
 import io
 
-if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
+if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
     @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
     async def inline_handler(event):
         builder = event.builder
