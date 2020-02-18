@@ -18,7 +18,7 @@ async def _(event):
     prev="1"
     for module in MODULE_LIST:
         if prev[0]!=module[0]:
-            modules+=f"\n\n\t{module[0].upper()}\t\n\n"
+            modules+=f"\t{module[0].upper()}\t\n"
         modules += f"~ ```{module}```\n"
         prev=module
     modules += "\n\n**Tip --> Use .syntax <module_name> for more info.**"
