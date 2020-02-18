@@ -1,49 +1,48 @@
 """ Powered by @Google
 Available Commands:
-.google <query>
+.google search <query>
 .google image <query>
 .google reverse search"""
 
 import asyncio
 import os
-from re import findall
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from requests import get
-from urllib.parse import quote_plus
-from urllib.error import HTTPError
 from google_images_download import google_images_download
-from gsearch.googlesearch import search
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
-MODULE_LIST.append("google")
+
 def progress(current, total):
     logger.info("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
 
-@borg.on(admin_cmd("go (.*)"))
+@borg.on(admin_cmd(pattern="google search (.*)"))
 async def _(event):
-    await event.edit("`BEASTBOT is Getting Information From Google Please Wait... ✍️🙇`")
-    match_ = event.pattern_match.group(1)
-    match = quote_plus(match_)
-    if not match:
-        await event.edit("`I can't search nothing !!`")
+    if event.fwd_from:
         return
-    plain_txt = get(f"https://www.startpage.com/do/search?cmd=process_search&query={match}", 'html').text
-    soup = BeautifulSoup(plain_txt, "lxml")
-    msg = ""
-    for result in soup.find_all('a', {'class': 'w-gl__result-title'}):
-        title = result.text
-        link = result.get('href')
-        msg += f"**{title}**{link}\n"
-    await event.edit(
-        "**Google Search Query:**\n\n`" + match_ + "`\n\n**Results:**\n" + msg,
-        link_preview = False)
+    start = datetime.now()
+    await event.edit("Processing ...")
+    # SHOW_DESCRIPTION = False
+    input_str = event.pattern_match.group(1) # + " -inurl:(htm|html|php|pls|txt) intitle:index.of \"last modified\" (mkv|mp4|avi|epub|pdf|mp3)"
+    input_url = "https://bots.shrimadhavuk.me/search/?q={}".format(input_str)
+    headers = {"USER-AGENT": "UniBorg"}
+    response = requests.get(input_url, headers=headers).json()
+    output_str = " "
+    for result in response["results"]:
+        text = result.get("title")
+        url = result.get("url")
+        description = result.get("description")
+        image = result.get("image")
+        output_str += " 👉🏻  [{}]({}) \n\n".format(text, url)
+    end = datetime.now()
+    ms = (end - start).seconds
+    await event.edit("searched Google for {} in {} seconds. \n{}".format(input_str, ms, output_str), link_preview=False)
+    await asyncio.sleep(5)
+    await event.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
 
 
-@borg.on(admin_cmd("google image (.*)"))
+@borg.on(admin_cmd(pattern="google image (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -62,7 +61,8 @@ async def _(event):
         "output_directory": Config.TMP_DOWNLOAD_DIRECTORY
     }
     paths = response.download(arguments)
-    lst = paths[0][query]
+    logger.info(paths)
+    lst = paths[0].get(input_str)
     await borg.send_file(
         event.chat_id,
         lst,
@@ -70,6 +70,7 @@ async def _(event):
         reply_to=event.message.id,
         progress_callback=progress
     )
+    logger.info(lst)
     for each_file in lst:
         os.remove(each_file)
     end = datetime.now()
@@ -79,7 +80,7 @@ async def _(event):
     await event.delete()
 
 
-@borg.on(admin_cmd("google reverse search"))
+@borg.on(admin_cmd(pattern="google reverse search"))
 async def _(event):
     if event.fwd_from:
         return
@@ -131,15 +132,3 @@ async def _(event):
 
 More Info: Open this <a href="{the_location}">Link</a> in {ms} seconds""".format(**locals())
     await event.edit(OUTPUT_STR, parse_mode="HTML", link_preview=False)
-SYNTAX.update({
-    "google": "\
-**Requested Module --> google**\
-\n\n**Detailed usage of fuction(s):**\
-\n\n```.google <optional_choice>```\
-\nPowered by @Google\
-Available Commands:\
-.google <query>\
-.google image <query>\
-.google reverse search\
-"
-})
