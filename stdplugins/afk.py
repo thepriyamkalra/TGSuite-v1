@@ -52,7 +52,8 @@ async def _(event):
         if reason:
             await event.edit(f" ** I'm Unavailable at the Current Moment because   {reason}.**")
         else:
-            await event.edit(f"**** I'm Unavailable at the Current Moment***")
+            await event.edit(f"****वो जो मालिक है हमारे , वो अभी उपलब्ध नहीं है..\
+ \n हम बॉट है***")
         await asyncio.sleep(5)
         try:
             await borg.send_message(  # pylint:disable=E0602
