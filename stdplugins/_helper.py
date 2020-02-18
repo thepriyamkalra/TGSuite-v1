@@ -36,8 +36,8 @@ async def MODULE_LIST(event):
             else:
                 await event.edit(input_str + " is not a valid plugin!")
         else:
-            help_string = """Userbot Helper.. Provided by @A_Dark_Princ3 \n [Check out this dope af website](https://www.moddingunited.xyz/) \n
-`Userbot Helper to reveal all the commands`"""
+            help_string = """BEASTbot Helper.. Provided by @authoritydmc  \n
+`BEASTBOT Helper to reveal all the commands`"""
             results = await bot.inline_query(  # pylint:disable=E0602
                 tgbotusername,
                 help_string

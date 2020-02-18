@@ -27,7 +27,7 @@ async def _(event):
     PIP_version=x.group()
     for z in range(3):
         PYTHON_version+=str(sys.version_info[z])+("." if z <2 else "")
-    help_string = """BEAST bot is running.\n```Python {}\n``````Telethon {}\n``````\n``````Pip {}\n``````\nMade With Love :) v1.0 ```\n
+    help_string = """BEAST bot is running.\n```Python {}\n``````Telethon {}\n``````\n``````Pip {}\n``````\nMade With Love :) v1.1 ```\n
     Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
     """.format(
         PYTHON_version,
