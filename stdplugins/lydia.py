@@ -27,7 +27,7 @@ if Config.LYDIA_API is not None:
     api_client = cf.API(api_key)
 
 
-@borg.on(admin_cmd(pattern="(enable|disable|list)ai", allow_sudo=True))
+@borg.on(admin_cmd(pattern="(enable|disable|list)ai"))
 async def lydia_disable_enable(event):
     if event.fwd_from:
         return
