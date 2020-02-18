@@ -19,7 +19,7 @@ UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
  wait for my master to look in, he mostly approves PMs.\n
-MeanWhile You can Check My Social Accounts. :)```\n
+MeanWhile You can Check My Creator(s)  Social Accounts. :)```\n
 [@Instagram](https://www.instagram.com/your_._stranger)\n\n[@Github](https://github.com/authoritydmc)\n\n[@Facebook](https://www.facebook.com/AuthorityDMC)
 """
 

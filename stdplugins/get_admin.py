@@ -3,9 +3,10 @@ Syntax: .get_admin"""
 from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
+MODULE_LIST.append(".admin(s) to get list of admins")
 
-
-@borg.on(admin_cmd(pattern="get admin?"))
+@borg.on(admin_cmd(pattern="admin.?"))
 async def _(event):
     if event.fwd_from:
         return

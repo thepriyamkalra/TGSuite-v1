@@ -32,6 +32,10 @@ from uniborg.util import admin_cmd
 
 MODULE_LIST.append("kang")
 
+MODULE_LIST.append("getsticker (GetStricker)")
+
+MODULE_LIST.append("packinfo (get Strickerpack info)")
+
 @borg.on(admin_cmd(pattern="kang ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -49,7 +53,7 @@ async def _(event):
     userid = event.from_id
     packname = f"{PACK_NAME}"
     # format: Uni_Borg_userid
-    packshortname = f"Uniborg_Pack{PACK_NAME[-1]}_{userid}"
+    packshortname = f"BEASTBOT_{PACK_NAME[-1]}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@UniBorg_Sticker.png"
@@ -60,7 +64,7 @@ async def _(event):
         uploaded_sticker = await borg.upload_file(file, file_name=file_ext_ns_ion)
         packname = f"{ANIM_PACK_NAME}"
         # format: Uni_Borg_Packx_userid
-        packshortname = f"Uni_Borg_Pack{packname[-1]}_{userid}_as"
+        packshortname = f"BEASTBOT_{packname[-1]}_{userid}_as"
     elif not is_message_image(reply_message):
         await event.edit("Invalid message type")
         return

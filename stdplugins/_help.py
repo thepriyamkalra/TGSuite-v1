@@ -24,10 +24,10 @@ async def _(event):
         s_help_string = borg._plugins[splugin_name].__doc__
     else:
         s_help_string = ""
-    help_string = """@UniBorg
+    help_string = """@BeastBot
 Python {}
 Telethon {}
-UserBot Forked from https://github.com/expectocode/uniborg""".format(
+""".format(
         sys.version,
         __version__
     )
@@ -63,21 +63,7 @@ async def _(event):
     result = await borg(functions.help.GetConfigRequest())  # pylint:disable=E0602
     result = result.stringify()
     logger.info(result)  # pylint:disable=E0602
-    await event.edit("""Telethon UserBot powered by @UniBorg""")
+    await event.edit("""Telethon UserBot powered by @BeastBot""")
 
 
-@borg.on(admin_cmd(pattern="syntax (.*)"))
-async def _(event):
-    if event.fwd_from:
-        return
-    plugin_name = event.pattern_match.group(1)
-    if plugin_name in borg._plugins:
-        help_string = borg._plugins[plugin_name].__doc__
-        unload_string = f"Use `.unload {plugin_name}` to remove this plugin.\n           © @UniBorg"
-        if help_string:
-            plugin_syntax = f"Syntax for plugin **{plugin_name}**:\n\n{help_string}\n{unload_string}"
-        else:
-            plugin_syntax = f"No DOCSTRING has been setup for {plugin_name} plugin."
-    else:
-        plugin_syntax = "Enter valid **Plugin** name.\nDo `.exec ls stdplugins` or `.helpme` to get list of valid plugin names."
-    await event.edit(plugin_syntax)
+

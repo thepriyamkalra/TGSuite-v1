@@ -11,13 +11,18 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from google_images_download import google_images_download
 from uniborg.util import admin_cmd
+from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
+MODULE_LIST.append("go(google search)")
+MODULE_LIST.append("go img (google image search)")
+
+MODULE_LIST.append("go rev(erse) image  search)")
 
 
 def progress(current, total):
     logger.info("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
 
-@borg.on(admin_cmd(pattern="google search (.*)"))
+@borg.on(admin_cmd(pattern="go (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -42,7 +47,7 @@ async def _(event):
     await event.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
 
 
-@borg.on(admin_cmd(pattern="google image (.*)"))
+@borg.on(admin_cmd(pattern="go im.?g.? (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -80,7 +85,7 @@ async def _(event):
     await event.delete()
 
 
-@borg.on(admin_cmd(pattern="google reverse search"))
+@borg.on(admin_cmd(pattern="go rev*"))
 async def _(event):
     if event.fwd_from:
         return

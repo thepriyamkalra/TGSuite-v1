@@ -57,13 +57,14 @@ async def _(event):
         insult = start + " " + adjective_start + " " + \
             adjective_mid + (" " if adjective_mid else "") + noun + end
         insults+="\n"+insult
+        await event.edit(insult)
         log_insults += f"```{insult}```\n\n"
-        
+        time.sleep(1)
 
             # probably not needed but meh
 
     await event.edit(insults)
-    time.sleep(2)
+
     await borg.send_message(
             LOGGER,
             f"Insulted [{user_id}] with:\n\n{log_insults}"
