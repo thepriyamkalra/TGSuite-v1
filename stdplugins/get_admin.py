@@ -6,7 +6,7 @@ from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
 MODULE_LIST.append(".admin(s) to get list of admins")
 
-@borg.on(admin_cmd(pattern="admin.?"))
+@borg.on(admin_cmd(pattern="admins"))
 async def _(event):
     if event.fwd_from:
         return

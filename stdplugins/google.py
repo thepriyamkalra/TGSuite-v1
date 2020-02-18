@@ -13,9 +13,9 @@ from google_images_download import google_images_download
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
 MODULE_LIST.append("go(google search)")
-MODULE_LIST.append("go img (google image search)")
+MODULE_LIST.append("goimg (google image search)")
 
-MODULE_LIST.append("go rev(erse) image  search)")
+MODULE_LIST.append("gorev(erse) image  search)")
 
 
 def progress(current, total):
@@ -47,7 +47,7 @@ async def _(event):
     await event.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
 
 
-@borg.on(admin_cmd(pattern="go im.?g.? (.*)"))
+@borg.on(admin_cmd(pattern="goim.?g.? (.*)"))
 async def _(event):
     if event.fwd_from:
         return

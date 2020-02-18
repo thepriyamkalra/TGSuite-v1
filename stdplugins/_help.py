@@ -24,7 +24,7 @@ async def _(event):
         s_help_string = borg._plugins[splugin_name].__doc__
     else:
         s_help_string = ""
-    help_string = """@BeastBot
+    help_string = """BeastBot
 Python {}
 Telethon {}
 """.format(
@@ -63,7 +63,7 @@ async def _(event):
     result = await borg(functions.help.GetConfigRequest())  # pylint:disable=E0602
     result = result.stringify()
     logger.info(result)  # pylint:disable=E0602
-    await event.edit("""Telethon UserBot powered by @BeastBot""")
+    await event.edit("""Telethon UserBot powered by BeastBot""")
 
 
 
