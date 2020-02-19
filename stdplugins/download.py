@@ -16,7 +16,7 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("download")
 
 
-@borg.on(admin_cmd(pattern="localdl ?(.*)", allow_sudo=True))
+@borg.on(admin_cmd(pattern="dl ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -95,7 +95,7 @@ SYNTAX.update({
     "download": "\
 **Requested Module --> download**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.localdl (as a reply to a telegram media file)```\
+\n\n```.dl (as a reply to a telegram media file)```\
 \nUsage: Downloads the target file to the temporary local download directory.\
 "
 })

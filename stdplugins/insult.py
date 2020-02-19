@@ -28,14 +28,26 @@ async def _(event):
               "What the fuck is wrong with you, you"]
     ends = ["!!!!", "!", ""]
     log_insults = ""
+    insults=""
     if args:
         pass
     else:
-        args = 5
+        args = 1
     try:
         args = int(args)
     except Exception as error:
         await event.edit(error)
+    reply_msg = await event.get_reply_message()
+    if reply_msg:
+        user_id = f"```{reply_msg.from_id}```"
+        noformat_userid = reply_msg.from_id
+    else:
+        user_id = "Unknown user"
+        noformat_userid = "Unknown user"
+    if noformat_userid in SUDO_USERS:
+        await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
+        return 
+
     for insulting in range(args):
         start = random.choice(starts)
         adjective_start = random.choice(adjectives_start)
@@ -44,24 +56,28 @@ async def _(event):
         end = random.choice(ends)
         insult = start + " " + adjective_start + " " + \
             adjective_mid + (" " if adjective_mid else "") + noun + end
+        insults+="\n"+insult
         log_insults += f"```{insult}```\n\n"
-        reply_msg = await event.get_reply_message()
-        if reply_msg:
-            user_id = f"```{reply_msg.from_id}```"
-            noformat_userid = reply_msg.from_id
-        else:
-            user_id = "Unknown user"
-            noformat_userid = "Unknown user"
-        if noformat_userid in SUDO_USERS:
-            await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
-            sys.exit()
+        
+
             # probably not needed but meh
+<<<<<<< HEAD
             break
         else:
             await event.edit(insult)
             time.sleep(2)
             status = f"Insulted [{user_id}] with:\n\n{log_insults}"
             await log(status)
+=======
+
+    await event.edit(insults)
+    time.sleep(2)
+    await borg.send_message(
+            LOGGER,
+            f"Insulted [{user_id}] with:\n\n{log_insults}"
+       )
+       
+>>>>>>> new_mod
        
 async def log(text):
     LOGGER = Config.PRIVATE_GROUP_BOT_API_ID
@@ -71,7 +87,7 @@ SYNTAX.update({
     "insult": "\
 **Requested Module --> insult**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.insult <optional_number_of_insults>``` [optionally as a reply to target user][default = 5]\
+\n\n```.insult <optional_number_of_insults>``` [optionally as a reply to target user][default = 1]\
 \nUsage: Insults target user.\
 "
 })

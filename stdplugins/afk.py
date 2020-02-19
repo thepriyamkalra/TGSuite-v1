@@ -48,7 +48,11 @@ async def _(event):
             borg.storage.afk_time = datetime.datetime.now()  # pylint:disable=E0602
         borg.storage.USER_AFK.update({"yes": reason})  # pylint:disable=E0602
         if reason:
+<<<<<<< HEAD
             await event.edit(f" ** I'm Unavailable at the Current Moment because of  {reason}.**")
+=======
+            await event.edit(f" ** I'm Unavailable at the Current Moment because   {reason}.**")
+>>>>>>> new_mod
         else:
             await event.edit(f"**** I'm Unavailable at the Current Moment***")
         await asyncio.sleep(5)

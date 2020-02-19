@@ -20,8 +20,11 @@ BAALAJI_TG_USER_BOT = "```My Master hasn't approved you to PM.```"
 TG_COMPANION_USER_BOT = "```Wait for my masters response.\nDo not spam his pm if you do not want to get blocked.```"
 UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
-Bleep blop! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease wait for my master to look in, he mostly approves PMs.\nAs far as I know, he doesn't usually approve retards though.
-\nIf you continue sending messages you will be blocked.```"""
+Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
+ wait for my master to look in, he mostly approves PMs.\n
+MeanWhile You can Check his Social Accounts. :)```\n
+[@Instagram](https://www.instagram.com/your_._stranger)\n\n[@Github](https://github.com/authoritydmc)\n\n[@Facebook](https://www.facebook.com/AuthorityDMC)
+"""
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
@@ -29,7 +32,7 @@ async def monito_p_m_s(event):
     current_message_text = event.message.message.lower()
     if current_message_text == BAALAJI_TG_USER_BOT or \
         current_message_text == TG_COMPANION_USER_BOT or \
-        current_message_text == UNIBORG_USER_BOT_NO_WARN:
+        current_message_text == UNIBORG_USER_BOT_NO_WARN :
         # userbot's should not reply to other userbot's
         # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
         return False
