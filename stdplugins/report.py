@@ -20,22 +20,20 @@ async def _(event):
         should_mention_admins = True
         if event.reply_to_msg_id:
             reply_message = await event.get_reply_message()
-    to_write_chat = await event.get_input_chat()
-    chat = None
-    if True:  # dont wanna remove messed up intends for now. (testing)
-        async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
-            if not x.deleted:
-                if isinstance(x.participant, ChannelParticipantCreator):
-                    mentions += "\n 👑 [{}](tg://user?id={}) `{}`".format(
-                        x.first_name, x.id, x.id)
-        mentions += "\n"
-        async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
-            if not x.deleted:
-                if isinstance(x.participant, ChannelParticipantAdmin):
-                    mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
-                        x.first_name, x.id, x.id)
-            else:
-                mentions += "\n `{}`".format(x.id)
+    chat = await event.get_input_chat()
+    async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
+        if not x.deleted:
+            if isinstance(x.participant, ChannelParticipantCreator):
+                mentions += "\n 👑 [{}](tg://user?id={}) `{}`".format(
+                    x.first_name, x.id, x.id)
+    mentions += "\n"
+    async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
+        if not x.deleted:
+            if isinstance(x.participant, ChannelParticipantAdmin):
+                mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
+                    x.first_name, x.id, x.id)
+        else:
+            mentions += "\n `{}`".format(x.id)
     if should_mention_admins:
         if reply_message:
             await reply_message.reply(mentions)

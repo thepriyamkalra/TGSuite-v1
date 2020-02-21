@@ -15,11 +15,11 @@ async def _(event):
         return
     modules = "**List of available modules:**\n"
     MODULE_LIST.sort()
-    prev="1"
+    prev = "1"
     for module in MODULE_LIST:
-        if prev[0]!=module[0]:
-            modules+=f"\n\n\t{module[0].upper()}\n\n"
+        if prev[0] != module[0]:
+            modules += f"\n\n\t{module[0].upper()}\n\n"
         modules += f"~ ```{module}```\n"
-        prev=module
+        prev = module
     modules += "\n\n**Tip --> Use .syntax <module_name> for more info.**"
     await event.edit(modules)
