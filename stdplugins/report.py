@@ -22,8 +22,6 @@ async def _(event):
             reply_message = await event.get_reply_message()
     to_write_chat = await event.get_input_chat()
     chat = None
-    if not input_str:
-        chat = to_write_chat
     else:
         mentions_heading = "Admins in {} channel: \n".format(input_str)
         mentions = mentions_heading
