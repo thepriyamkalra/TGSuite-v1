@@ -47,7 +47,26 @@ for art in ascii:
 async def _(event):
     if event.fwd_from:
         return
-    for _ in range(10):
+    oof = event.pattern_match.group(1)
+    if not oof:
+        oof = 10
+    try:
+        oof = int(oof/2)
+    except TypeError:
+        await event.edit("Count must be an integer!")
+    output = ""
+    for _ in range(oof):
+        output += "oo"
+        await event.edit(output)
+    output += "f"
+    await event.edit(output)
+
+
+@borg.on(admin_cmd(pattern="hek ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    for _ in range(5):
         await event.edit(";_;")
         await event.edit("_;;")
         await event.edit(";;_")
@@ -94,8 +113,11 @@ SYNTAX.update({
     "reactions": "\
 **Requested Module --> reactions**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.oof``` & ```.sed``` [as a reply to a target message]\
 \nUsage: Just some funny little animations ;)\
+\nList of reactions:\
+\n.oof\
+\n.sed\
+\n.hek\
 "
 })
 

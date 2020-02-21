@@ -12,7 +12,7 @@ MODULE_LIST.append("report")
 async def _(event):
     if event.fwd_from:
         return
-    mentions = "**Admins in this Channel**: \n"
+    mentions = "Somebody come look at this shit..\n"
     should_mention_admins = False
     reply_message = None
     pattern_match_str = event.pattern_match.group(1)
@@ -22,9 +22,6 @@ async def _(event):
             reply_message = await event.get_reply_message()
     to_write_chat = await event.get_input_chat()
     chat = None
-    else:
-        mentions_heading = "Admins in {} channel: \n".format(input_str)
-        mentions = mentions_heading
     try:
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
             if not x.deleted:
