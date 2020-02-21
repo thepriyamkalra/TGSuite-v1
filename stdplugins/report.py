@@ -22,7 +22,7 @@ async def _(event):
             reply_message = await event.get_reply_message()
     to_write_chat = await event.get_input_chat()
     chat = None
-    try:
+    if True:  # dont wanna remove messed up intends for now. (testing)
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
             if not x.deleted:
                 if isinstance(x.participant, ChannelParticipantCreator):
@@ -36,8 +36,6 @@ async def _(event):
                         x.first_name, x.id, x.id)
             else:
                 mentions += "\n `{}`".format(x.id)
-    except Exception as e:
-        mentions += " " + str(e) + "\n"
     if should_mention_admins:
         if reply_message:
             await reply_message.reply(mentions)
