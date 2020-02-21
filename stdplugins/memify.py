@@ -80,7 +80,7 @@ async def _(event):
           if response.text.startswith("Forward"):
               await event.edit(f"```{response.text}```")
           if "Okay..." in response.text:
-            await event.edit("```This is not an image! It will take a while to be convert it to an image..```")
+            await event.edit("```This is not an image! It will take a while be convert it to an image..```")
             thumb = None
             if os.path.exists(thumb_image_path):
                 thumb = thumb_image_path
