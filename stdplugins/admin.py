@@ -20,7 +20,7 @@ async def _(event):
     if input_str != "":
         admin_rank = input_str
     else:
-        admin_rank = ""
+        admin_rank = "admeme"
     start = datetime.now()
     to_promote_id = None
     rights = ChatAdminRights(

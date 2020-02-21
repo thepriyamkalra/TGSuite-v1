@@ -3,7 +3,7 @@
 import sys
 from telethon import events, functions, __version__
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
 
 
 MODULE_LIST.append("alive")
@@ -13,24 +13,16 @@ MODULE_LIST.append("alive")
 async def _(event):
     if event.fwd_from:
         return
-    splugin_name = event.pattern_match.group(1)
-    if splugin_name in borg._plugins:
-        s_help_string = borg._plugins[splugin_name].__doc__
+    if Config.USER is not None:
+        user = f"\n```User: {Config.USER}```"
     else:
-        s_help_string = ""
-    help_string = """Your bot is running.
-```Python {}```
-```Telethon {}```
-
-""".format(
-        sys.version,
-        __version__
-    )
+        user = " "
+    help_string = f"Your bot is running.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```{str(user)}\n```By: @A_FRICKING_GAMER```\n"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
         results = await borg.inline_query(  # pylint:disable=E0602
             tgbotusername,
-            help_string + "\n\n" + s_help_string
+            help_string + "\n\n"
         )
         await results[0].click(
             event.chat_id,
@@ -39,7 +31,7 @@ async def _(event):
         )
         await event.delete()
     else:
-        await event.reply(help_string + "\n\n" + s_help_string)
+        await event.reply(help_string + "\n\n")
         await event.delete()
 
 
@@ -48,6 +40,6 @@ SYNTAX.update({
 **Requested Module --> alive**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.alive```\
-\nUsage: Returns userbot's system stats.\
+\nUsage: Returns userbot's system stats, user's name (only if set).\
 "
 })
