@@ -8,7 +8,7 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("report")
 
 
-@borg.on(admin_cmd("admins ?(.*)"))
+@borg.on(admin_cmd("report ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -16,11 +16,10 @@ async def _(event):
     should_mention_admins = False
     reply_message = None
     pattern_match_str = event.pattern_match.group(1)
-    if "m" in pattern_match_str:
+    if "loud" in pattern_match_str:
         should_mention_admins = True
         if event.reply_to_msg_id:
             reply_message = await event.get_reply_message()
-    input_str = event.pattern_match.group(2)
     to_write_chat = await event.get_input_chat()
     chat = None
     if not input_str:
@@ -28,11 +27,6 @@ async def _(event):
     else:
         mentions_heading = "Admins in {} channel: \n".format(input_str)
         mentions = mentions_heading
-        try:
-            chat = await borg.get_entity(input_str)
-        except Exception as e:
-            await event.edit(str(e))
-            return None
     try:
         async for x in borg.iter_participants(chat, filter=ChannelParticipantsAdmins):
             if not x.deleted:

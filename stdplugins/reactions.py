@@ -9,6 +9,38 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
 MODULE_LIST.append("reactions")
+MODULE_LIST.append("emojis")
+MODULE_LIST.append("ascii")
+
+emojis = {
+    "yee": "ツ",
+    "happy": "(ʘ‿ʘ)",
+    "veryhappy": "=͟͟͞͞٩(๑☉ᴗ☉)੭ु⁾⁾",
+    "amazed": "ヾ(o✪‿✪o)ｼ",
+    "crying": "༎ຶ‿༎ຶ",
+    "dicc": "╰U╯☜(◉ɷ◉ )",
+    "fek": "╰U╯\n(‿ˠ‿)",
+    "ded": "✖‿✖",
+    "sad": "⊙︿⊙",
+    "lenny": "( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)",
+    "idc": "¯\_(ツ)_/¯"
+}
+
+unpacked_emojis = ""
+
+for emoji in emojis:
+    unpacked_emojis += f"{emoji}\n"
+
+# this dictionary is a mess but meh
+ascii = {
+    "mf": "......................................../´¯/) \n......................................,/¯../ \n...................................../..../ \n..................................../´.¯/ \n..................................../´¯/ \n..................................,/¯../ \n................................../..../ \n................................./´¯./ \n................................/´¯./ \n..............................,/¯../ \n............................./..../ \n............................/´¯/ \n........................../´¯./ \n........................, /¯.. / \n......................./.... / \n...................... /´¯/ \n...................., /¯.. / \n.................../.... / \n............. /´¯/\'...' /´¯¯·¸ \n.......... / '/.../..../....... /¨¯\ \n........('(...´...´.... ¯~/'...') \n.........\.................'..... / \n..........''...\.......... _.·´\n............\..............( \n..............\.............\...",
+    "rip": "\n           88\n8b,dPPYba, 88 8b,dPPYba,   \n88P\'   \"Y8 88 88P'    \"8a  \n88         88 88       d8  \n88         88 88b,   ,a8\"  \n88         88 88`YbbdP\"\'   \n              88     \n              88     "
+}
+
+unpacked_ascii = ""
+
+for art in ascii:
+    unpacked_ascii += f"{art}\n"
 
 
 @borg.on(admin_cmd(pattern="oof ?(.*)"))
@@ -26,10 +58,11 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    for _ in range(10):
+    for _ in range(4):
         await event.edit(":/")
         await event.edit(":|")
         await event.edit(":\\")
+        await event.edit(":|")
     await event.edit(":/")
 
 
@@ -38,50 +71,11 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    if input_str == "yee":
-        await event.edit("""ツ""")
-    elif input_str == "happy":
-        await event.edit("""
-(ʘ‿ʘ)
-""")
-    elif input_str == "veryhappy":
-        await event.edit("""
-=͟͟͞͞٩(๑☉ᴗ☉)੭ु⁾⁾
-""")
-    elif input_str == "amazed":
-        await event.edit("""
-ヾ(o✪‿✪o)ｼ
-""")
-    elif input_str == "crying":
-        await event.edit("""
-༎ຶ‿༎ຶ
-""")
-    elif input_str == "dicc":
-        await event.edit("""
-╰U╯☜(◉ɷ◉ )
-""")
-    elif input_str == "fek":
-        await event.edit("""
-╰U╯\n(‿ˠ‿)
-""")
-    elif input_str == "ded":
-        await event.edit("""
-✖‿✖
-""")
-    elif input_str == "sad":
-        await event.edit("""
-⊙︿⊙
-""")
-    elif input_str == "lenny":
-        await event.edit("""
-( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)
-""")
-    elif input_str == "idc":
-        await event.edit("""
-¯\_(ツ)_/¯
-""")
-    else:
-        await event.edit("variable not defined.")
+    try:
+        req_emoji = emojis[str(input_str)]
+        await event.edit(req_emoji)
+    except KeyError:
+        await event.edit("Emoji not found!")
 
 
 @borg.on(admin_cmd(pattern="ascii ?(.*)"))
@@ -89,44 +83,40 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    if input_str == "mf":
-        await event.edit("""
-......................................../´¯/) 
-......................................,/¯../ 
-...................................../..../ 
-..................................../´.¯/
-..................................../´¯/
-..................................,/¯../ 
-................................../..../ 
-................................./´¯./
-................................/´¯./
-..............................,/¯../ 
-............................./..../ 
-............................/´¯/
-........................../´¯./
-........................,/¯../ 
-......................./..../ 
-....................../´¯/
-....................,/¯../ 
-.................../..../ 
-............./´¯/'...'/´¯¯·¸ 
-........../'/.../..../......./¨¯\ 
-........('(...´...´.... ¯~/'...') 
-.........\.................'...../ 
-..........''...\.......... _.·´ 
-............\..............( 
-..............\.............\...`
-    """)
+    try:
+        req_ascii = ascii[str(input_str)]
+        await event.edit(req_ascii)
+    except KeyError:
+        await event.edit("ASCII art not found!")
 
 
 SYNTAX.update({
     "reactions": "\
 **Requested Module --> reactions**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.oof```, ```.sed``` [as a reply to a target message]\
+\n\n```.oof``` & ```.sed``` [as a reply to a target message]\
 \nUsage: Just some funny little animations ;)\
-\n\n```.ascii <ascii_art_name>```\
-\nUsage: Prints the target ascii art ;)\
-\nAs of now only ```mf``` ascii art is included, more to be added in the future.\
+"
+})
+
+SYNTAX.update({
+    "emoji": f"\
+**Requested Module --> emoji**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n.emoji <emoji_name>\
+\nUsage: Prints the target emoji.\
+\nList of included emoji(s):\
+\n{unpacked_emojis}\
+"
+})
+
+SYNTAX.update({
+    "ascii": f"\
+**Requested Module --> ascii**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n.ascii <art_name>\
+\nUsage: Prints the target ascii art.\
+\nList of included ASCII arts:\
+\n{unpacked_ascii}\
 "
 })
