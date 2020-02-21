@@ -1,14 +1,14 @@
 # For UniBorg
-# Syntax .admins
+# Syntax .admemes
 from telethon import events
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
-MODULE_LIST.append("report")
+MODULE_LIST.append("admemes")
 
 
-@borg.on(admin_cmd("report ?(.*)"))
+@borg.on(admin_cmd("admemes ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -45,10 +45,10 @@ async def _(event):
 
 
 SYNTAX.update({
-    "report": "\
-**Requested Module --> report**\
+    "admemes": "\
+**Requested Module --> admemes**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.report``` [as a reply to a target message]\
-\nUsage: Report the target message to the admins.\
+\n\n```.admemes [OPTIONAL argument: loud, this will notify the admins.]```\
+\nUsage: Mention admins in the current chat.\
 "
 })

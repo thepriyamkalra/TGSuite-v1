@@ -29,7 +29,7 @@ emojis = {
 unpacked_emojis = ""
 
 for emoji in emojis:
-    unpacked_emojis += f"{emoji}\n"
+    unpacked_emojis += f"`{emoji}`\n"
 
 # this dictionary is a mess but meh
 ascii = {
@@ -47,12 +47,13 @@ async def _(event):
     if event.fwd_from:
         return
     oof = event.pattern_match.group(1)
+    try:
+        oof = int(oof)
+    except TypeError:
+        return await event.edit("Count must be an integer!")
     if not oof:
         oof = 10
-    try:
-        oof = int(oof/2)
-    except TypeError:
-        await event.edit("Count must be an integer!")
+    oof = int(oof/2)
     output = ""
     for _ in range(oof):
         output += "oo"
@@ -121,8 +122,8 @@ SYNTAX.update({
 })
 
 SYNTAX.update({
-    "emoji": f"\
-**Requested Module --> emoji**\
+    "emojis": f"\
+**Requested Module --> emojis**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n.emoji <emoji_name>\
 \nUsage: Prints the target emoji.\
