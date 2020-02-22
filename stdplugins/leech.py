@@ -294,7 +294,7 @@ async def leech2drive(event):
         var = rep.text
     if str(var) == "setup":
         telegraph = "https://telegra.ph/Leech2Drive-Setup-Tutorial-02-21"
-        await event.edit(f"Find gdrive setup instructions for leech2drive [here]({telegraph}).")
+        return await event.edit(f"Find gdrive setup instructions for leech2drive [here]({telegraph}).")
     # print(var)
     uris = [var]
     # Add URL Into Queue

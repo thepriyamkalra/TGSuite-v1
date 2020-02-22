@@ -47,16 +47,16 @@ async def _(event):
     if event.fwd_from:
         return
     oof = event.pattern_match.group(1)
-    try:
-        oof = int(oof)
-    except TypeError:
-        return await event.edit("Count must be an integer!")
     if not oof:
         oof = 10
+    try:
+        oof = int(oof)
+    except:
+        return await event.edit("Count must be an integer!")
     oof = int(oof/2)
     output = ""
     for _ in range(oof):
-        output += "oo"
+        output += "Oo"
         await event.edit(output)
     output += "f"
     await event.edit(output)
