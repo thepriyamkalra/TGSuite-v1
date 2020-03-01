@@ -33,12 +33,13 @@ async def _(event):
         await event.edit("Fatal Error!\nPlease contact the developer of this module [@A_FRICKING_GAMER] for support.")
         return
     if text and count != None:
+        await event.delete()
         for spam in range(int(count)):
             await event.reply(text)
         msg = await event.reply(f"Task complete, spammed input text {count} times!")
         sleep(5)
         await msg.delete()
-        status = f"SPAMMED\n```{text}```\n in {chat} ```{count}``` times."
+        status = f"SPAMMED\n```{text}```\n in ```{chat}``` ```{count}``` times."
         await log(status)
     else:
         await event.edit("Unexpected Error! Aborting..")
