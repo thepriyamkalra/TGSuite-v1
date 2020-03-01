@@ -3,9 +3,8 @@
 import sys
 from telethon import events, functions, __version__
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
-import os
-import re
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
+
 
 MODULE_LIST.append("alive")
 
@@ -14,32 +13,16 @@ MODULE_LIST.append("alive")
 async def _(event):
     if event.fwd_from:
         return
-    splugin_name = event.pattern_match.group(1)
-    if splugin_name in borg._plugins:
-        s_help_string = borg._plugins[splugin_name].__doc__
+    if Config.USER is not None:
+        user = f"\n```User: {Config.USER}```"
     else:
-        s_help_string = ""
-    PYTHON_version=""
-    
-    z=os.popen("pip  --version")
-    sr=z.read()
-    x = re.search(r"(\d+)\.(\d+)\.(\d+)", sr)
-    PIP_version=x.group()
-    for z in range(3):
-        PYTHON_version+=str(sys.version_info[z])+("." if z <2 else "")
-    help_string = """BEAST bot is running.\n```Python {}\n``````Telethon {}\n``````\n``````Pip {}\n``````\nMade With Love :) v1.1 ```\n
-    Deploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)
-    """.format(
-        PYTHON_version,
-        __version__,
-        PIP_version
-
-    )
+        user = " "
+    help_string = f"Your bot is running.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```{str(user)}\n```By: @beast0110```\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
         results = await borg.inline_query(  # pylint:disable=E0602
             tgbotusername,
-            help_string + "\n\n" + s_help_string
+            help_string + "\n\n"
         )
         await results[0].click(
             event.chat_id,
@@ -48,7 +31,7 @@ async def _(event):
         )
         await event.delete()
     else:
-        await event.reply(help_string + "\n\n" + s_help_string)
+        await event.reply(help_string + "\n\n")
         await event.delete()
 
 
@@ -57,6 +40,6 @@ SYNTAX.update({
 **Requested Module --> alive**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.alive```\
-\nUsage: Returns userbot's system stats..   .\
+\nUsage: Returns userbot's system stats, user's name (only if set).\
 "
 })
