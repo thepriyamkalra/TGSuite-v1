@@ -17,7 +17,7 @@ async def _(event):
         user = f"\n```User: {Config.USER}```"
     else:
         user = " "
-    help_string = f"BEASTBOT-REBORN v 1.0 is running.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```{str(user)}\n```By: @beast0110```\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
+    help_string = f"BEASTBOT-REBORN v 1.2 is running.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```{str(user)}\n```By: @beast0110```\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
         results = await borg.inline_query(  # pylint:disable=E0602
