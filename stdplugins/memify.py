@@ -39,7 +39,7 @@ InputStickerSetID,
 InputStickerSetShortName,
 MessageMediaPhoto
 )
-MODULE_LIST.append("Memify")
+MODULE_LIST.append("memify")
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
@@ -68,7 +68,8 @@ async def _(event):
     
     async with borg.conversation("@MemeAutobot") as bot_conv:
           try:
-            memeVar = event.pattern_match.group(1)
+            memeVar = str(event.pattern_match.group(1))
+            memeVar = memeVar.strip()
             await silently_send_message(bot_conv, "/start")
             await asyncio.sleep(1)
             await silently_send_message(bot_conv, memeVar)
@@ -149,8 +150,8 @@ async def silently_send_message(conv, text):
     return response
     
 SYNTAX.update({
-    "alive": "\
-**Requested Module --> alive**\
+    "memify": "\
+**Requested Module --> memify**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.memify <text_to_be_pasted_on_top> ; <text_to_be_pasted_on_bottom>```\
 \nUsage: Memifies the image/sticker/gif.\
