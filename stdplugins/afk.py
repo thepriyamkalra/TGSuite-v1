@@ -4,7 +4,7 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
-from sql_helpers.global_variables_sql import LOGGER, SYNTAX, MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
@@ -18,10 +18,8 @@ async def set_not_afk(event):
     current_message = event.message.message
     if ".afk" not in current_message and "yes" in borg.storage.USER_AFK:  # pylint:disable=E0602
         try:
-            await borg.send_message(  # pylint:disable=E0602
-                LOGGER,  # pylint:disable=E0602
-                "Set AFK mode to False"
-            )
+            status = "Set AFK mode to False"
+            await log(status)
         except Exception as e:  # pylint:disable=C0103,W0703
             await borg.send_message(  # pylint:disable=E0602
                 event.chat_id,
@@ -50,16 +48,13 @@ async def _(event):
             borg.storage.afk_time = datetime.datetime.now()  # pylint:disable=E0602
         borg.storage.USER_AFK.update({"yes": reason})  # pylint:disable=E0602
         if reason:
-            await event.edit(f" ** I'm Unavailable at the Current Moment because   {reason}.**")
+            await event.edit(f"**I'm goin' afk cuz {reason}.**")
         else:
-            await event.edit(f"****वो जो मालिक है हमारे , वो अभी उपलब्ध नहीं है..\
- \n हम बॉट है***")
+            await event.edit(f"**I'm goin' afk.**")
         await asyncio.sleep(5)
         try:
-            await borg.send_message(  # pylint:disable=E0602
-                LOGGER,  # pylint:disable=E0602
-                f"Set AFK mode to True, and Reason is {reason}"
-            )
+            status = f"Set AFK mode to True, and Reason is {reason}"
+            await log(status)
         except Exception as e:  # pylint:disable=C0103,W0703
             logger.warn(str(e))  # pylint:disable=E0602
 
@@ -91,7 +86,7 @@ async def on_afk(event):
             time %= 60
             seconds = time
             if days == 1:
-                afk_since = "**Yesterday**"
+                afk_since = "**yesterday**"
             elif days > 1:
                 if days > 6:
                     date = now + \
@@ -117,6 +112,11 @@ async def on_afk(event):
         if event.chat_id in borg.storage.last_afk_message:  # pylint:disable=E0602
             await borg.storage.last_afk_message[event.chat_id].delete()  # pylint:disable=E0602
         borg.storage.last_afk_message[event.chat_id] = msg  # pylint:disable=E0602
+
+async def log(text):
+    LOGGER = Config.PRIVATE_GROUP_BOT_API_ID
+    await borg.send_message(LOGGER, text)
+
 
 SYNTAX.update({
     "afk": "\

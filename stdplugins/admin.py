@@ -20,7 +20,7 @@ async def _(event):
     if input_str != "":
         admin_rank = input_str
     else:
-        admin_rank = ""
+        admin_rank = "admeme"
     start = datetime.now()
     to_promote_id = None
     rights = ChatAdminRights(
@@ -182,7 +182,7 @@ async def _(event):
             await event.edit(f"Successfully taped ```{to_ban_id}```!")
 
 
-@borg.on(admin_cmd("pin"))
+@borg.on(admin_cmd("pin ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
