@@ -10,7 +10,7 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 MODULE_LIST.append("purge")
 
 
-@borg.on(admin_cmd("purge ?(.*)",allow_sudo=True))
+@borg.on(admin_cmd("purge ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
