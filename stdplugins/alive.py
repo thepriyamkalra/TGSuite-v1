@@ -21,7 +21,7 @@ async def _(event):
         user = " "
     uname = platform.uname()
     specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```"
-    help_string = f"**Your bot is running.**\n\n**General Info:**\n```Build: {BUILD}```{str(user)}\n```By: @A_FRICKING_GAMER```\n\n***System Specifications:**\n{specs}\n```Python {sys.version}```\n```Telethon {__version__}```"
+    help_string = f"**Your bot is running.**\n\n**General Info:**\n```Build: {BUILD}```{str(user)}\n```By: @A_FRICKING_GAMER```\n\n**System Specifications:**\n{specs}\n```Python {sys.version}```\n```Telethon {__version__}```"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
         results = await borg.inline_query(  # pylint:disable=E0602
