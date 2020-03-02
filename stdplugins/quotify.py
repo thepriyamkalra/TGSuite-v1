@@ -38,7 +38,7 @@ def get_sticker(text):
     limit = 200
     cords_x = 1
     cords_y = 1
-    spacing = 17
+    spacing = 20
     x_mode = False
     if os.name == "nt":
         fnt = "arial.ttf"
