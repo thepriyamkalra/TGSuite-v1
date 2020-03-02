@@ -14,4 +14,4 @@ DL = Config.TMP_DOWNLOAD_DIRECTORY
 MODULE_LIST = []
 # add syntax to this dictionary using SYNTAX.update
 SYNTAX = {}
-BUILD = "USERDEBUG-46x01"
+BUILD = "USERDEBUG-46x02"

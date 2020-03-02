@@ -24,7 +24,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    chat = event.pattern_match.group(1)
+    chat = str(event.pattern_match.group(1))
     rep = await event.get_reply_message()
     msg = rep.text
     await borg.send_message(chat, msg)
