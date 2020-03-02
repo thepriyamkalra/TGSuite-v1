@@ -34,11 +34,15 @@ def get_sticker(text):
     cords_x = 1
     cords_y = 1
     spacing = 17
+    x_mode = False
     if os.name == "nt":
         fnt = "arial.ttf"
     else:
         fnt = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     font = ImageFont.truetype(fnt, 25)
+    if str(text).startswith("-x "):
+        x_mode = True
+        string = string[1:]
     for char in string:
         if cords_x >= limit:
             result = "Input text is too large!\nYou may get unexpected results."
@@ -48,7 +52,7 @@ def get_sticker(text):
                   xy=(cords_x, cords_y), font=font)
         draw.text(text=" ", fill=(255, 255, 255),
                   xy=(cords_x + 1, cords_y + 1), font=font)
-        if str(text).startswith("-x "):
+        if x_mode:
             cords_x += len(char)+spacing
         cords_y += len(char) + spacing
     img.save(sticker, "WEBP")
