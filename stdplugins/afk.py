@@ -4,6 +4,7 @@ import asyncio
 import datetime
 from telethon import events
 from telethon.tl import functions, types
+from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
