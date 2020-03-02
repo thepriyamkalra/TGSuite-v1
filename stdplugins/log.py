@@ -19,6 +19,7 @@ async def _(event):
     await log(msg)
     await event.delete()
 
+
 @borg.on(admin_cmd(pattern="msg ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -26,7 +27,7 @@ async def _(event):
     chat = event.pattern_match.group(1)
     rep = await event.get_reply_message()
     msg = rep.text
-    await borg.send_message(chat, text)
+    await borg.send_message(chat, msg)
     await event.delete()
 
 
@@ -38,7 +39,7 @@ SYNTAX.update({
     "log": "\
 **Requested Module --> log**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.log (or as a reply to target message)```\
+\n\n```.log (as a reply to target message)```\
 \nUsage:  Simply log the replied msg to logger group.\
 "
 })
@@ -47,7 +48,7 @@ SYNTAX.update({
     "msg": "\
 **Requested Module --> msg**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.msg <chat_id> (or as a reply to target message)```\
+\n\n```.msg <chat_id> (as a reply to target message)```\
 \nUsage:  Send a message to another chat.\
 \nTip: This is useful for professional channel broadcasts.\
 "

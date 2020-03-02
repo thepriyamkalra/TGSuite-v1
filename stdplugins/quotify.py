@@ -5,6 +5,7 @@ from telethon import events
 from uniborg.util import admin_cmd
 import asyncio
 import os
+from time import sleep
 from telethon.tl import functions, types
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, DL
 from PIL import Image, ImageDraw, ImageFont
@@ -21,12 +22,16 @@ async def _(event):
     string = event.pattern_match.group(1)
     await event.edit("Quotifying input text!")
     get_sticker(string)
+    await event.edit(result)
     await borg.send_file(event.chat_id, sticker)
     os.remove(sticker)
+    sleep(5)
     await event.delete()
 
 
 def get_sticker(text):
+    global result
+    result = "Task complete!"
     string = str(text).split()
     img = Image.new("RGB", (250, 250))
     draw = ImageDraw.Draw(img)
@@ -46,7 +51,6 @@ def get_sticker(text):
     for char in string:
         if cords_x >= limit:
             result = "Input text is too large!\nYou may get unexpected results."
-            print(result)
             break
         draw.text(text=char, fill=(255, 255, 255),
                   xy=(cords_x, cords_y), font=font)
@@ -64,5 +68,7 @@ SYNTAX.update({
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.quotify <text_to_quotify>```\
 \nUsage: Quotify the input text ^_^.\
+\n\n```.quotify -x <text_to_quotify>```\
+\nUsage: Same as default .quotify but intends everyword.\
 "
 })
