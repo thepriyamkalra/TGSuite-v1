@@ -3,6 +3,7 @@
 import sys
 import os
 import platform
+import psutil
 from telethon import events, functions, __version__
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
@@ -20,7 +21,8 @@ async def _(event):
     else:
         user = " "
     uname = platform.uname()
-    specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```"
+    memory = psutil.virtual_memory()
+    specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
     help_string = f"**Your bot is running.**\n\n**General Info:**\n```Build: {BUILD}```{str(user)}\n```By: @A_FRICKING_GAMER```\n\n**System Specifications:**\n{specs}\n```Python {sys.version}```\n```Telethon {__version__}```"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
@@ -38,6 +40,12 @@ async def _(event):
         await event.reply(help_string + "\n\n")
         await event.delete()
 
+def get_size(bytes, suffix="B"):
+    factor = 1024
+    for unit in ["", "K", "M", "G", "T", "P"]:
+        if bytes < factor:
+            return f"{bytes:.2f}{unit}{suffix}"
+        bytes /= factor
 
 SYNTAX.update({
     "alive": "\
