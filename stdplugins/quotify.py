@@ -22,6 +22,7 @@ async def _(event):
     string = event.pattern_match.group(1)
     await event.edit("Quotifying input text!")
     get_sticker(string)
+    sleep(1)
     await event.edit(result)
     await borg.send_file(event.chat_id, sticker)
     os.remove(sticker)
