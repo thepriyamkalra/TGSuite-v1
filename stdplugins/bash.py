@@ -23,7 +23,7 @@ async def _(event):
     if not arg:
     	arg="@@@" 
     cmd = await event.get_reply_message()
-    if "f" in arugument:
+    if "f" in arg:
     	arg=True
     else:
     	arg=False
