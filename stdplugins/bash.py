@@ -22,14 +22,14 @@ async def _(event):
         return
     DELAY_BETWEEN_EDITS = 0.3
     PROCESS_RUN_TIME = 100
-    arugument = event.pattern_match.group(1)
-    if not arugument:
-    	arugument="@@@" 
+    arg = event.pattern_match.group(1)
+    if not arg:
+    	arg="@@@" 
     cmd = await event.get_reply_message()
     if "f" in arugument:
-    	arugument=True
+    	arg=True
     else:
-    	arugument=False
+    	arg=False
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -48,7 +48,7 @@ async def _(event):
         _o = o.split("\n")
         o = "\n".join(_o)
     OUTPUT="NULL"
-    if arugument:
+    if arg:
     	if not "No Error" in e:
     		o="\n**stderror**:\n"+e+"\n**OUTPUT**\n"+o
     		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**stderr**\n`{e}`\n**OUTPUT**\n`{o}`"
