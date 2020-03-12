@@ -48,8 +48,7 @@ async def _(event):
     OUTPUT="NULL"
     if arg==True:
     	if not "No Error" in e:
-    		o="\n**stderror**:\n"+e+"\n**OUTPUT**\n"+o
-    		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**stderr**\n`{e}`\n**OUTPUT**\n`{o}`"
+    		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**stderr**:\n`{e}`\n**OUTPUT**:\n\n`{o}`"
     	else:
     		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**OUTPUT**\n`{o}`"
     else:
