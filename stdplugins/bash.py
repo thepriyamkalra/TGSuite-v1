@@ -21,10 +21,14 @@ async def _(event):
         return
     DELAY_BETWEEN_EDITS = 0.3
     PROCESS_RUN_TIME = 100
-    cmd = event.pattern_match.group(1)
-    if not cmd:
-    	abe = await event.get_reply_message()
-    	cmd = abe.text
+    arugument = event.pattern_match.group(1)
+    if not arugument:
+    	arugument="@@@" 
+    cmd = await event.get_reply_message()
+    if "f" in arugument:
+    	arugument=True
+    else:
+    	arugument=False
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -41,8 +45,20 @@ async def _(event):
         o = "**Tip**: \n`Use .syntax bash to get help regarding this module.`"
     else:
         _o = o.split("\n")
-        o = "`\n".join(_o)
-    OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n\n**stderr:** \n`{e}`\n**Output:**\n{o}"
+        o = "\n".join(_o)
+    OUTPUT="NULL"
+    if arugument:
+    	if not "No Error" in e:
+    		o="\n**stderror**:\n"+e+"\n**OUTPUT**\n"+o
+    	else:
+    		o="\n**OUTPUT**\n"+o
+    	OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n`{o}`"
+    else:
+    	if not "No Error" in e:
+    		o="\n**stderror**:\n"+e+"\n"+o
+    	else:
+    		o="\n**OUTPUT**\n"+o
+    	OUTPUT=f"`{o}`"
     if len(OUTPUT) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUTPUT)) as out_file:
             out_file.name = "exec.text"
