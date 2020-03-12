@@ -13,15 +13,21 @@ from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 MODULE_LIST.append("bash")
-
-
 @borg.on(admin_cmd(pattern="bash ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     DELAY_BETWEEN_EDITS = 0.3
     PROCESS_RUN_TIME = 100
-    cmd = event.pattern_match.group(1)
+    arg = event.pattern_match.group(1)
+    if not arg:
+    	arg="@@@" 
+    abe=await event.get_reply_message()
+    cmd=abe.text
+    if "f" in arg:
+    	arg=True
+    else:
+    	arg=False
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
         reply_to_id = event.reply_to_msg_id
@@ -39,7 +45,17 @@ async def _(event):
     else:
         _o = o.split("\n")
         o = "\n".join(_o)
-    OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n\n**stderr:** \n`{e}`\n**Output:**\n`{o}`"
+    OUTPUT="NULL"
+    if arg==True:
+    	if not "No Error" in e:
+    		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**stderr**:\n`{e}`\n**OUTPUT**:\n\n`{o}`"
+    	else:
+    		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**OUTPUT**\n`{o}`"
+    else:
+    	if not "No Error" in e:
+    	    OUTPUT=f"\n**stderror**\n{e}\n **OUTPUT**\n `{o}`"
+    	else:
+    	    OUTPUT=f"**OUTPUT**\n`{o}`"
     if len(OUTPUT) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUTPUT)) as out_file:
             out_file.name = "exec.text"
@@ -53,8 +69,6 @@ async def _(event):
             )
             await event.delete()
     await event.edit(OUTPUT)
-
-
 SYNTAX.update({
     "bash": "\
 **Requested Module --> bash**\
