@@ -56,9 +56,9 @@ async def _(event):
     		OUTPUT = f"**QUERY:**\n__Command:__\n`{cmd}` \n__PID:__\n`{process.pid}`\n**OUTPUT**\n`{o}`"
     else:
     	if not "No Error" in e:
-    		OUTPUT=f"\n**stderror**\n{e}\n **OUTPUT**\n `{o}`"
-   		else:
-    		OUTPUT=f"**OUTPUT**\n`{o}`"
+    	    OUTPUT=f"\n**stderror**\n{e}\n **OUTPUT**\n `{o}`"
+    	else:
+    	    OUTPUT=f"**OUTPUT**\n`{o}`"
     if len(OUTPUT) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUTPUT)) as out_file:
             out_file.name = "exec.text"
