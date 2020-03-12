@@ -22,8 +22,7 @@ async def _(event):
     arg = event.pattern_match.group(1)
     if not arg:
     	arg="@@@" 
-    cmd=await event.get_reply_message()
-    cmd=str(cmd)
+    cmd=await event.get_reply_message().text
     if "f" in arg:
     	arg=True
     else:
