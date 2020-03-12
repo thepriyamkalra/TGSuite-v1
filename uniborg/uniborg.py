@@ -110,8 +110,8 @@ class Uniborg(TelegramClient):
             spec.loader.exec_module(mod)
             self._plugins[shortname] = mod
             self._logger.info(f"Successfully loaded plugin {shortname}")
-        except Exception:
-            self._logger.info(f"Failed loading plugin {shortname}")
+        except Exception as e:
+            self._logger.info(f"Failed loading plugin {shortname} because {e}")
 
     def remove_plugin(self, shortname):
         name = self._plugins[shortname].__name__
