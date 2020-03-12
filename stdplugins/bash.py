@@ -10,7 +10,7 @@ import io
 import asyncio
 import time
 from uniborg.util import admin_cmd
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST,SUDO_USERS
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 MODULE_LIST.append("bash")
 @borg.on(admin_cmd(pattern="bash ?(.*)"))
@@ -22,7 +22,8 @@ async def _(event):
     arg = event.pattern_match.group(1)
     if not arg:
     	arg="@@@" 
-    cmd = await event.get_reply_message()
+    cmd=await event.get_reply_message()
+    cmd=str(cmd)
     if "f" in arg:
     	arg=True
     else:
