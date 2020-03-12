@@ -73,8 +73,8 @@ SYNTAX.update({
     "bash": "\
 **Requested Module --> bash**\
 \n\n**Detailed usage of fuction(s):**\
-\n\nreply to any command with ```.bash <f>``\
+\n\nreply to any command with ```.bash [f]( f is optional)``\
 \nUsage: Evaluate bash code.\
-\n f is optional ,if supplied show full result\
+\nf is optional ,if supplied show full result\
 "
 })
