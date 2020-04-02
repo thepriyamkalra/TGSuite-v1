@@ -7,6 +7,20 @@ from telethon.tl import functions, types
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
+
+ig_link=""
+github_link=""
+fb_link=""
+try:
+    if Config.IG_LINK is not None:
+        ig_link=Config.IG_LINK
+    if Config.FB_LINK is not None:
+        fb_link=Config.FB_LINK
+    if Config.GITHUB_LINK is not None:
+        github_link=Config.GITHUB_LINK
+except  Exception:
+    pass
+social_str=f"\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
 borg.storage.last_afk_message = {}  # pylint:disable=E0602
@@ -25,7 +39,7 @@ async def set_not_afk(event):
                 event.chat_id,
                 "Please set `PRIVATE_GROUP_BOT_API_ID` " + \
                 "for the proper functioning of afk functionality " + \
-                "in @UniBorg\n\n `{}`".format(str(e)),
+                "in @BeastBot\n\n `{}`".format(str(e)),
                 reply_to=event.message.id,
                 silent=True
             )
@@ -48,9 +62,9 @@ async def _(event):
             borg.storage.afk_time = datetime.datetime.now()  # pylint:disable=E0602
         borg.storage.USER_AFK.update({"yes": reason})  # pylint:disable=E0602
         if reason:
-            await event.edit(f"**I'm goin' afk cuz {reason}.**")
+            await event.edit(f"**I'm goin' afk cuz {reason}.**\nMeanwhile you can ping here {social_str}")
         else:
-            await event.edit(f"**I'm goin' afk.**")
+            await event.edit(f"**I'm goin' afk.**\nMeanwhile you can ping here {social_str}")
         await asyncio.sleep(5)
         try:
             status = f"Set AFK mode to True, and Reason is {reason}"
