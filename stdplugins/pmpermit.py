@@ -6,7 +6,10 @@ from telethon import events
 from telethon.tl import functions, types
 from sql_helpers.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST,SUDO_USERS
-from uniborg.util import admin_cmd
+from uniborg.util import admin_cmd 
+
+#should show social link or not?
+should_show_social=Config.SHOW_SOCIAL  
 
 ig_link="set IG_LINK in Heroku config"
 github_link="set GITHUB_LINK in Heroku config"
@@ -21,6 +24,9 @@ try:
 except  Exception:
     pass
 
+social_str=""
+if should_show_social:
+    social_str=f"\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
@@ -33,8 +39,7 @@ UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
 wait for my master to look in, he mostly approves PMs.\nMeanWhile you can check my master's Social Accounts
-```"""+f"\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
-
+```"""+social_str
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
