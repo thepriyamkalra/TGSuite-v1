@@ -42,7 +42,7 @@ async def set_not_afk(event):
                 event.chat_id,
                 "Please set `PRIVATE_GROUP_BOT_API_ID` " + \
                 "for the proper functioning of afk functionality " + \
-                "in @BeastBot\n\n `{}`".format(str(e)),
+                "in @ BeastBot \n\n `{}`".format(str(e)),
                 reply_to=event.message.id,
                 silent=True
             )
