@@ -16,7 +16,7 @@ if Config.BOT_USER is not None:
 async def _(event):
     if event.fwd_from:
         return
-    help_string = f"BEASTBOT-REBORN v 1.2 is running for {username}.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```\nBy: @beast0110\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
+    help_string = f"BEASTBOT-REBORN v 1.3 is running for {username}.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```\nBy: @beast0110\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
         results = await borg.inline_query(  # pylint:disable=E0602
