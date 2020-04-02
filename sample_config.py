@@ -123,6 +123,9 @@ class Config(object):
     GITHUB_LINK=os.environ.get("GITHUB_LINK",None)
 
 
+    BOT_USER=os.environ.get("USER_NAME",None)
+
+
 class Production(Config):
     LOGGER = False
 
