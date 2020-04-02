@@ -19,7 +19,7 @@ try:
         fb_link=Config.FB_LINK
     if Config.GITHUB_LINK is not None:
         github_link=Config.GITHUB_LINK
-except  e:
+except  Exception:
     pass
 
 
