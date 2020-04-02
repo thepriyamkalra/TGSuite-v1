@@ -8,9 +8,9 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
 
 
-ig_link=""
-github_link=""
-fb_link=""
+ig_link="set IG_LINK in Heroku config"
+github_link="set GITHUB_LINK in Heroku config"
+fb_link="set FB_LINK in Heroku config"
 try:
     if Config.IG_LINK is not None:
         ig_link=Config.IG_LINK
