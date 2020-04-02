@@ -22,7 +22,7 @@ except  Exception:
     pass
 social_str=""
 if should_show_social:
-    social_str=f"\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
+    social_str=f"\nMeanWhile you can check my master's Social Accounts\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
 
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602

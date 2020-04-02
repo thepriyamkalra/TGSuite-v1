@@ -26,7 +26,7 @@ except  Exception:
 
 social_str=""
 if should_show_social:
-    social_str=f"\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
+    social_str=f"\nMeanWhile you can check my master's Social Accounts\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
@@ -38,7 +38,7 @@ CONTINOUS_MSG_COUNT=0 #for bot and spam protection
 UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
-wait for my master to look in, he mostly approves PMs.\nMeanWhile you can check my master's Social Accounts
+wait for my master to look in, he mostly approves PMs.
 ```"""+social_str
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
