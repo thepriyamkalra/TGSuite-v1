@@ -189,6 +189,11 @@
       "required": false,
 	"value":"king kobra"
     },
+     "SHOW_SOCIAL": {
+      "description": "Whether Social Link be Shown or not",
+      "required": true,
+	"value":"True"
+    },
     "G_DRIVE_CLIENT_SECRET": {
       "description": "Get your credentials from https://da.gd/so63O",
       "required": false

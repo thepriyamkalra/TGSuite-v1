@@ -100,7 +100,7 @@ class Config(object):
     # Set to True if you want to block users that are spamming your PMs.
     NO_P_M_SPAM = bool(os.environ.get("NO_P_M_SPAM", False))
     # define "spam" in PMs
-    MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 3))
+    MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 10))
     # leave this blank, should be automatically filled for Heroku.com users
     PM_LOGGR_BOT_API_ID = os.environ.get("PM_LOGGR_BOT_API_ID", None)
     if PM_LOGGR_BOT_API_ID:
@@ -124,7 +124,7 @@ class Config(object):
 
 
     BOT_USER=os.environ.get("USER_NAME",None)
-
+    SHOW_SOCIAL=bool(os.environ.get("SHOW_SOCIAL",False))
 
 class Production(Config):
     LOGGER = False
