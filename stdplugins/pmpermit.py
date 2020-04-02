@@ -34,10 +34,8 @@ UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
 wait for my master to look in, he mostly approves PMs.\n
+```"""+f"\nFacebook : {fb_link}\n\nInstagram: {ig_link}\n\nGithub: {github_link}\n"
 
-```\n
-    Facebook : f{fb_link}\nInstagram: f{ig_link}\nGithub: {github_link}\n
-"""
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
