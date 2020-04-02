@@ -26,7 +26,7 @@ except  Exception:
 
 social_str=""
 if should_show_social:
-    social_str=f"\nMeanWhile you can check my master's Social Accounts\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
+    social_str=f"\nMeanWhile you can check my master's Social Accounts\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
