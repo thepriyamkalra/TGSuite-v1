@@ -65,9 +65,9 @@ async def _(event):
             borg.storage.afk_time = datetime.datetime.now()  # pylint:disable=E0602
         borg.storage.USER_AFK.update({"yes": reason})  # pylint:disable=E0602
         if reason:
-            await event.edit(f"**I'm goin' afk cuz {reason}.**\nMeanwhile you can ping here {social_str}")
+            await event.edit(f"**I'm goin' afk cuz {reason}.**\n{social_str}")
         else:
-            await event.edit(f"**I'm goin' afk.**\nMeanwhile you can ping here {social_str}")
+            await event.edit(f"**I'm goin' afk.**\n{social_str}")
         await asyncio.sleep(5)
         try:
             status = f"Set AFK mode to True, and Reason is {reason}"
