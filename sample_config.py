@@ -116,6 +116,12 @@ class Config(object):
     # define "pack_name" in config_vars
     ANIM_PACK_NAME = os.environ.get("ANIM_PACK_NAME", None)
 
+    FB_LINK=os.environ.get("FB_LINK",None)
+
+    IG_LINK=os.environ.get("IG_LINK",None)
+
+    GITHUB_LINK=os.environ.get("GITHUB_LINK",None)
+
 
 class Production(Config):
     LOGGER = False

@@ -1,6 +1,5 @@
 # For UniBorg
 # Syntax (.approve, .block)
-import sys
 import asyncio
 import json
 from telethon import events
