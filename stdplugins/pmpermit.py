@@ -9,6 +9,19 @@ from sql_helpers.pmpermit_sql import is_approved, approve, disapprove, get_all_a
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST,SUDO_USERS
 from uniborg.util import admin_cmd
 
+ig_link="set IG_LINK in Heroku config"
+github_link="set GITHUB_LINK in Heroku config"
+fb_link="set FB_LINK in Heroku config"
+try:
+    if Config.IG_LINK is not None:
+        ig_link=Config.IG_LINK
+    if Config.FB_LINK is not None:
+        fb_link=Config.FB_LINK
+    if Config.GITHUB_LINK is not None:
+        github_link=Config.GITHUB_LINK
+except  e:
+    pass
+
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
@@ -23,7 +36,7 @@ Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPleas
 wait for my master to look in, he mostly approves PMs.\n
 
 ```\n
-
+    Facebook : f{fb_link}\nInstagram: f{ig_link}\nGithub: {github_link}\n
 """
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
