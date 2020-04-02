@@ -14,11 +14,11 @@ github_link="set GITHUB_LINK in Heroku config"
 fb_link="set FB_LINK in Heroku config"
 try:
     if Config.IG_LINK is not None:
-        ig_link=str(Config.IG_LINK)
+        ig_link=Config.IG_LINK
     if Config.FB_LINK is not None:
-        fb_link=str(Config.FB_LINK)
+        fb_link=Config.FB_LINK
     if Config.GITHUB_LINK is not None:
-        github_link=str(Config.GITHUB_LINK)
+        github_link=Config.GITHUB_LINK
 except  Exception:
     pass
 
@@ -34,7 +34,7 @@ UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
 wait for my master to look in, he mostly approves PMs.\n
-```"""+f"\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
+```"""+f"\nFacebook : test {fb_link} {Config.FB_LINK} [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
 
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
