@@ -38,7 +38,7 @@ async def lydia_disable_enable(event):
     if Config.LYDIA_API is None:
         await event.edit("please add required `LYDIA_API` env var")
         return
-    api_key = Config.LYDIA_API_KEY
+    api_key = Config.LYDIA_API
     api_client = API(api_key)
     lydia = LydiaAI(api_client)
     # session = lydia.create_session()
