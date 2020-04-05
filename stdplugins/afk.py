@@ -22,7 +22,7 @@ except  Exception:
     pass
 social_str=""
 if should_show_social:
-    social_str=f"\nMeanWhile you can check my master's Social Accounts\nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
+    social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल साइट्स देख सकते है \nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
 
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
@@ -38,14 +38,18 @@ async def set_not_afk(event):
             status = "Set AFK mode to False"
             await log(status)
         except Exception as e:  # pylint:disable=C0103,W0703
-            await borg.send_message(  # pylint:disable=E0602
+            warn_msg= await borg.send_message(  # pylint:disable=E0602
                 event.chat_id,
                 "Please set `PRIVATE_GROUP_BOT_API_ID` " + \
                 "for the proper functioning of afk functionality " + \
-                "in @BeastBot\n\n `{}`".format(str(e)),
+                "in your Heroku Configuaration\n\n `{}`".format(str(e)),
                 reply_to=event.message.id,
-                silent=True
-            )
+                silent=True)
+            sleep(3)
+            try:
+                warn_msg.delete()
+            except Exception:
+                pass
         borg.storage.USER_AFK = {}  # pylint:disable=E0602
         borg.storage.afk_time = None  # pylint:disable=E0602
 
@@ -121,9 +125,9 @@ async def on_afk(event):
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
-            f"**cuz {reason}** \n\n\n{social_str}" \
+            f"**cuz {reason}** \n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-** {reason}\n\n{social_str}" \
             if reason \
-            else f"\n**My Master is AFK since** {afk_since} \n\n\n{social_str}"
+            else f"\n**My Master is AFK since** {afk_since} \n **मेरे मालिक अभी उपलब्ध नहीं है** .\n\n{social_str}"
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in borg.storage.last_afk_message:  # pylint:disable=E0602
