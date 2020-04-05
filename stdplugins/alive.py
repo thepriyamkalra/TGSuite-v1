@@ -23,22 +23,22 @@ async def _(event):
         userobj=  await borg.get_me()
         user_first_name=html.escape(userobj.first_name)
     except:
-        user_first_name="Exception getting your First name .Set it first"
+        user_first_name=""
     try:
         userobj=  await borg.get_me()
         user_last_name=html.escape(userobj.last_name)
     except:
-        user_last_name="Exception getting Your Last Name. Set it "
+        user_last_name=""
     
     uname = platform.uname()
     memory = psutil.virtual_memory()
     specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
-    help_string = f"**BOT** : \t\tBEASTBOT-REBORN v 1.4\n\
-    **FOR** :```**{user_first_name}{user_last_name}**```.\n\n\
+    help_string = f" **BOT** : \t\t      **BEASTBOT-REBORN v 1.4**\n\
+    **Owner** :```{user_first_name}{user_last_name}```.\n\n\
     **Build** : ```{user_first_name}{BUILD}```\nBy: @beast0110\n\
-    **Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\
+    **Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\n\
     **System Information** : \n{specs}\n\
-    **Python** : ```{sys.version}```\n**Telethon** : ```{__version__}```\n"
+    **Python** : ```{sys.version[:5]}```\n **Telethon** : ```{__version__}```\n"
     
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
