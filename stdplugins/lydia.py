@@ -27,10 +27,7 @@ api_key=""
 api_client=""
 lydia=""
 session=None
-# if Config.LYDIA_API is not None:
-#     api_key = Config.LYDIA_API
-#     # Initialise client
-#     api_client = cf.API(api_key)
+
 
 
 @borg.on(admin_cmd(pattern="(enable|disable|list)ai"))
@@ -43,9 +40,12 @@ async def lydia_disable_enable(event):
     api_key = Config.LYDIA_API
     api_client = API(api_key)
     lydia = LydiaAI(api_client)
-    # session = lydia.create_session()
-    if event.reply_to_msg_id is not None:
-        input_str = event.pattern_match.group(1)
+ 
+
+
+    input_str = event.pattern_match.group(1)
+
+    if event.reply_to_msg_id is not None or input_str == "list":
         reply_msg = await event.get_reply_message()
         user_id = reply_msg.from_id
         chat_id = event.chat_id
@@ -99,6 +99,7 @@ async def on_new_message(event):
             session_id = s.session_id
             session_expires = s.session_expires
             query = event.text
+            # session=None #making a global session id.
             # Check if the session is expired
             # If this method throws an exception at this point,
             # then there's an issue with the API, Auth or Server.
@@ -114,7 +115,7 @@ async def on_new_message(event):
             try:
                 async with event.client.action(event.chat_id, "typing"):
                     await asyncio.sleep(1)
-                    output = session.think_thought( str(query))
+                    output = lydia.think_thought( session_id,str(query))
                     await event.reply(output)
             except Exception as e:
                 logger.info(str(e))
