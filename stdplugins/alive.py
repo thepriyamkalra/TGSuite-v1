@@ -33,12 +33,12 @@ async def _(event):
     uname = platform.uname()
     memory = psutil.virtual_memory()
     specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
-    help_string = f" **BOT** : \t\t      **BEASTBOT-REBORN v 1.4**\n\
-    **Owner** :```{user_first_name}{user_last_name}```.\n\n\
-    **Build** : ```{user_first_name}{BUILD}```\n **By** : @beast0110\n\
-    **Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\n\
-    **System Information** : \n{specs}\n\
-    **Python** : ```{sys.version[:5]}```\n **Telethon** : ```{__version__}```\n"
+    help_string = f" \t\t         **BEASTBOT-REBORN v 1.4**\
+    \n**Owner** :```{user_first_name}{user_last_name}```.\n\
+    \n**Build** : ```{user_first_name}{BUILD}```\n**By** : @beast0110\
+    \n**Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\n\
+    \n**System Information** : \n{specs}\
+    \n**Python** : ```{sys.version[:5]}```\n**Telethon** : ```{__version__}```\n"
     
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
