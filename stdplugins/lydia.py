@@ -7,7 +7,8 @@
 # @Hackintosh5 (for inspiring me to write this module)
 # @Zero_cool7870 (For Writing The Original Module)
 # Zi Xing (For CoffeeHouse API)
-#modified by @authoritydmc for working with latest lydia api
+
+#modified by @authoritydmc for working with latest lydia api 2.2.2
 
 from coffeehouse.lydia import LydiaAI
 from coffeehouse.api import API
@@ -21,12 +22,11 @@ from uniborg.util import admin_cmd
 
 MODULE_LIST.append("lydia")
 
-ACC_LYDIA = {}
-
+#global Variable 
 api_key=""
 api_client=""
 lydia=""
-
+session=None
 # if Config.LYDIA_API is not None:
 #     api_key = Config.LYDIA_API
 #     # Initialise client
