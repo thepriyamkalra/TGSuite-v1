@@ -7,6 +7,7 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
 import html
 import platform
 import psutil
+import os
 MODULE_LIST.append("alive")
 
 user_first_name="set Firstname in your Profile"
