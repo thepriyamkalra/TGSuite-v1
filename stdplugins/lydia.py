@@ -7,7 +7,8 @@
 # @Hackintosh5 (for inspiring me to write this module)
 # @Zero_cool7870 (For Writing The Original Module)
 # Zi Xing (For CoffeeHouse API)
-#modified by @authoritydmc for working with latest lydia api
+
+#modified by @authoritydmc for working with latest lydia api 2.2.2
 
 from coffeehouse.lydia import LydiaAI
 from coffeehouse.api import API
@@ -21,16 +22,16 @@ from uniborg.util import admin_cmd
 
 MODULE_LIST.append("lydia")
 
-ACC_LYDIA = {}
-
+#global Variable 
 api_key=""
 api_client=""
-lydia=""
+lydia=None
+session=None
+if Config.LYDIA_API is not None :
+    api_key = Config.LYDIA_API
+    api_client = API(api_key)
+    lydia = LydiaAI(api_client)
 
-# if Config.LYDIA_API is not None:
-#     api_key = Config.LYDIA_API
-#     # Initialise client
-#     api_client = cf.API(api_key)
 
 
 @borg.on(admin_cmd(pattern="(enable|disable|list)ai"))
@@ -40,15 +41,21 @@ async def lydia_disable_enable(event):
     if Config.LYDIA_API is None:
         await event.edit("please add required `LYDIA_API` env var")
         return
-    api_key = Config.LYDIA_API
-    api_client = API(api_key)
-    lydia = LydiaAI(api_client)
-    # session = lydia.create_session()
-    if event.reply_to_msg_id is not None:
-        input_str = event.pattern_match.group(1)
-        reply_msg = await event.get_reply_message()
-        user_id = reply_msg.from_id
-        chat_id = event.chat_id
+    else:
+        api_key = Config.LYDIA_API
+        api_client = API(api_key)
+        lydia = LydiaAI(api_client)
+
+    input_str = event.pattern_match.group(1)
+
+    if event.reply_to_msg_id is not None or input_str == "list":
+        reply_msg = None
+        user_id = None
+        chat_id = None
+        if event.reply_to_msg_id is not None:
+            reply_msg = await event.get_reply_message()
+            user_id = reply_msg.from_id
+            chat_id = event.chat_id
         await event.edit("Processing...")
         if input_str == "enable":
             session = lydia.create_session()
@@ -99,6 +106,7 @@ async def on_new_message(event):
             session_id = s.session_id
             session_expires = s.session_expires
             query = event.text
+            # session=None #making a global session id.
             # Check if the session is expired
             # If this method throws an exception at this point,
             # then there's an issue with the API, Auth or Server.
@@ -114,7 +122,7 @@ async def on_new_message(event):
             try:
                 async with event.client.action(event.chat_id, "typing"):
                     await asyncio.sleep(1)
-                    output = session.think_thought( str(query))
+                    output = lydia.think_thought( session_id,query)
                     await event.reply(output)
             except Exception as e:
                 logger.info(str(e))
