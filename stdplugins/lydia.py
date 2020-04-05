@@ -23,7 +23,9 @@ MODULE_LIST.append("lydia")
 
 ACC_LYDIA = {}
 
-
+api_key=""
+api_client=""
+lydia=""
 
 # if Config.LYDIA_API is not None:
 #     api_key = Config.LYDIA_API
@@ -102,7 +104,7 @@ async def on_new_message(event):
             # then there's an issue with the API, Auth or Server.
             if session_expires < time():
                 # re-generate session
-                session = api_client.create_session()
+                session = lydia.create_session()
                 logger.info(session)
                 session_id = session.id
                 session_expires = session.expires
@@ -112,7 +114,7 @@ async def on_new_message(event):
             try:
                 async with event.client.action(event.chat_id, "typing"):
                     await asyncio.sleep(1)
-                    output = session.think_thought( query)
+                    output = session.think_thought( str(query))
                     await event.reply(output)
             except Exception as e:
                 logger.info(str(e))
