@@ -13,4 +13,4 @@ PACKS = Config.PACKS_CONTENT
 # add syntax to this dictionary using SYNTAX.update
 SYNTAX = {}
 MODULE_LIST=[]
-BUILD = "-069x45"
+BUILD = "-069x50"
