@@ -4,40 +4,33 @@ import sys
 from telethon import events, functions, __version__,utils
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
-
+import html
 MODULE_LIST.append("alive")
 
-
-
-
-# if Config.BOT_USER is not None:
-#     username=Config.BOT_USER
-user_first_name=""
-user_last_name=""
+user_first_name="set Firstname in your Profile"
+user_last_name="set lastName in your profile"
 
 
 @borg.on(admin_cmd(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
-    re=await event.get_reply_message()
-
-    try:
-        obj_user = await event.client(
-                 GetFullUserRequest(
-                    re.chat_id
-                )
-            )
-        user_first_name=obj_user.first_name
-    except :
-        user_first_name="Error at getting User Firstname"
     try:
         userobj=  await borg.get_me()
-        user_last_name=userobj.last_name
+        user_first_name=html.escape(userobj.first_name)
+        user_last_name=html.escape(userobj.last_name)
     except:
-        user_last_name="error getting lastName @getme"
- 
-    help_string = f"BEASTBOT-REBORN v 1.3 is running for **{user_first_name}** \t{user_last_name}.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```\nBy: @beast0110\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
+        pass
+    uname = platform.uname()
+    memory = psutil.virtual_memory()
+    specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
+    help_string = f"**BOT** : \t\tBEASTBOT-REBORN v 1.4\n\
+    **FOR** :```**{user_first_name}{user_last_name}**```.\n\n\
+    **Build** : ```{user_first_name}{BUILD}```\nBy: @beast0110\n\
+    **Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\
+    **System Information** : \n{specs}\n\
+    **Python** : ```{sys.version}```\n**Telethon** : ```{__version__}```\n"
+    
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
         results = await borg.inline_query(  # pylint:disable=E0602
