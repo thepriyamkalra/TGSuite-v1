@@ -32,6 +32,7 @@ psycopg2
 psycopg2-binary
 pybase64>=0.4.0
 pyfiglet
+psutil
 PyGithub
 pylast
 pymongo
@@ -52,3 +53,4 @@ telegraph
 urbandict
 wikipedia>=1.4.0
 youtube-dl
+youtube_dl
