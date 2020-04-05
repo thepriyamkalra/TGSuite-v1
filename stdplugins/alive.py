@@ -5,6 +5,7 @@ from telethon import events, functions, __version__,utils
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
 import html
+import platform
 MODULE_LIST.append("alive")
 
 user_first_name="set Firstname in your Profile"
