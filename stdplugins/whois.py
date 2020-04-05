@@ -96,7 +96,7 @@ async def get_full_user(event):
                 )
             )
             return replied_user, None
-        else:
+        else:   
             replied_user = await event.client(
                 GetFullUserRequest(
                     previous_message.from_id

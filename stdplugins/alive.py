@@ -16,7 +16,10 @@ async def _(event):
     if event.fwd_from:
         return
     try:
-        username=await  utils.get_display_name()
+        obj_user = await event.client(
+                get_me()
+            )
+        username=obj_user.first_name
     except :
         username="Failed to get userName from getme()"
     help_string = f"BEASTBOT-REBORN v 1.3 is running for **{username}**.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```\nBy: @beast0110\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
