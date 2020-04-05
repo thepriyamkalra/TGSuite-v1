@@ -22,7 +22,11 @@ except  Exception:
     pass
 social_str=""
 if should_show_social:
+<<<<<<< HEAD
     social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल साइट्स देख सकते है \nFacebook : [click here]({fb_link})\n\nInstagram: [Go here]({ig_link})\n\nGithub: [branch here]({github_link})\n"
+=======
+    social_str=f"\nMeanWhile you can check my master's Social Accounts\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
+>>>>>>> ff466a490e0e2a65d8ad2fbb5a8d5d5fc72031fc
 
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
@@ -42,7 +46,11 @@ async def set_not_afk(event):
                 event.chat_id,
                 "Please set `PRIVATE_GROUP_BOT_API_ID` " + \
                 "for the proper functioning of afk functionality " + \
+<<<<<<< HEAD
                 "in your Heroku Configuaration\n\n `{}`".format(str(e)),
+=======
+                "in @ BeastBot \n\n `{}`".format(str(e)),
+>>>>>>> ff466a490e0e2a65d8ad2fbb5a8d5d5fc72031fc
                 reply_to=event.message.id,
                 silent=True)
             sleep(3)
