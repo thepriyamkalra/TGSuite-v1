@@ -48,14 +48,15 @@ async def lydia_disable_enable(event):
 
     input_str = event.pattern_match.group(1)
 
-    if event.reply_to_msg_id is not None or input_str == "list":
+    if event.reply_to_msg_id is not None or input_str == "list" or event.is_private:
         reply_msg = None
         user_id = None
-        chat_id = None
+        chat_id = event.chat_id
+        if event.is_private:
+            user_id=event.chat_id
         if event.reply_to_msg_id is not None:
             reply_msg = await event.get_reply_message()
             user_id = reply_msg.from_id
-            chat_id = event.chat_id
         await event.edit("Processing...")
         if input_str == "enable":
             session = lydia.create_session()
