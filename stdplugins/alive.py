@@ -1,10 +1,9 @@
 # For UniBorg
 # Syntax .alive
 import sys
-from telethon import events, functions, __version__
+from telethon import events, functions, __version__,utils
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
-
 
 MODULE_LIST.append("alive")
 username="set USER_NAME in Heroku Config"
@@ -17,8 +16,7 @@ async def _(event):
     if event.fwd_from:
         return
     try:
-        user_self = await  event.getme()
-        username=user_self.first_name
+        username=await  utils.get_display_name()
     except :
         username="Failed to get userName from getme()"
     help_string = f"BEASTBOT-REBORN v 1.3 is running for **{username}**.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```\nBy: @beast0110\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
