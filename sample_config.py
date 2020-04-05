@@ -121,9 +121,7 @@ class Config(object):
     IG_LINK=os.environ.get("IG_LINK",None)
 
     GITHUB_LINK=os.environ.get("GITHUB_LINK",None)
-
-
-    BOT_USER=os.environ.get("USER_NAME",None)
+    
     SHOW_SOCIAL=bool(os.environ.get("SHOW_SOCIAL",False))
 
 class Production(Config):

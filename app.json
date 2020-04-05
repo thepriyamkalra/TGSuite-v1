@@ -177,17 +177,17 @@
     "FB_LINK": {
       "description": "Your Facebook Profile Link",
       "required": false,
-	"value":"king kobra"
+	"value":"https://facebook.com/<your user name>"
     },
     "IG_LINK": {
       "description": "Your Instagram Link",
       "required": false,
-	"value":"king kobra"
+	"value":"https://instagram.com/<your user name>"
     },
     "GITHUB_LINK": {
       "description": "Your Github Profile Link",
       "required": false,
-	"value":"king kobra"
+	"value":"https://github.com/<your user name>"
     },
      "SHOW_SOCIAL": {
       "description": "Whether Social Link be Shown or not",
