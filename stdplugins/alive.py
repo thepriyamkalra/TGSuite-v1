@@ -6,7 +6,14 @@ from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, BUILD
 
 MODULE_LIST.append("alive")
-username="set USER_NAME in Heroku Config"
+
+username="Failed to get userName from getme() #e10 "
+try:
+    user_obj=borg.get_me()
+    username=user_obj.first_name
+except :
+    pass
+
 
 # if Config.BOT_USER is not None:
 #     username=Config.BOT_USER
@@ -15,13 +22,14 @@ username="set USER_NAME in Heroku Config"
 async def _(event):
     if event.fwd_from:
         return
-    try:
-        obj_user = await event.client(
-                get_me()
-            )
-        username=obj_user.first_name
-    except :
-        username="Failed to get userName from getme()"
+    # try:
+    #     obj_user = await event.client(
+    #             get_me()
+    #         )
+    #     username=obj_user.first_name
+    # except :
+        # pass
+ 
     help_string = f"BEASTBOT-REBORN v 1.3 is running for **{username}**.\n```Python {sys.version}```\n```Telethon {__version__}```\n```Build: {BUILD}```\nBy: @beast0110\nDeploy Code [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)"
     tgbotusername = Config.TG_BOT_USER_NAME_BF_HER  # pylint:disable=E0602
     if tgbotusername is not None:
