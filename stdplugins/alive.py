@@ -10,20 +10,26 @@ import psutil
 import os
 MODULE_LIST.append("alive")
 
-user_first_name="set Firstname in your Profile"
-user_last_name="set lastName in your profile"
+
 
 
 @borg.on(admin_cmd(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
+    user_first_name="set Firstname in your Profile"
+    user_last_name="set lastName in your profile"
     try:
         userobj=  await borg.get_me()
         user_first_name=html.escape(userobj.first_name)
+    except:
+        user_first_name="Exception getting your First name .Set it first"
+    try:
+        userobj=  await borg.get_me()
         user_last_name=html.escape(userobj.last_name)
     except:
-        pass
+        user_last_name="Exception getting Your Last Name. Set it "
+    
     uname = platform.uname()
     memory = psutil.virtual_memory()
     specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
