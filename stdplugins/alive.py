@@ -17,7 +17,7 @@ async def _(event):
     if event.fwd_from:
         return
     try:
-        user_self = await  borg.getme()
+        user_self = await  event.getme()
         username=user_self.first_name
     except :
         username="Failed to get userName from getme()"
