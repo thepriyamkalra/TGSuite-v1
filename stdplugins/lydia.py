@@ -42,9 +42,9 @@ async def lydia_disable_enable(event):
         await event.edit("please add required `LYDIA_API` env var")
         return
     else:
-        global api_key = Config.LYDIA_API
-        global api_client = API(api_key)
-        global lydia = LydiaAI(api_client)
+        api_key = Config.LYDIA_API
+        api_client = API(api_key)
+        lydia = LydiaAI(api_client)
 
     input_str = event.pattern_match.group(1)
 
