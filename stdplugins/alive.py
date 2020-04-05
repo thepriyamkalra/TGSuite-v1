@@ -33,7 +33,7 @@ async def _(event):
     uname = platform.uname()
     memory = psutil.virtual_memory()
     specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
-    help_string = f":-> \t\t         **BEASTBOT-REBORN v 1.5**\t\t         <-:\
+    help_string = f":-> \t\t            **BEASTBOT-REBORN v 1.5**\t\t           <-:\n\n\
     \n**Owner** :```{user_first_name}{user_last_name}```.\n\
     \n**Build** : ```{user_first_name}{BUILD}```\n**By** : @beast0110\
     \n**Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\n\
@@ -53,9 +53,11 @@ async def _(event):
         )
         await event.delete()
     else:
-        await event.reply(help_string + "\n\n")
+        # await event.reply(help_string + "\n\n")
         await event.delete()
-
+        await borg.send_message(event.chat_id,help_string+"\n\n",silent=True
+        ,link_preview=False
+        )
 def get_size(bytes, suffix="B"):
     factor = 1024
     for unit in ["", "K", "M", "G", "T", "P"]:
