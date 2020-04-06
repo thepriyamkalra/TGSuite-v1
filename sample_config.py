@@ -113,6 +113,7 @@ class Config(object):
     PACKS_CONTENT = os.environ.get("PACKS_CONTENT", None)
     # define "pack_name" in config_vars
     PACK_NAME = os.environ.get("PACK_NAME", None)
+    PACK_PREFIX=os.environ.get("PACK_PREFIX","BEASTBOT_")
     # define "pack_name" in config_vars
     ANIM_PACK_NAME = os.environ.get("ANIM_PACK_NAME", None)
 

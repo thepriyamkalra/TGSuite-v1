@@ -52,8 +52,8 @@ async def _(event):
     me = borg.me
     userid = event.from_id
     packname = f"{PACK_NAME}"
-    # format: Uni_Borg_userid
-    packshortname = f"BEASTBOT_{PACK_NAME[-1]}_{userid}"
+    # format:BEASTBOT_x_userid
+    packshortname = f"{Config.PACK_PREFIX}{PACK_NAME[-1]}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@UniBorg_Sticker.png"
@@ -63,8 +63,8 @@ async def _(event):
         file_ext_ns_ion = "AnimatedSticker.tgs"
         uploaded_sticker = await borg.upload_file(file, file_name=file_ext_ns_ion)
         packname = f"{ANIM_PACK_NAME}"
-        # format: Uni_Borg_Packx_userid
-        packshortname = f"BEASTBOT_{packname[-1]}_{userid}_as"
+        # format: BEASTBOT_x_userid_as
+        packshortname = f"{Config.PACK_PREFIX}{packname[-1]}_{userid}_as"
     elif not is_message_image(reply_message):
         await event.edit("Invalid message type")
         return
@@ -186,7 +186,7 @@ async def _(event):
             return
         is_a_s = is_it_animated_sticker(reply_message)
         file_ext_ns_ion = "webp"
-        file_caption = "https://t.me/RoseSupport/33801"
+        file_caption = "Here is the stickers in zip File :)"
         if is_a_s:
             file_ext_ns_ion = "tgs"
             file_caption = "Forward the ZIP file to @AnimatedStickersRoBot to get lottIE JSON containing the vector information."
@@ -355,5 +355,7 @@ SYNTAX.update({
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.kang <optional_emoji>```\
 \nUsage: Adds sticker to your own sticker pack! [NAME = env variables ANIM_PACK_NAME, PACK_NAME]\
+\n```.packinfo```\nUsuage: get sticker pack info\
+\n```.getsticker```\nUsuage: get all the stickers of a pack \n
 "
 })
