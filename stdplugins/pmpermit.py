@@ -41,7 +41,7 @@ Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPleas
 wait for my master to look in, he mostly approves PMs.```
 \n\n
 ```रुक जाइए ,ये एक बॉट है,डरे नहीं, अभी मेरे मालिक ने आपको मैसेज करने की अनुमति नहीं दी है |
-उनके अनुमति का इंतजार करे \nवो अधिकतर आज्ञा दे देते है \n**तबतक आप अनाव्यशक मैसेज न करे 
+उनके अनुमति का इंतजार करे \nवो अधिकतर आज्ञा दे देते है```\n**तबतक आप अनाव्यशक मैसेज न करे 
 अन्यथा मैं आपको अवरुद्ध कर दूंगा** \n      **बीस्ट बॉट**"""+social_str
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
