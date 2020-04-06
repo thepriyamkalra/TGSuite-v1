@@ -132,11 +132,11 @@ SYNTAX.update({
     "lydia": "\
 **Requested Module --> lydia**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.enableai (as a reply to target user)```\
+\n\n```.enableai (as a reply to target user or directly in PM)```\
 \nUsage: Enables LydiaAI for the target user in the current chat.\
-\n\n```.disableai (as a reply to target user)```\
+\n\n```.disableai (as a reply to target user or directly in PM)```\
 \nUsage: Disables LydiaAI for the target user in the current chat.\
-\n\n```.listai (as a reply to target user)```\
+\n\n```.listai ```\
 \nUsage: Lists all users on which LydiaAI is enabled.\
 "
 })
