@@ -6,27 +6,7 @@ from telethon import events
 from telethon.tl import functions, types
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 #whether social link should be shown or not 
-should_show_social=Config.SHOW_SOCIAL
 
-ig_link="**set `IG_LINK` and `SHOW_SOCIAL` as `True` in Heroku config**\n"
-github_link="** set `GITHUB_LINK` and `SHOW_SOCIAL` as `True` in Heroku config **"
-fb_link="** set `FB_LINK`  and `SHOW_SOCIAL` as `True` in Heroku config **"
-try:
-    if Config.IG_LINK is not None:
-        ig_link=Config.IG_LINK
-    if Config.FB_LINK is not None:
-        fb_link=Config.FB_LINK
-    if Config.GITHUB_LINK is not None:
-        github_link=Config.GITHUB_LINK
-except  Exception:
-    pass
-social_str=""
-if should_show_social:
-    global social_str
-    social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n\
-    \nGithub: [branch here]({github_link})\n \
-    \nFacebook: [click here]({fb_link})\n\
-    \nInstagram: [Go here]({ig_link})\n"
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
 borg.storage.last_afk_message = {}  # pylint:disable=E0602
@@ -91,7 +71,6 @@ async def on_afk(event):
     if event.fwd_from:
         return
     afk_since = "**a while ago**"
-    global social_str #use global social_str variable
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
         # userbot's should not reply to other userbot's
@@ -128,8 +107,26 @@ async def on_afk(event):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
-        if not event.is_private:
-            social_str="\n:r3dw0lf:\n" #do not show any link in group (cause it may trigger ban)
+        should_show_social=Config.SHOW_SOCIAL
+
+        ig_link="**set `IG_LINK` and `SHOW_SOCIAL` as `True` in Heroku config**\n"
+        github_link="** set `GITHUB_LINK` and `SHOW_SOCIAL` as `True` in Heroku config **"
+        fb_link="** set `FB_LINK`  and `SHOW_SOCIAL` as `True` in Heroku config **"
+        try:
+            if Config.IG_LINK is not None:
+                ig_link=Config.IG_LINK
+            if Config.FB_LINK is not None:
+                fb_link=Config.FB_LINK
+            if Config.GITHUB_LINK is not None:
+                github_link=Config.GITHUB_LINK
+        except  Exception:
+            pass
+        social_str=""
+        if should_show_social and not event.is_private :  #do not show any link in group (cause it may trigger ban)
+            social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n\
+            \nGithub: [branch here]({github_link})\n \
+            \nFacebook: [click here]({fb_link})\n\
+            \nInstagram: [Go here]({ig_link})\n"
 
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
             f"**cuz {reason}** \n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-** {reason}\n\n{social_str}" \
