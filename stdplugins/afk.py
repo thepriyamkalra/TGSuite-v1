@@ -127,7 +127,7 @@ async def on_afk(event):
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
         if not event.is_private:
-            social_str="" #do not show any link in group (cuase it may trigger ban)
+            global social_str="" #do not show any link in group (cause it may trigger ban)
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
             f"**cuz {reason}** \n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-** {reason}\n\n{social_str}" \
             if reason \
