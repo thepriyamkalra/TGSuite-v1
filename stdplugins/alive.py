@@ -10,7 +10,7 @@ import psutil
 import os
 MODULE_LIST.append("alive")
 
-BUILD="-69x56"
+BUILD="-69x57"
 
 
 @borg.on(admin_cmd(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
@@ -19,21 +19,24 @@ async def _(event):
         return
     user_first_name="set Firstname in your Profile"
     user_last_name="set lastName in your profile"
+    userobj=None
     try:
         userobj=  await borg.get_me()
-        user_first_name=html.escape(userobj.first_name)
+    except:
+        userobj=None
+    try:
+        user_first_name=userobj.first_name
     except:
         user_first_name=""
     try:
-        userobj=  await borg.get_me()
-        user_last_name=html.escape(userobj.last_name)
+        user_last_name=userobj.last_name
     except:
         user_last_name=""
     
     uname = platform.uname()
     memory = psutil.virtual_memory()
     specs = f"```System: {uname.system}```\n```Release: {uname.release}```\n```Version: {uname.version}```\n```Processor: {uname.processor}```\n```Memory [RAM]: {get_size(memory.total)}```"
-    help_string = f":-> \t\t            **BEASTBOT-REBORN v 1.5**\t\t           <-:\n\n\
+    help_string = f":-> \t\t          **BEASTBOT-REBORN v 1.5**\t\t           <-:\n\n\
     \n**Owner** :```{user_first_name}{user_last_name}```.\n\
     \n**Build** : ```{user_first_name}{BUILD}```\n**By** : @beast0110\
     \n**Deploy Code** : [@Github](https://github.com/authoritydmc/BEASTBOT-REBORN)\n\
