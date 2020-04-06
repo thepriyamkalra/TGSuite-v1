@@ -47,7 +47,7 @@ async def set_not_afk(event):
                 "in your Heroku Configuaration\n\n `{}`".format(str(e)),
                 reply_to=event.message.id,
                 silent=True)
-            sleep(3)
+            await asyncio.sleep(3)
             try:
                 event.delete()
             except Exception:
