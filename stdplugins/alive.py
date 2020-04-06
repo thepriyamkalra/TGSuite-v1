@@ -9,7 +9,7 @@ import psutil
 import os
 MODULE_LIST.append("alive")
 
-BUILD="-69x58"
+BUILD="-69x60"
 
 
 @borg.on(admin_cmd(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
