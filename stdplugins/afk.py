@@ -90,6 +90,7 @@ async def on_afk(event):
     if event.fwd_from:
         return
     afk_since = "**a while ago**"
+    global social_str #use global social_str variable
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
         # userbot's should not reply to other userbot's
@@ -127,7 +128,7 @@ async def on_afk(event):
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
         if not event.is_private:
-            global social_str="" #do not show any link in group (cause it may trigger ban)
+            social_str="" #do not show any link in group (cause it may trigger ban)
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
             f"**cuz {reason}** \n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-** {reason}\n\n{social_str}" \
             if reason \
