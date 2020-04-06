@@ -26,7 +26,7 @@ except  Exception:
 
 social_str=""
 if should_show_social:
-    social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स देख सकते है\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
+    social_str=f"\n\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स देख सकते है\n\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
@@ -38,12 +38,11 @@ CONTINOUS_MSG_COUNT=0 #for bot and spam protection
 UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
-wait for my master to look in, he mostly approves PMs.
+wait for my master to look in, he mostly approves PMs.```
 \n\n
-रुक जाइए ,ये एक बॉट है,डरे नहीं\nअभी मेरे मालिक ने आपको मैसेज करने की अनुमति नहीं दी है |
-उनके अनुमति का इंतजार करे |\nवो अदितकार आज्ञा दे देते है |\n**तबतक आप अनाव्यशक मैसेज न करे 
-अन्यथा मैं आपको अवरुद्ध कर दूंगा** | **बीस्ट बॉट**
-```"""+social_str
+```रुक जाइए ,ये एक बॉट है,डरे नहीं, अभी मेरे मालिक ने आपको मैसेज करने की अनुमति नहीं दी है |
+उनके अनुमति का इंतजार करे \nवो अधिकतर आज्ञा दे देते है```\n**तबतक आप अनाव्यशक मैसेज न करे 
+अन्यथा मैं आपको अवरुद्ध कर दूंगा** \n      **बीस्ट बॉट**"""+social_str
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
