@@ -30,7 +30,7 @@ async def set_not_afk(event):
                 silent=True)
             await asyncio.sleep(3)
             try:
-                event.delete()
+               await event.delete()
             except Exception:
                 pass
         borg.storage.USER_AFK = {}  # pylint:disable=E0602
