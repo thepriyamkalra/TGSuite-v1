@@ -1,5 +1,5 @@
-# BEAST_BOT REBORN V 1.0
-
+# BEAST_BOT REBORN V 2.0+
+**based on telethon 1.11.3**
 Customized #UniBorg based on telethon.
 
 ## Installing
