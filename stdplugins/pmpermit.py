@@ -11,9 +11,9 @@ from uniborg.util import admin_cmd
 #should show social link or not?
 should_show_social=Config.SHOW_SOCIAL  
 
-ig_link="set IG_LINK in Heroku config"
-github_link="set GITHUB_LINK in Heroku config"
-fb_link="set FB_LINK in Heroku config"
+ig_link="**set `IG_LINK` and `SHOW_SOCIAL` as `True` in Heroku config**\n"
+github_link="** set `GITHUB_LINK` and `SHOW_SOCIAL` as `True` in Heroku config **"
+fb_link="** set `FB_LINK`  and `SHOW_SOCIAL` as `True` in Heroku config **"
 try:
     if Config.IG_LINK is not None:
         ig_link=Config.IG_LINK
@@ -26,7 +26,7 @@ except  Exception:
 
 social_str=""
 if should_show_social:
-    social_str=f"\nMeanWhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल साइट्स देख सकते है\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
+    social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स देख सकते है\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
 
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}
@@ -39,6 +39,10 @@ UNIBORG_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
 wait for my master to look in, he mostly approves PMs.
+\n\n
+रुक जाइए ,ये एक बॉट है,डरे नहीं\nअभी मेरे मालिक ने आपको मैसेज करने की अनुमति नहीं दी है |
+उनके अनुमति का इंतजार करे |\nवो अदितकार आज्ञा दे देते है |\n**तबतक आप अनाव्यशक मैसेज न करे 
+अन्यथा मैं आपको अवरुद्ध कर दूंगा** | **बीस्ट बॉट**
 ```"""+social_str
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))

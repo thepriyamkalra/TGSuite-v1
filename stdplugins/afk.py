@@ -8,9 +8,9 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 #whether social link should be shown or not 
 should_show_social=Config.SHOW_SOCIAL
 
-ig_link="set IG_LINK in Heroku config"
-github_link="set GITHUB_LINK in Heroku config"
-fb_link="set FB_LINK in Heroku config"
+ig_link="**set `IG_LINK` and `SHOW_SOCIAL` as `True` in Heroku config**\n"
+github_link="** set `GITHUB_LINK` and `SHOW_SOCIAL` as `True` in Heroku config **"
+fb_link="** set `FB_LINK`  and `SHOW_SOCIAL` as `True` in Heroku config **"
 try:
     if Config.IG_LINK is not None:
         ig_link=Config.IG_LINK
@@ -22,10 +22,10 @@ except  Exception:
     pass
 social_str=""
 if should_show_social:
-    social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल साइट्स देख सकते है\n\n\
-    Github: [branch here]({github_link})\n\n \
-    Facebook: [click here]({fb_link})\n\n  \
-    Instagram: [Go here]({ig_link})\n"
+    social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n\
+    \nGithub: [branch here]({github_link})\n \
+    \nFacebook: [click here]({fb_link})\n\
+    \nInstagram: [Go here]({ig_link})\n"
 borg.storage.USER_AFK = {}  # pylint:disable=E0602
 borg.storage.afk_time = None  # pylint:disable=E0602
 borg.storage.last_afk_message = {}  # pylint:disable=E0602
