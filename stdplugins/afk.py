@@ -41,7 +41,7 @@ async def set_not_afk(event):
             await log(status)
         except Exception as e:  # pylint:disable=C0103,W0703
             await borg.send_message(  # pylint:disable=E0602
-                event.chat_id,
+                777000,
                 "Please set `PRIVATE_GROUP_BOT_API_ID` " + \
                 "for the proper functioning of afk functionality " + \
                 "in your Heroku Configuaration\n\n `{}`".format(str(e)),
@@ -126,6 +126,8 @@ async def on_afk(event):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
+        if not event.is_private:
+            social_str="" #do not show any link in group (cuase it may trigger ban)
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
             f"**cuz {reason}** \n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-** {reason}\n\n{social_str}" \
             if reason \
