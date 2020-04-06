@@ -18,16 +18,13 @@ async def _(event):
         return
     user_first_name="set Firstname in your Profile"
     user_last_name="set lastName in your profile"
-    userobj=None
     try:
-        userobj=  await borg.get_me()
-    except:
-        userobj=None
-    try:
+        userobj= await borg.get_me()
         user_first_name=userobj.first_name
     except:
         user_first_name=""
     try:
+        userobj= await borg.get_me()
         user_last_name=userobj.last_name
     except:
         user_last_name=""
