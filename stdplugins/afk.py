@@ -122,7 +122,7 @@ async def on_afk(event):
         except  Exception:
             pass
         social_str=""
-        if should_show_social and not event.is_private :  #do not show any link in group (cause it may trigger ban)
+        if should_show_social and  event.is_private :  #do not show any link in group (cause it may trigger ban)
             social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n\
             \nGithub: [branch here]({github_link})\n \
             \nFacebook: [click here]({fb_link})\n\
