@@ -53,6 +53,7 @@ async def _(event):
     userid = event.from_id
     packname = f"{PACK_NAME}"
     # format:BEASTBOT_x_userid
+    #format for Uniborg user : set PACK_PREFIX as Uniborg_Pack
     packshortname = f"{Config.PACK_PREFIX}{PACK_NAME[-1]}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
@@ -356,6 +357,5 @@ SYNTAX.update({
 \n\n```.kang <optional_emoji>```\
 \nUsage: Adds sticker to your own sticker pack! [NAME = env variables ANIM_PACK_NAME, PACK_NAME]\
 \n```.packinfo```\nUsuage: get sticker pack info\
-\n```.getsticker```\nUsuage: get all the stickers of a pack \n
-"
+\n```.getsticker```\nUsuage: get all the stickers of a pack \n"
 })
