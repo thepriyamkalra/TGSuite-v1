@@ -22,6 +22,7 @@ except  Exception:
     pass
 social_str=""
 if should_show_social:
+    global social_str
     social_str=f"\nMeanwhile you can check my master's Social Accounts\nतबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n\
     \nGithub: [branch here]({github_link})\n \
     \nFacebook: [click here]({fb_link})\n\
@@ -128,7 +129,9 @@ async def on_afk(event):
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
         if not event.is_private:
-            social_str="" #do not show any link in group (cause it may trigger ban)
+            social_str="\n:r3dw0lf:\n" #do not show any link in group (cause it may trigger ban)
+        else:
+
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
             f"**cuz {reason}** \n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-** {reason}\n\n{social_str}" \
             if reason \
