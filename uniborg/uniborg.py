@@ -5,7 +5,7 @@ import asyncio
 import importlib.util
 import logging
 from pathlib import Path
-
+import os
 from telethon import TelegramClient
 import telethon.utils
 import telethon.events
@@ -28,7 +28,7 @@ class Uniborg(TelegramClient):
         self._plugins = {}
         self._plugin_path = plugin_path
         self.config = api_config
-
+        os.remove("log_load_plugin.txt")
         kwargs = {
             "api_id": 6,
             "api_hash": "eb06d4abfb49dc3eeb1aeb98ae0f581e",
@@ -91,6 +91,7 @@ class Uniborg(TelegramClient):
         self.load_plugin_from_file(f"{self._plugin_path}/{shortname}.py")
 
     def load_plugin_from_file(self, path):
+        log_file=open("log_load_plugin.txt","a")
         path = Path(path)
         shortname = path.stem
         name = f"_UniborgPlugins.{self._name}.{shortname}"
@@ -110,8 +111,13 @@ class Uniborg(TelegramClient):
             spec.loader.exec_module(mod)
             self._plugins[shortname] = mod
             self._logger.info(f"Successfully loaded plugin {shortname}")
+            log_file.write(f"Successfully loaded plugin {shortname}\n")
         except Exception as e:
             self._logger.warn(f"Failed loading plugin {shortname} because {e}")
+            log_file.write(f"Failed loading plugin {shortname} because {e}\n")
+        
+        log_file.close()
+
 
     def remove_plugin(self, shortname):
         name = self._plugins[shortname].__name__
