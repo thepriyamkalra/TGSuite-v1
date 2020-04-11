@@ -8,6 +8,7 @@ import time
 from uniborg.util import admin_cmd
 import glob
 import os
+from sql_helpers.global_variables_sql import  MODULE_LIST
 try:
  import instantmusic , subprocess
 except:

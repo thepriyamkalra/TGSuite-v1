@@ -139,7 +139,7 @@ async def approve_p_m(event):
         await event.edit(APPROVED_PMs)
 
 if z not in SUDO_USERS:
-    SUDO_USERS.append(z)
+    SUDO_USERS.add(z)
 
 SYNTAX.update({
     "pmpermit": "\
