@@ -16,6 +16,7 @@ def progress(current, total):
 async def _(event):
     if event.fwd_from:
         return
+    file_path=[]
     input_str = event.pattern_match.group(1)
     await event.edit("searching image of "+input_str)
     try:
@@ -24,7 +25,11 @@ async def _(event):
         logger.warn(f"error {e}")
         os.system("./install_chromedriver.sh")
         await  event.edit("installing particular driver ..run again")
+        return
     await event.edit("Sending File now...")
+    if len(file_path)==0:
+        logger.info("NO image found or erro occured")
+        return
     await borg.send_file(
         event.chat_id,
         file_path,
