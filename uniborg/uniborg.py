@@ -28,7 +28,10 @@ class Uniborg(TelegramClient):
         self._plugins = {}
         self._plugin_path = plugin_path
         self.config = api_config
-        os.remove("log_load_plugin.txt")
+        try:
+            os.remove("log_load_plugin.txt")   
+        except:
+            print("Failed to remove log_file")     
         kwargs = {
             "api_id": 6,
             "api_hash": "eb06d4abfb49dc3eeb1aeb98ae0f581e",
