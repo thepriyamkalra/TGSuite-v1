@@ -23,12 +23,12 @@ async def _(event):
         file_path=search_and_download(input_str)
     except  Exception as e:
         logger.warn(f"error {e}")
-        os.system("./install_chromedriver.sh")
+        os.system("./stdplugins/install_chromedriver.sh")
         await  event.edit("installing particular driver ..run again")
         return
     await event.edit("Sending File now...")
     if len(file_path)==0:
-        logger.info("NO image found or erro occured")
+        logger.info("NO image found or error occured")
         return
     await borg.send_file(
         event.chat_id,
