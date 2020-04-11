@@ -42,9 +42,14 @@ async def _(event):
         user_id = f"```{reply_msg.from_id}```"
         noformat_userid = reply_msg.from_id
     else:
-        user_id = "Unknown user"
-        noformat_userid = "Unknown user"
-    if noformat_userid in SUDO_USERS:
+        if event.is_private:
+            user_id=event.chat_id
+            noformat_userid=event.chat_id
+        else: #group
+            user_id = "Unknown user"
+            noformat_userid = "Unknown user"
+    print(f"{noformat_userid} its type {type(noformat_userid)} ")
+    if noformat_userid in SUDO_USERS :
         await event.edit("मुझे खेद है, मैं ऐसा नहीं कर सकता|\nक्या आपने मेरे निर्माता का अपमान करने की कोशिश की|\n```\
 वह मेरे लिए भगवान है```")
         return 
@@ -62,7 +67,7 @@ async def _(event):
         time.sleep(1)
         log_insults += f"```{insult}```\n\n"
     #send message now
-    await event.edit(insults)
+    await event.edit(insults+"!!")
     time.sleep(2)
     await borg.send_message(
             LOGGER,
