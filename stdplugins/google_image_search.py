@@ -18,7 +18,12 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     await event.edit("searching image of "+input_str)
-    file_path=search_and_download(input_str)
+    try:
+        file_path=search_and_download(input_str)
+    except  Exception as e:
+        logger.warn(f"error {e}")
+        os.system("./install_chromedriver.sh")
+        await  event.edit("installing particular driver ..run again")
     await event.edit("Sending File now...")
     await borg.send_file(
         event.chat_id,
@@ -29,7 +34,11 @@ async def _(event):
     await event.edit("Complete Sending file for "+input_str)
     for each_file in file_path:
         os.remove(each_file)
-    os.rmdir(Config.TMP_DOWNLOAD_DIRECTORY+input_str)
+
+    try:
+        os.rmdir(str(Config.TMP_DOWNLOAD_DIRECTORY+input_str).replace(" ","_"))
+    except :
+        logger.error("Can not delete images directory")
 
     await asyncio.sleep(5)
     await event.delete()
