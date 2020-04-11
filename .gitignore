@@ -1,3 +1,5 @@
+/stdplugins/test.py
+/DOWNLOADS/*
 config.py
 *.pyc
 log_load_plugin.txt

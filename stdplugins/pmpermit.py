@@ -95,6 +95,10 @@ async def approve_p_m(event):
                 await event.edit("Private Message Accepted")
                 await asyncio.sleep(3)
                 await event.delete()
+        else:
+            print("Can not use pmpermit in GROUP")
+    else:
+        print("NO_P_M__SPAM not configured")
 
 
 @borg.on(admin_cmd("block ?(.*)"))

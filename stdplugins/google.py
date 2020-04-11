@@ -13,9 +13,7 @@ from google_images_download import google_images_download
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
 MODULE_LIST.append("go(google search)")
-MODULE_LIST.append("goimg (google image search)")
 
-MODULE_LIST.append("gorev(erse) image  search)")
 
 
 def progress(current, total):
@@ -47,12 +45,12 @@ async def _(event):
     await event.edit("Google: {}\n{}".format(input_str, output_str), link_preview=False)
 
 
-@borg.on(admin_cmd(pattern="goim.?g.? (.*)"))
+@borg.on(admin_cmd(pattern="goimg? (.*)"))
 async def _(event):
     if event.fwd_from:
         return
     start = datetime.now()
-    await event.edit("Processing ...")
+    await event.edit("Processing ...not working anymore..Due to Google's DOM Change")
     input_str = event.pattern_match.group(1)
     response = google_images_download.googleimagesdownload()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
@@ -68,6 +66,9 @@ async def _(event):
     paths = response.download(arguments)
     logger.info(paths)
     lst = paths[0].get(input_str)
+    if len(lst) == 0:
+        await event.delete()
+        return
     await borg.send_file(
         event.chat_id,
         lst,
@@ -85,7 +86,7 @@ async def _(event):
     await event.delete()
 
 
-@borg.on(admin_cmd(pattern="go rev*"))
+@borg.on(admin_cmd(pattern="gorev$"))
 async def _(event):
     if event.fwd_from:
         return
