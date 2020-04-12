@@ -80,14 +80,16 @@ def time_formatter(milliseconds: int) -> str:
         ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
     return tmp[:-2]
 
-@borg.on(admin_cmd(pattern="yt(a|v) (.*)"))
+@borg.on(admin_cmd(pattern="yt(a|v) ?(.*)"))
 async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
 
     url = v_url.pattern_match.group(2)
     type = v_url.pattern_match.group(1).lower()
-    url=await v_url.get_reply_message()
-    await v_url.edit("`Preparing to download...`")
+    if not url:
+    	abe = await v_url.get_reply_message()
+    	url = abe.text
+    await v_url.edit("`Preparing to download...at`"+url)
 
     if type == "a":
         opts = {
@@ -149,11 +151,11 @@ async def download_video(v_url):
         video = True
 
     try:
-        await v_url.edit("`Fetching data, please wait..`")
+        await v_url.edit("`Fetching data,  please wait..` for "+url )
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except DownloadError as DE:
-        await v_url.edit(f"`{str(DE)}`")
+        await v_url.edit(f"`{DE}`")
         return
     except ContentTooShortError:
         await v_url.edit("`The download content was too short.`")
@@ -179,7 +181,7 @@ async def download_video(v_url):
         await v_url.edit("`There was an error during info extraction.`")
         return
     except Exception as e:
-        await v_url.edit(f"{str(type(e)): {str(e)}}")
+        await v_url.edit(f"{type(e)}: {str(e)}")
         return
     c_time = time.time()
     if song:
@@ -199,7 +201,14 @@ async def download_video(v_url):
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{ytdl_data['title']}.mp3")))
-        os.remove(f"{ytdl_data['id']}.mp3")
+
+        try:
+            os.remove(f"{ytdl_data['id']}.mp4")
+            os.remove(f"{ytdl_data['id']}.jpg")
+        except Exception as e:
+            print("error at deleting file ",e)
+
+
         await v_url.delete()
     elif video:
         await v_url.edit(f"`Preparing to upload video:`\
@@ -214,7 +223,12 @@ async def download_video(v_url):
             ).create_task(
                 progress(d, t, v_url, c_time, "Uploading..",
                          f"{ytdl_data['title']}.mp4")))
-        os.remove(f"{ytdl_data['id']}.mp4")
+        try:
+            os.remove(f"{ytdl_data['id']}.mp4")
+            os.remove(f"{ytdl_data['id']}.jpg")
+        except Exception as e:
+            print("error at deleting file ",e)
+
         await v_url.delete()
         
 SYNTAX.update({
