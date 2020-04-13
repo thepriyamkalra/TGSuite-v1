@@ -128,12 +128,15 @@ async def on_afk(event):
             \nGithub: [branch here]({github_link})\n \
             \nFacebook: [click here]({fb_link})\n\
             \nInstagram: [Go here]({ig_link})\n"
-        hin2= "\n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-**"  if Config.SHOW_HINDI else ""
-        hin3="**मेरे मालिक अभी उपलब्ध नहीं है** .\n" if Config.SHOW_HINDI else ""
+        hin2=""
+        if Config.SHOW_HINDI:
+            hin2= "\n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-**"+reason if reason else "**मेरे मालिक अभी उपलब्ध नहीं है .**"
+        else:
+            hin2=""
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
-            f"**cuz {reason}**{hin2}{reason}\n\n{social_str}" \
+            f"**cuz {reason}**{hin2}\n\n{social_str}" \
             if reason \
-            else f"\n**My Master is AFK since** {afk_since} \n {hin3}\n{social_str}"
+            else f"\n**My Master is AFK since** {afk_since}\n{hin2}\n{social_str}"
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in borg.storage.last_afk_message:  # pylint:disable=E0602
