@@ -47,10 +47,14 @@ UNIBORG_USER_BOT_NO_WARN = """```
 Hee HAA! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease
 wait for my master to look in, he mostly approves PMs.```
 \n\n"""
+if Config.PM_WARN_MSG !="None":
+    UNIBORG_USER_BOT_NO_WARN=Config.PM_WARN_MSG
 if Config.SHOW_HINDI:
     UNIBORG_USER_BOT_NO_WARN+=UNIBORG_USER_BOT_WARN_HINDI+social_str
 else:
     UNIBORG_USER_BOT_NO_WARN+=social_str
+
+
 
 @borg.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
