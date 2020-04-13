@@ -30,6 +30,7 @@ if should_show_social:
     if Config.SHOW_HINDI:
         social_str+=f"\nतबतक आप मेरे मालिक का सोशल एकाउंट्स देख सकते है\n\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
 
+
 logger.info(str(Config.SHOW_HINDI))
 MODULE_LIST.append("pmpermit")
 borg.storage.PM_WARNS = {}

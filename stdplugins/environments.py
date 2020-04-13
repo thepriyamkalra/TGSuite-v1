@@ -9,6 +9,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
+
     if not input_str :
         reslt=f"Total env variable are **{len(os.environ.keys())}**\n"
         for k in sorted(os.environ.keys()):
@@ -18,7 +19,9 @@ async def _(event):
     else:
         try:
             reslt=os.environ.get(input_str,"no such environment variable exist")
+
             await  event.edit(f"```{input_str}``` -> ```{reslt}```")
+
         except :
             await event.edit("error getting env variable")
     
@@ -37,7 +40,6 @@ async def _(event):
             await  event.edit(f"set the value ```{env_value}``` for ```{variable_name}``` is **successfull**")
         except :
             await event.edit(f"Reply to a environment value you want to set first for ```{variable_name}```")
-
     else:
         await  event.edit(f"```Give environment variable name first for which you want to set.```")
 
