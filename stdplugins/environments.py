@@ -1,13 +1,7 @@
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
 import asyncio
-from selenium import webdriver
 import os
-import time
-import io
-import requests
-from PIL import Image
-import hashlib
 MODULE_LIST.append("getenv")
 
 @borg.on(admin_cmd(pattern="getenv ?(.*)"))
@@ -16,7 +10,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     # await event.edit("test "+input_str)
-    if input_str is None:
+    if input_str :
         reslt=f"Total env variable are **{len(os.environ.keys)}**\n"
         for k in os.environ.keys():
             reslt+=f"```{k}```\n"
@@ -35,8 +29,7 @@ async def _(event):
     if event.fwd_from:
         return
     variable_name = event.pattern_match.group(1)
-    # await event.edit("test "+input_str)
-    if variable_name not None:
+    if not variable_name:
         abe=await event.get_reply_message()
         env_value=abe.text
         if env_value is None:
@@ -44,8 +37,6 @@ async def _(event):
         else:
             os.environ[variable_name]=env_value
             print(f"set the env value {variable_name} to {env_value}")
-
-
     else:
         await  event.edit(f"```Give environment variable name first for which you want to set.```")
 
