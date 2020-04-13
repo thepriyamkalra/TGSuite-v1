@@ -39,7 +39,7 @@ async def lydia_disable_enable(event):
     if event.fwd_from:
         return
     if Config.LYDIA_API is None:
-        await event.edit("please add required `LYDIA_API` env var")
+        await event.edit("please add required `LYDIA_API` env var,get it from coffeehouse.intellivoid.net")
         return
     else:
         api_key = Config.LYDIA_API

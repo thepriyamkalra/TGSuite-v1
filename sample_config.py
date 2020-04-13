@@ -125,6 +125,10 @@ class Config(object):
     
     SHOW_SOCIAL=bool(os.environ.get("SHOW_SOCIAL",False))
 
+    SHOW_HINDI=bool(os.environ.get("SHOW_HINDI",True))
+
+    PM_WARN_MSG=str(os.environ.get("PM_WARN_MSG",None))
+
 class Production(Config):
     LOGGER = False
 
