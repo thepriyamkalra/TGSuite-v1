@@ -194,6 +194,11 @@
       "required": true,
 	"value":"True"
     },
+    "SHOW_HINDI": {
+      "description": "show Pm warn in Hindi or not?",
+      "value": "False",
+      "required": false
+    },
     "G_DRIVE_CLIENT_SECRET": {
       "description": "Get your credentials from https://da.gd/so63O",
       "required": false

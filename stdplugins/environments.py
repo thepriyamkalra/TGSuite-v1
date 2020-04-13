@@ -1,13 +1,8 @@
 from uniborg.util import admin_cmd
 from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
 import asyncio
-from selenium import webdriver
 import os
 import time
-import io
-import requests
-from PIL import Image
-import hashlib
 MODULE_LIST.append("test (image search query)")
 
 def progress(current, total):
