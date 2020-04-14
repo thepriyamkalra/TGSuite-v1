@@ -3,27 +3,55 @@
 Customized #UniBorg based on telethon.
 
 ## How to use
-Step1: goto [my.telegram.org/apps](https://telegram.org/apps) **use VPN in india to access the site**
-step2: login and setup the app ..
+
+#### Step1: 
+
+goto [my.telegram.org/apps](https://telegram.org/apps) **use VPN in india to access the site**
+
+
+#### step2: login and setup the app ..
+
+
 you will get **APP ID**  and **APP HASH** copy these two value at safe place (you will need later)
 
-step 2.1: clone this repo and pip install telethon first...
+**Figure for reference**
 
-step2.2 run python session-strings.py
+![APP_ID and APP_HASH ](https://i.ibb.co/CwPdL7c/app-id-hash.jpg)
 
-step2.3 enter your mobile number with country code for eg +919876543210
+#### Important Setup steps( very much imp)
 
-step 2.4 enter the code you received 
+##### step 2.1: clone this repo and pip install telethon first...
 
-step 2.5 you will get a string as a response starting with something like 1Bqvt......
-
-step 2.5 copy this String somwhere safe .this is **HU_STRING_SESSION** value
-
-step3: Create an account on Heroku.com
-
-step4: click on deploy button below
+> git clone https://github.com/authoritydmc/BEASTBOT-REBORN.git 
 
 
+using python's pip install telethon.. 
+
+> pip install telethon
+
+##### step2.2 run 
+> python session_strings.py
+
+##### step2.3 enter your mobile number with country code for eg +919876543210
+
+##### step 2.4 enter the code you received 
+
+##### step 2.5 you will get a string as a response starting with something like 1Bqvt......
+
+ copy this String somwhere safe .this is your **HU_STRING_SESSION** value
+
+#### step3: Create an account on [Heroku.com](https://heroku.com)
+
+#### step4: click on deploy button
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+#### step5 : Fill in all the Three required Value you copied and app name(anything) ..and finally click on deploy.
+
+
+
+![heroku setting page ](https://i.ibb.co/B2RPWWn/heroku-setting.jpg)
+![heroku setting page](https://i.ibb.co/YPFkpzR/heroku-settting2.jpg)
 
 ## Installing
 
