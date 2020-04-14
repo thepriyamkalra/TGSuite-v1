@@ -2,7 +2,7 @@
 **based on telethon 1.11.3**
 Customized #UniBorg based on telethon.
 
-##How to use
+## How to use
 Step1: goto [my.telegram.org/apps](https://telegram.org/apps) **use VPN in india to access the site**
 step2: login and setup the app ..
 you will get **APP ID**  and **APP HASH** copy these two value at safe place (you will need later)
@@ -13,7 +13,11 @@ step2.2 run python session-strings.py
 
 step2.3 enter your mobile number with country code for eg +919876543210
 
-step 2.4 
+step 2.4 enter the code you received 
+
+step 2.5 you will get a string as a response starting with something like 1Bqvt......
+
+step 2.5 copy this String somwhere safe .this is **HU_STRING_SESSION** value
 
 step3: Create an account on Heroku.com
 
