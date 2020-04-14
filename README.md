@@ -53,7 +53,11 @@ using python's pip install telethon..
 ![heroku setting page ](https://i.ibb.co/B2RPWWn/heroku-setting.jpg)
 ![heroku setting page](https://i.ibb.co/YPFkpzR/heroku-settting2.jpg)
 
-## Installing
+#### Finished .. your bot must be up and running by now..
+
+## NOT FOR DEPLOYRES... below information only for Developers and Collaborators
+
+### Installing
 
 #### The Easy Way
 
