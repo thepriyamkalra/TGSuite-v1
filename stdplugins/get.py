@@ -24,6 +24,8 @@ async def _(event):
         await event.edit(f"**Click** [here]({DEPLOYLINK}) **to goto the heroku deploy page.**")
     elif input_str == "packs":
         await event.edit(f"**Found the following sticker pack data:**\n{PACKS}")
+    elif input_str == "guide":
+        await event.edit(f"[ Follow this Guide ](https://authoritydmc.github.io/BEASTBOT-REBORN/)")
     else:
         pass
         
