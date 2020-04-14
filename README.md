@@ -2,6 +2,25 @@
 **based on telethon 1.11.3**
 Customized #UniBorg based on telethon.
 
+##How to use
+Step1: goto [my.telegram.org/apps](https://telegram.org/apps) **use VPN in india to access the site**
+step2: login and setup the app ..
+you will get **APP ID**  and **APP HASH** copy these two value at safe place (you will need later)
+
+step 2.1: clone this repo and pip install telethon first...
+
+step2.2 run python session-strings.py
+
+step2.3 enter your mobile number with country code for eg +919876543210
+
+step 2.4 
+
+step3: Create an account on Heroku.com
+
+step4: click on deploy button below
+
+
+
 ## Installing
 
 #### The Easy Way
