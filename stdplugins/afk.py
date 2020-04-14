@@ -122,17 +122,23 @@ async def on_afk(event):
         except  Exception:
             pass
         social_str=""
-        if should_show_social and  event.is_private :  #do not show any link in group (cause it may trigger ban)
-            hin_str="तबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n" if Config.SHOW_HINDI else ""
+        if should_show_social=="True" and  event.is_private :  #do not show any link in group (cause it may trigger ban)
+            hin_str="तबतक आप मेरे मालिक का सोशल एकाउंट्स  देख सकते है\n" if Config.SHOW_HINDI=="True" else ""
             social_str=f"\nMeanwhile you can check my master's Social Accounts\n{hin_str}\
             \nGithub: [branch here]({github_link})\n \
             \nFacebook: [click here]({fb_link})\n\
             \nInstagram: [Go here]({ig_link})\n"
         hin2=""
-        if Config.SHOW_HINDI:
+        if Config.SHOW_HINDI=="True":
             hin2= "\n **मेरे मालिक अभी उपलब्ध नहीं है . कारण :-**"+reason if reason else "**मेरे मालिक अभी उपलब्ध नहीं है .**"
         else:
             hin2=""
+
+        logger.info(f"{hin2} : social->>{social_str}")
+        logger.info(f"SHOW_SOCIAL{Config.SHOW_SOCIAL} : SHOW_HINDI->>{Config.SHOW_HINDI}")
+        # logger.info(f"SHOW_SOCIAL_ORI{bool(os.environ.get("SHOW_SOCIAL",False))} : SHOW_HINDI->>{bool(os.environ.get("SHOW_HINDI",False))}")
+
+
         message_to_reply = f"\n**My Master is AFK since** {afk_since} " + \
             f"**cuz {reason}**{hin2}\n\n{social_str}" \
             if reason \
@@ -146,7 +152,6 @@ async def on_afk(event):
 async def log(text):
     LOGGER = Config.PRIVATE_GROUP_BOT_API_ID
     await borg.send_message(LOGGER, text)
-
 
 SYNTAX.update({
     "afk": "\

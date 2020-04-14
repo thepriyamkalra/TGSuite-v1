@@ -25,9 +25,9 @@ except  Exception:
     pass
 
 social_str=""
-if should_show_social:
+if should_show_social=="True":
     social_str=f"\n\nMeanwhile you can check my master's Social Accounts"
-    if Config.SHOW_HINDI:
+    if Config.SHOW_HINDI=="True":
         social_str+=f"\nतबतक आप मेरे मालिक का सोशल एकाउंट्स देख सकते है\n\nGithub : [branch here]({github_link})\n\nInstagram: [Go here]({ig_link})\n\nFacebook: [touch here]({fb_link})\n"
 
 
@@ -49,7 +49,7 @@ wait for my master to look in, he mostly approves PMs.```
 \n\n"""
 if Config.PM_WARN_MSG !="None":
     UNIBORG_USER_BOT_NO_WARN=Config.PM_WARN_MSG
-if Config.SHOW_HINDI:
+if Config.SHOW_HINDI=="True":
     UNIBORG_USER_BOT_NO_WARN+=UNIBORG_USER_BOT_WARN_HINDI+social_str
 else:
     UNIBORG_USER_BOT_NO_WARN+=social_str

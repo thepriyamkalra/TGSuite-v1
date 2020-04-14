@@ -125,9 +125,9 @@ class Config(object):
 
     GITHUB_LINK=os.environ.get("GITHUB_LINK",None)
     
-    SHOW_SOCIAL=bool(os.environ.get("SHOW_SOCIAL",False))
+    SHOW_SOCIAL=os.environ.get("SHOW_SOCIAL","False")
 
-    SHOW_HINDI=bool(os.environ.get("SHOW_HINDI",True))
+    SHOW_HINDI=os.environ.get("SHOW_HINDI","False")
 
     PM_WARN_MSG=str(os.environ.get("PM_WARN_MSG",None))
 
