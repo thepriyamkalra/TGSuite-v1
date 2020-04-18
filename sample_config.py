@@ -114,7 +114,7 @@ class Config(object):
     # define "pack_name" in config_vars
     PACK_NAME = os.environ.get("PACK_NAME", None)
     PACK_PREFIX=os.environ.get("PACK_PREFIX","BEASTBOT_")
-    PACK_PREFIX_ANI=os.environ.get("PACK_PREFIX","BEASTBOT_")
+    PACK_PREFIX_ANI=os.environ.get("PACK_PREFIX_ANI","BEASTBOT_")
 
     # define "pack_name" in config_vars
     ANIM_PACK_NAME = os.environ.get("ANIM_PACK_NAME", None)
@@ -128,7 +128,8 @@ class Config(object):
     SHOW_SOCIAL=os.environ.get("SHOW_SOCIAL","False")
     SHOW_HINDI=os.environ.get("SHOW_HINDI","False")
     PM_WARN_MSG=str(os.environ.get("PM_WARN_MSG",None))
-
+    HEROKU_APP_NAME=os.environ.get("HEROKU_APP_NAME",None)
+    HEROKU_API_KEY=os.environ.get("HEROKU_API_KEY",None)
 class Production(Config):
     LOGGER = False
 
