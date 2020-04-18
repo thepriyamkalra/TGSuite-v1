@@ -126,9 +126,18 @@ class Config(object):
     GITHUB_LINK=os.environ.get("GITHUB_LINK",None)
     
     SHOW_SOCIAL=os.environ.get("SHOW_SOCIAL","False")
+
     SHOW_HINDI=os.environ.get("SHOW_HINDI","False")
+    
     PM_WARN_MSG=str(os.environ.get("PM_WARN_MSG",None))
-    HEROKU_APP_NAME=os.environ.get("HEROKU_APP_NAME",None)
+
+
+    HEROKU_LINK=os.environ.get("HEROKU_LINK",None)
+
+    #return the name got from HEROKU_LINK in not defined HEROKU APP NAME
+    HEROKU_APP_NAME=os.environ.get("HEROKU_APP_NAME",HEROKU_LINK.split(".")[0][8:] if HEROKU_LINK !=None else None)
+
+
     HEROKU_API_KEY=os.environ.get("HEROKU_API_KEY",None)
 class Production(Config):
     LOGGER = False
