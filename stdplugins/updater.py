@@ -162,8 +162,5 @@ async def deploy_start(tgbot, message, refspec, remote):
 SYNTAX.update({"update":"""
 \nUpdate your bot with the latest update on Official Repo.
 \nBut first set HEROKU_API_KEY first .
-<<<<<<< HEAD
-=======
 \nIf you have more than one bot set HEROKU_APP_NAME too
->>>>>>> master
 """})
