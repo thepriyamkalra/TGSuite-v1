@@ -7,18 +7,9 @@ import os
 import sys
 import git
 import asyncio
-import random
-import re
-import time
-from collections import deque
 import requests
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import MessageEntityMentionName
 from telethon import events
 from uniborg.util import admin_cmd
-from contextlib import suppress
-import sys
-import asyncio
 from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
 
 MODULE_LIST.append("update (update the BEASTBOT)")
@@ -166,4 +157,7 @@ async def deploy_start(tgbot, message, refspec, remote):
     await tgbot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-    
+SYNTAX.update({".update":"""
+\nUpdate your bot with the latest update on Official Repo.
+\nBut first set HEROKU_API_KEY first .
+"""})
