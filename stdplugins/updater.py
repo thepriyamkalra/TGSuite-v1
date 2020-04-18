@@ -160,7 +160,7 @@ async def deploy_start(tgbot, message, refspec, remote):
     await tgbot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-SYNTAX.update({".update":"""
+SYNTAX.update({"update":"""
 \nUpdate your bot with the latest update on Official Repo.
 \nBut first set HEROKU_API_KEY first .
 """})
