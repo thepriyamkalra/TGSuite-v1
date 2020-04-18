@@ -128,7 +128,7 @@ class Config(object):
     SHOW_SOCIAL=os.environ.get("SHOW_SOCIAL","False")
 
     SHOW_HINDI=os.environ.get("SHOW_HINDI","False")
-    
+
     PM_WARN_MSG=str(os.environ.get("PM_WARN_MSG",None))
 
 
