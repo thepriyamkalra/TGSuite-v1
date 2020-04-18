@@ -7,8 +7,8 @@ from telethon import events, errors, custom
 from sql_helpers.global_variables_sql import MODULE_LIST
 import io
 
-if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
-    @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
+if Config.TG_BOT_USER_NAME_BF_HER is not None and borg is not None:
+    @borg.on(events.InlineQuery)  # pylint:disable=E0602
     async def inline_handler(event):
         builder = event.builder
         result = None
@@ -24,7 +24,7 @@ if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
                 link_preview=False
             )
         await event.answer([result] if result else None)
-    @tgbot.on(events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+    @borg.on(events.callbackquery.CallbackQuery(  # pylint:disable=E0602
         data=re.compile(b"helpme_next\((.+?)\)")
     ))
     async def on_plug_in_callback_query_handler(event):
@@ -40,7 +40,7 @@ if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
 
-    @tgbot.on(events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+    @borg.on(events.callbackquery.CallbackQuery(  # pylint:disable=E0602
         data=re.compile(b"helpme_prev\((.+?)\)")
     ))
     async def on_plug_in_callback_query_handler(event):
@@ -57,7 +57,7 @@ if Config.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
         else:
             reply_pop_up_alert = "Please get your own Userbot, and don't use mine!"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-    @tgbot.on(events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+    @borg.on(events.callbackquery.CallbackQuery(  # pylint:disable=E0602
         data=re.compile(b"us_plugin_(.*)")
     ))
     async def on_plug_in_callback_query_handler(event):
