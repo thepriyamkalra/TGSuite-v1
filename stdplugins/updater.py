@@ -1,4 +1,4 @@
-"""Update UserBot code (for Xtra-Telegram)
+"""
 Syntax: .update
 \nAll Credits goes to © @Three_Cube_TeKnoways
 \nFor this awasome plugin.\nPorted from PpaperPlane Extended"""
@@ -19,6 +19,9 @@ from uniborg.util import admin_cmd
 from contextlib import suppress
 import sys
 import asyncio
+from sql_helpers.global_variables_sql import  SYNTAX, MODULE_LIST
+
+MODULE_LIST.append("update (update the BEASTBOT)")
 
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (
