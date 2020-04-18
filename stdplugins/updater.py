@@ -105,12 +105,15 @@ async def updater(message):
 
     if Config.HEROKU_API_KEY is not None:
         import heroku3
+
         logger.info("heroku api key"+Config.HEROKU_API_KEY)
+
         heroku = heroku3.from_key(Config.HEROKU_API_KEY)
         heroku_applications = heroku.apps()
         if len(heroku_applications) >= 1:
             if Config.HEROKU_APP_NAME is not None:
                 logger.info("heroku app name"+Config.HEROKU_APP_NAME)
+
                 heroku_app = None
                 for i in heroku_applications:
                     if i.name == Config.HEROKU_APP_NAME:
