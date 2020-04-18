@@ -138,11 +138,10 @@ async def updater(message):
         else:
             await message.edit(NO_HEROKU_APP_CFGD)
     else:
-        msg="""No heroku api key found in  var
-        \nGoto https://dashboard.heroku.com/account and you after scrolling a bit you will
-        see API key tab .. click on reveal button you will see your api key .copy it
-        now goto your app >Settings>Reveal Config vars .
-        and add `HEROKU_API_KEY` with copied API key"""
+        msg="""No `HEROKU_API_KEY` found in config
+        \nGoto https://dashboard.heroku.com/account\nThere  after scrolling a bit you will see API key tab .. \nclick on **reveal** button you will see your **API key** \n**copy it**
+        \nNow goto **Heroku>your app >Settings>Reveal Config vars**
+        \nNow add `HEROKU_API_KEY` with copied API key"""
         await message.edit(msg)
         
 
@@ -163,4 +162,8 @@ async def deploy_start(tgbot, message, refspec, remote):
 SYNTAX.update({"update":"""
 \nUpdate your bot with the latest update on Official Repo.
 \nBut first set HEROKU_API_KEY first .
+<<<<<<< HEAD
+=======
+\nIf you have more than one bot set HEROKU_APP_NAME too
+>>>>>>> master
 """})
