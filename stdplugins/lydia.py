@@ -7,8 +7,8 @@
 # @Hackintosh5 (for inspiring me to write this module)
 # @Zero_cool7870 (For Writing The Original Module)
 # Zi Xing (For CoffeeHouse API)
-
-#modified by @authoritydmc for working with latest lydia api 2.2.2
+# Modified by @authoritydmc for v2.2.2 compatibility
+# Modified by Priyam Kalra 4/18/2020
 
 from coffeehouse.lydia import LydiaAI
 from coffeehouse.api import API
@@ -22,7 +22,7 @@ from uniborg.util import admin_cmd
 
 MODULE_LIST.append("lydia")
 
-#global Variable 
+# Global Variable 
 api_key=""
 api_client=""
 lydia=None
@@ -39,7 +39,7 @@ async def lydia_disable_enable(event):
     if event.fwd_from:
         return
     if Config.LYDIA_API is None:
-        await event.edit("please add required `LYDIA_API` env var")
+        await event.edit("Please add required `LYDIA_API` enviroment variable.")
         return
     else:
         api_key = Config.LYDIA_API
@@ -57,7 +57,7 @@ async def lydia_disable_enable(event):
         if event.reply_to_msg_id is not None:
             reply_msg = await event.get_reply_message()
             user_id = reply_msg.from_id
-        await event.edit("Processing...")
+        # await event.edit("Processing...")
         if input_str == "enable":
             session = lydia.create_session()
             logger.info(session)
@@ -73,7 +73,7 @@ async def lydia_disable_enable(event):
                 for lydia_ai in lsts:
                     output_str += f"[user](tg://user?id={lydia_ai.user_id}) in chat `{lydia_ai.chat_id}`\n"
             else:
-                output_str = "no Lydia AI enabled users / chats. Start by replying `.enableai` to any user in any chat!"
+                output_str = "No Lydia AI enabled users / chats. Start by replying `.enableai` to any user in any chat!"
             if len(output_str) > Config.MAX_MESSAGE_SIZE_LIMIT:
                 with io.BytesIO(str.encode(output_str)) as out_file:
                     out_file.name = "lydia_ai.text"
@@ -88,9 +88,9 @@ async def lydia_disable_enable(event):
             else:
                 await event.edit(output_str)
         else:
-            await event.edit("Reply To User Message to Add / Delete them from Lydia Auto-Chat.")
+            await event.edit("Reply to a user's message to add / delete them from lydia ai-chat.")
     else:
-        await event.edit("Reply To A User's Message to Add / Delete them from Lydia Auto-Chat.")
+        await event.edit("Reply to a user's message to add / delete them from Lydia ai-chat.")
 
 
 @borg.on(admin_cmd(incoming=True))
@@ -107,7 +107,7 @@ async def on_new_message(event):
             session_id = s.session_id
             session_expires = s.session_expires
             query = event.text
-            # session=None #making a global session id.
+            # session=None # Making a global session id.
             # Check if the session is expired
             # If this method throws an exception at this point,
             # then there's an issue with the API, Auth or Server.
@@ -136,7 +136,7 @@ SYNTAX.update({
 \nUsage: Enables LydiaAI for the target user in the current chat.\
 \n\n```.disableai (as a reply to target user)```\
 \nUsage: Disables LydiaAI for the target user in the current chat.\
-\n\n```.listai (as a reply to target user)```\
+\n\n```.listai```\
 \nUsage: Lists all users on which LydiaAI is enabled.\
 "
 })
