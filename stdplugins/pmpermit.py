@@ -38,7 +38,7 @@ async def monito_p_m_s(event):
         if not is_approved(chat.id) and chat.id != borg.uid:
             logger.info(chat.stringify())
             logger.info(borg.storage.PM_WARNS)
-            if chat.id in SUDO_USERS;
+            if chat.id in SUDO_USERS:
                 await event.edit("Oh wait, that looks like my master!")
                 await event.edit("Approving..")
                 approve(chat.id, "SUDO_USER")
