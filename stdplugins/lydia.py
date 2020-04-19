@@ -62,7 +62,7 @@ async def lydia_disable_enable(event):
             session = lydia.create_session()
             logger.info(session)
             logger.info(add_s(user_id, chat_id, session.id, session.expires))
-            await event.edit(f"Hello there {user_id}!")
+            await event.edit(f"Hello there!")
         elif input_str == "disable":
             logger.info(remove_s(user_id, chat_id))
             await event.edit(f"No, no, no, i am out.")
