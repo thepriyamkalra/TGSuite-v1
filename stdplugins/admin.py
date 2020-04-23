@@ -182,13 +182,13 @@ async def _(event):
             await event.edit(f"Successfully taped ```{to_ban_id}```!")
 
 
-@borg.on(admin_cmd("pin ?(.*)"))
+@borg.on(admin_cmd("pinmsg ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     silent = True
     input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str == "loud":
         silent = False
     if event.message.reply_to_msg_id is not None:
         message_id = event.message.reply_to_msg_id
