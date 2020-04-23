@@ -6,7 +6,7 @@ import json
 from telethon import events
 from telethon.tl import functions, types
 from sql_helpers.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, SUDO_USERS
 from uniborg.util import admin_cmd
 
 
@@ -38,6 +38,10 @@ async def monito_p_m_s(event):
         if not is_approved(chat.id) and chat.id != borg.uid:
             logger.info(chat.stringify())
             logger.info(borg.storage.PM_WARNS)
+            if chat.id in SUDO_USERS:
+                await event.edit("Oh wait, that looks like my master!")
+                await event.edit("Approving..")
+                approve(chat.id, "SUDO_USER")
             if chat.id not in borg.storage.PM_WARNS:
                 borg.storage.PM_WARNS.update({chat.id: 0})
             if borg.storage.PM_WARNS[chat.id] == Config.MAX_FLOOD_IN_P_M_s:
