@@ -368,5 +368,7 @@ SYNTAX.update({
 \nUsage: demotes target user.\
 \n\n```.kick <userid>``` (or as a reply to a message of targer user)\
 \nUsage: kicks target user.\
+\n\n```.pinmsg``` (as a reply to a message)\
+\nUsage: pins target msg.\
 "
 })
