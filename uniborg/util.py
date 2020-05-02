@@ -20,6 +20,7 @@ else:
 
 
 def admin_cmd(pattern=None, allow_sudo=False, **args):
+    args["func"] = lambda e: e.via_bot_id is None
     if pattern is not None:
         args["pattern"] = re.compile(Config.COMMAND_HAND_LER + pattern)
     if allow_sudo:
