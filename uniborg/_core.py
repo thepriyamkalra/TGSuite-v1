@@ -109,7 +109,7 @@ async def nuke_plug_in(event):
     plugin = f"stdplugins/{input_str}.py"
     if os.path.exists(plugin):
         try:
-            os.delete(plugin)
+            os.remove(plugin)
             await mone.edit(f"{input_str} has been nuked!")
         except Exception as e:
             await mone.edit(f"Unexpected error occured: {e}")
