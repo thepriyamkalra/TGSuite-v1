@@ -68,8 +68,8 @@ async def install_plug_in(event):
     await asyncio.sleep(DELETE_TIMEOUT)
     await event.delete()
 
-@borg.on(admin_cmd(pattern="share (.*)", allow_sudo=True))
-async def _(event):
+@borg.on(util.admin_cmd(pattern="share (.*)"))
+async def share_plug_in(event):
     if event.fwd_from:
         return
     mone = await event.edit("Searching for required file..")
@@ -100,8 +100,8 @@ async def _(event):
     else:
         await mone.edit("404: Module not found")
         
-@borg.on(admin_cmd(pattern="nuke (.*)", allow_sudo=True))
-async def _(event):
+@borg.on(util.admin_cmd(pattern="nuke (.*)"))
+async def nuke_plug_in(event):
     if event.fwd_from:
         return
     mone = await event.edit("Searching for required file..")
