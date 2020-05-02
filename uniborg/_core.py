@@ -7,8 +7,10 @@ import traceback
 import os
 from datetime import datetime
 from uniborg import util
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
-
+thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+MODULE_LIST.append("core")
 DELETE_TIMEOUT = 5
 
 
@@ -65,3 +67,68 @@ async def install_plug_in(event):
             os.remove(downloaded_file_name)
     await asyncio.sleep(DELETE_TIMEOUT)
     await event.delete()
+
+@borg.on(util.admin_cmd(pattern="share (.*)"))
+async def share_plug_in(event):
+    if event.fwd_from:
+        return
+    mone = await event.edit("Searching for required file..")
+    input_str = event.pattern_match.group(1)
+    plugin = f"stdplugins/{input_str}.py"
+    thumb = None
+    if os.path.exists(thumb_image_path):
+        thumb = thumb_image_path
+    if os.path.exists(plugin):
+        start = datetime.now()
+        c_time = time.time()
+        await borg.send_file(
+            event.chat_id,
+            plugin,
+            force_document=True,
+            supports_streaming=False,
+            allow_cache=False,
+            reply_to=event.message.id,
+            thumb=thumb,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(d, t, mone, c_time, "")
+            )
+        )
+        end = datetime.now()
+        # os.remove(input_str)
+        ms = (end - start).seconds
+        await mone.edit(f"Uploaded {input_str} in {ms} seconds.")
+    else:
+        await mone.edit("404: Module not found")
+        
+@borg.on(util.admin_cmd(pattern="nuke (.*)"))
+async def nuke_plug_in(event):
+    if event.fwd_from:
+        return
+    mone = await event.edit("Searching for required file..")
+    input_str = event.pattern_match.group(1)
+    plugin = f"stdplugins/{input_str}.py"
+    if os.path.exists(plugin):
+        try:
+            os.remove(plugin)
+            await mone.edit(f"{input_str} has been nuked!")
+        except Exception as e:
+            await mone.edit(f"Unexpected error occured: {e}")
+    else:
+        await mone.edit("404: Module not found")
+
+SYNTAX.update({
+    "core": "\
+**Requested Module --> core**\
+\n\n**Detailed usage of fuction(s):**\
+\n\n```.load <as_a_reply_to_a_module_file>```\
+\nUsage: Load a specified module.\
+\n\n```.reload <module_name>```\
+\nUsage: Reload any module that was unloaded.\
+\n\n```.unload <module_name>```\
+\nUsage: Unload any loaded module.\
+\n\n```.share <module_name>```\
+\nUsage: Share any loaded module.\
+\n\n```.nuke <module_name>```\
+\nUsage: Nuke any module, loaded or unloaded.\
+"
+})
