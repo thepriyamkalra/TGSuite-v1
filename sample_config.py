@@ -113,6 +113,8 @@ class Config(object):
     ANIM_PACK_NAME = os.environ.get("ANIM_PACK_NAME", None)
     #
     USER = os.environ.get("USER", None)
+    #
+    DROPBOX_TOKEN = os.environ.get("DROPBOX_TOKEN", None)
 
 class Production(Config):
     LOGGER = False
