@@ -46,6 +46,7 @@ async def remove(event):
     await asyncio.sleep(DELETE_TIMEOUT)
     await msg.delete()
 
+
 @borg.on(util.admin_cmd(pattern="load"))  # pylint:disable=E0602
 async def install_plug_in(event):
     if event.fwd_from:
@@ -57,7 +58,8 @@ async def install_plug_in(event):
                 borg._plugin_path  # pylint:disable=E0602
             )
             if "(" not in downloaded_file_name:
-                borg.load_plugin_from_file(downloaded_file_name)  # pylint:disable=E0602
+                borg.load_plugin_from_file(
+                    downloaded_file_name)  # pylint:disable=E0602
                 await event.edit("Loaded `{}`".format(os.path.basename(downloaded_file_name)))
             else:
                 os.remove(downloaded_file_name)
@@ -67,6 +69,7 @@ async def install_plug_in(event):
             os.remove(downloaded_file_name)
     await asyncio.sleep(DELETE_TIMEOUT)
     await event.delete()
+
 
 @borg.on(util.admin_cmd(pattern="share (.*)"))
 async def share_plug_in(event):
@@ -99,7 +102,8 @@ async def share_plug_in(event):
         await mone.edit(f"Uploaded {input_str} in {ms} seconds.")
     else:
         await mone.edit("404: Module not found")
-        
+
+
 @borg.on(util.admin_cmd(pattern="nuke (.*)"))
 async def nuke_plug_in(event):
     if event.fwd_from:
@@ -109,6 +113,7 @@ async def nuke_plug_in(event):
     plugin = f"stdplugins/{input_str}.py"
     if os.path.exists(plugin):
         try:
+            borg.remove_plugin(input_str)
             os.remove(plugin)
             await mone.edit(f"{input_str} has been nuked!")
         except Exception as e:
