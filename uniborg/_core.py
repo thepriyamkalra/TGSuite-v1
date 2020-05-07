@@ -106,12 +106,44 @@ async def nuke_plug_in(event):
         return
     mone = await event.edit("Searching for required file..")
     input_str = event.pattern_match.group(1)
+    dest_dir = "nuked"
     plugin = f"stdplugins/{input_str}.py"
+    plugin_split = plugin.split("/")
+    plugin_split.insert(1, dest_dir)
+    plugin_dest = "/".join(plugin_split)
+    if not os.path.exists(dest_dir):
+        os.mkdir(dest_dir)
     if os.path.exists(plugin):
         try:
             borg.remove_plugin(input_str)
-            os.remove(plugin)
+            os.rename(plugin, plugin_dest)
             await mone.edit(f"{input_str} has been nuked!")
+        except Exception as e:
+            await mone.edit(f"Unexpected error occured: {e}")
+    else:
+        await mone.edit("404: Module not found")
+
+
+@borg.on(util.admin_cmd(pattern="recover (.*)"))
+async def recover_plug_in(event):
+    if event.fwd_from:
+        return
+    mone = await event.edit("Searching for required file..")
+    input_str = event.pattern_match.group(1)
+    dest_dir = "nuked"
+    plugin = f"stdplugins/{input_str}.py"
+    plugin_split = plugin.split("/")
+    plugin_split.insert(1, dest_dir)
+    plugin_dest = "/".join(plugin_split)
+    if os.path.exists(plugin_dest):
+        try:
+            os.rename(plugin_dest, plugin)
+            try:
+                borg.remove_plugin(input_str)
+            except:
+                pass
+            borg.load_plugin(input_str)
+            await mone.edit(f"{input_str} has been recovered and loaded!")
         except Exception as e:
             await mone.edit(f"Unexpected error occured: {e}")
     else:
@@ -131,5 +163,7 @@ SYNTAX.update({
 \nUsage: Share any loaded module.\
 \n\n```.nuke <module_name>```\
 \nUsage: Nuke any module, loaded or unloaded.\
+\n\n```.recovery <module_name>```\
+\nUsage: Recover and load any nuked module.\
 "
 })

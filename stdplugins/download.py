@@ -12,6 +12,7 @@ from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
+from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, DL
 
 MODULE_LIST.append("download")
@@ -24,12 +25,26 @@ async def _(event):
     args = event.pattern_match.group(1)
     args_split = args.split("/")
     name = args_split[-1]
-    await event.edit(f"Trying to download {name} from {args}...")
-    request = requests.get(args)
     path = DL + name
+    await event.edit(f"Trying to download {name} from {args}..")
+    time.sleep(2)
     with open(path, "wb") as f:
-        f.write(request.content)
-        await event.edit(f"Downloaded {name} to {path}.")
+        request = requests.get(args, stream=True)
+        size = request.headers.get("content-length")
+        if size is None:
+            f.write(request.content)
+            await event.edit(f"Downloaded {name} to {path}.")
+        else:
+            dl = 0
+            for data in request.iter_content(chunk_size=10*1024):
+                dl += len(data)
+                f.write(data)
+                percentage = dl/int(size)*100
+                try:
+                    await event.edit(f"Downloading {name}:\nTotal Size: {int(int(size)/1024/1024)}MB\nDownloaded: ~{int(dl/1024/1024)}MB\nPercentage: {str(percentage)[:5]}%\n")
+                except MessageNotModifiedError:
+                    pass
+            await event.edit(f"Downloaded {name} to {path}.")
 
 
 @borg.on(admin_cmd(pattern="localdl ?(.*)"))
