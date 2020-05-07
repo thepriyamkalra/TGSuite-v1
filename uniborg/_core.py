@@ -106,7 +106,7 @@ async def nuke_plug_in(event):
         return
     mone = await event.edit("Searching for required file..")
     input_str = event.pattern_match.group(1)
-    dest_dir = "nuked"
+    dest_dir = "stdplugins/nuked"
     plugin = f"stdplugins/{input_str}.py"
     plugin_split = plugin.split("/")
     plugin_split.insert(1, dest_dir)
@@ -130,7 +130,7 @@ async def recover_plug_in(event):
         return
     mone = await event.edit("Searching for required file..")
     input_str = event.pattern_match.group(1)
-    dest_dir = "nuked"
+    dest_dir = "stdplugins/nuked"
     plugin = f"stdplugins/{input_str}.py"
     plugin_split = plugin.split("/")
     plugin_split.insert(1, dest_dir)
