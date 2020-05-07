@@ -1,22 +1,38 @@
 # For UniBorg
-# Syntax localdl
+# Syntax localdl, directdl
 
 import aiohttp
 import asyncio
 import math
 import os
 import time
+import requests
 from datetime import datetime
 from pySmartDL import SmartDL
 from telethon import events
 from telethon.tl.types import DocumentAttributeVideo
 from uniborg.util import admin_cmd, humanbytes, progress, time_formatter
-from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
+from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, DL
 
 MODULE_LIST.append("download")
 
 
-@borg.on(admin_cmd(pattern="localdl ?(.*)", allow_sudo=True))
+@borg.on(admin_cmd(pattern="directdl ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    args = event.pattern_match.group(1)
+    args_split = args.split("/")
+    name = args_split[-1]
+    await event.edit(f"Trying to download {name} from {args}...")
+    request = requests.get(args)
+    path = DL + name
+    with open(path, "wb") as f:
+        f.write(request.content)
+        await event.edit(f"Downloaded {name} to {path}.")
+
+
+@borg.on(admin_cmd(pattern="localdl ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -90,12 +106,13 @@ async def _(event):
         await mone.edit("Reply to a message to download to my local server.")
 
 
-
 SYNTAX.update({
     "download": "\
 **Requested Module --> download**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.localdl (as a reply to a telegram media file)```\
 \nUsage: Downloads the target file to the temporary local download directory.\
+\n\n```.directdl <direct_dl_link>```\
+\nUsage: Attempts to download media from the provided link.\
 "
 })

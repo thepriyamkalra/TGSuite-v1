@@ -1,6 +1,7 @@
 from os import path, remove
 from random import randint
 import time
+import requests
 from dropbox import dropbox
 import asyncio
 from telethon.tl import functions
@@ -36,20 +37,24 @@ async def ipadrop(event):
             await event.edit(f"Downloaded IPA to {downloaded_file_name}.")
             ipa_split = downloaded_file_name.split("/")
             ipa = ipa_split[2]
-        if not path.exists(ipa):
-            await event.edit("404: IPA not found!")
-            return
-        else:
-            ipa_link = await upload(ipa, mesg=event)
-            ipa_dl_link = get_dl_link(ipa_link)
     elif args.startswith("http"):
         if not args.endswith(".ipa"):
-            return await event.edit("Unsupported link!\nPlease provide a direct link to the IPA file.\nKnown unsupported servers: Google drive (since 2016)")
-        ipa_dl_link = get_dl_link(args)
-        ipa = ipa_dl_link
+            return await event.edit("Unsupported link!\nPlease provide a direct link to the IPA file.")
+        ipa_split = args.split("/")
+        ipa = ipa_split[-1]
+        await event.edit(f"Downloading IPA: {ipa}")
+        request = requests.get(args)
+        with open(ipa, "wb") as f:
+            f.write(request.content)
+    if not path.exists(ipa):
+        await event.edit("404: IPA not found!")
+        return
+    else:
+        ipa_link = await upload(ipa, mesg=event)
+        ipa_dl_link = get_dl_link(ipa_link)
     get_plist(ipa_dl_link, ipa)
     idnum = randint(101, 9999999999)
-    manifest = f"manifest_{idnum}.plist"
+    manifest = f"manifest_{name}_{idnum}.plist"
     with open(manifest, "w") as f:
         f.write(plist)
     manifest_link = await upload(manifest, mesg=event, num=idnum)
@@ -93,7 +98,7 @@ class TransferData:
         try:
             with open(file_path, "rb") as f:
                 file_size = path.getsize(file_path)
-                CHUNK_SIZE = 1 * 1024 * 1024
+                CHUNK_SIZE = 5 * 1024 * 1024
                 if file_size <= CHUNK_SIZE:
                     await msg.edit(f"Processing {filename}..")
                     dbx.files_upload(f.read(), dest_path)
@@ -116,7 +121,7 @@ class TransferData:
                                 f.read(CHUNK_SIZE), cursor.session_id, cursor.offset)
                             cursor.offset = f.tell()
                             progress = int(f.tell()/file_size*100)
-                            await msg(f"Processing {filename}: {progress}%")
+                            await msg.edit(f"Processing {filename}: {progress}%")
             shared_link_metadata = dbx.sharing_create_shared_link_with_settings(
                 dest_path)
             link = shared_link_metadata.url
@@ -137,9 +142,6 @@ async def upload(ipa_path, mesg, num=None):
 def get_plist(ipaurl, ipaname):
     global plist, name
     name = ipaname
-    if "/" in name:
-        name_split = name.split("/")
-        name = name_split[-1]
     if name.endswith(".ipa"):
         name = name[:-4]
     plist = f"""
