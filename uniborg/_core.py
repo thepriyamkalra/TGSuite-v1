@@ -5,17 +5,17 @@
 import asyncio
 import traceback
 import os
+import time
 from datetime import datetime
 from uniborg import util
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST
 
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 MODULE_LIST.append("core")
 DELETE_TIMEOUT = 5
 
 
 @borg.on(util.admin_cmd(pattern="reload (?P<shortname>\w+)$"))  # pylint:disable=E0602
-async def load_reload(event):
+async def reload_plug_in(event):
     await event.delete()
     shortname = event.pattern_match["shortname"]
     try:
@@ -33,7 +33,7 @@ async def load_reload(event):
 
 
 @borg.on(util.admin_cmd(pattern="(?:unload) (?P<shortname>\w+)$"))  # pylint:disable=E0602
-async def remove(event):
+async def remove_plug_in(event):
     await event.delete()
     shortname = event.pattern_match["shortname"]
     if shortname == "_core":
@@ -78,9 +78,6 @@ async def share_plug_in(event):
     mone = await event.edit("Searching for required file..")
     input_str = event.pattern_match.group(1)
     plugin = f"stdplugins/{input_str}.py"
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
     if os.path.exists(plugin):
         start = datetime.now()
         c_time = time.time()
@@ -91,9 +88,8 @@ async def share_plug_in(event):
             supports_streaming=False,
             allow_cache=False,
             reply_to=event.message.id,
-            thumb=thumb,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "")
+                util.progress(d, t, mone, c_time, "Sharing module..")
             )
         )
         end = datetime.now()

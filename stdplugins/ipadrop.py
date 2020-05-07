@@ -18,6 +18,7 @@ token_file = Config.DROPBOX_TOKEN
 async def ipadrop(event):
     if event.fwd_from:
         return
+    args = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         try:
@@ -35,25 +36,33 @@ async def ipadrop(event):
             await event.edit(f"Downloaded IPA to {downloaded_file_name}.")
             ipa_split = downloaded_file_name.split("/")
             ipa = ipa_split[2]
-    if not path.exists(ipa):
-        await event.edit("404: IPA not found!")
-        return
-    else:
-        ipa_link = await upload(ipa, mesg=event)
-        ipa_dl_link = get_dl_link(ipa_link)
-        get_plist(ipa_dl_link, ipa)
-        idnum = randint(101, 9999999999)
-        manifest = f"manifest_{idnum}.plist"
-        with open(manifest, "w") as f:
-            f.write(plist)
-        manifest_link = await upload(manifest, mesg=event, num=idnum)
-        manifest_dl_link = get_dl_link(manifest_link)
-        final_link = "itms-services://?action=download-manifest&url=" + manifest_dl_link
-        message = f"\nRun this link in safari to install {ipa[:-4]}:\n`{final_link}`"
-        await event.edit(message)
-        await log(message)
-        remove(manifest)
+        if not path.exists(ipa):
+            await event.edit("404: IPA not found!")
+            return
+        else:
+            ipa_link = await upload(ipa, mesg=event)
+            ipa_dl_link = get_dl_link(ipa_link)
+    elif args.startswith("http"):
+        if not args.endswith(".ipa"):
+            return await event.edit("Unsupported link!\nPlease provide a direct link to the IPA file.\nKnown unsupported servers: Google drive (since 2016)")
+        ipa_dl_link = get_dl_link(args)
+        ipa = ipa_dl_link
+    get_plist(ipa_dl_link, ipa)
+    idnum = randint(101, 9999999999)
+    manifest = f"manifest_{idnum}.plist"
+    with open(manifest, "w") as f:
+        f.write(plist)
+    manifest_link = await upload(manifest, mesg=event, num=idnum)
+    manifest_dl_link = get_dl_link(manifest_link)
+    final_link = "itms-services://?action=download-manifest&url=" + manifest_dl_link
+    message = f"\nRun this link in safari to install {name}:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
+    await event.edit(message)
+    await log(message)
+    remove(manifest)
+    try:
         remove(ipa)
+    except FileNotFoundError:
+        pass
 
 
 async def log(text):
@@ -127,10 +136,10 @@ async def upload(ipa_path, mesg, num=None):
 
 def get_plist(ipaurl, ipaname):
     global plist, name
-    if "/" in ipaname:
+    name = ipaname
+    if "/" in name:
         name_split = name.split("/")
         name = name_split[-1]
-    name = ipaname
     if name.endswith(".ipa"):
         name = name[:-4]
     plist = f"""
@@ -189,7 +198,7 @@ SYNTAX.update({
     "ipadrop": "\
 **Requested Module --> ipadrop**\
 \n\n**Detailed usage of fuction(s):**\
-\n\n```.ipadrop <as a reply to IPA file>```\
-\nUsage: Reply to an ipa file to get an OTA installation link.\
+\n\n```.ipadrop <ipa_direct_link> [or as a reply to IPA file]```\
+\nUsage: Provide a direct link or reply to an IPA file to get an OTA app installation link.\
 "
 })
