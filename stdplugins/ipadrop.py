@@ -1,3 +1,8 @@
+# For The-TG-Bot 2.0
+# By Priyam Kalra
+# Syntax .ipadrop <ipa_direct_link> [or as a reply to IPA file]
+
+
 from os import path, remove
 from random import randint
 import time
@@ -16,12 +21,62 @@ MODULE_LIST.append("ipadrop")
 token_file = Config.DROPBOX_TOKEN
 idnum = randint(101, 9999999999)
 
-
+# Driver code
 @borg.on(admin_cmd(pattern="ipadrop ?(.*)"))
 async def ipadrop(event):
     if event.fwd_from:
         return
     args = event.pattern_match.group(1)
+    ipa = await download(args, event)
+    if not path.exists(ipa):
+        await event.edit("404: IPA not found!")
+        return
+    else:
+        ipa_link = await upload(ipa, event)
+        ipa_dl_link = get_dl_link(ipa_link)
+    get_plist(ipa_dl_link, ipa)
+    manifest = f"manifest_{name}_{idnum}.plist"
+    with open(manifest, "w") as f:
+        f.write(plist)
+    manifest_link = await upload(manifest, event, idnum)
+    manifest_dl_link = get_dl_link(manifest_link)
+    final_link =  get_itunes_link(manifest_dl_link)
+    message = f"\nRun this link in safari to install `{name}`:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
+    await event.edit(message)
+    await log(message)
+    remove(manifest)
+    try:
+        remove(ipa)
+    except FileNotFoundError:
+        pass
+
+# Simple userbot logging
+async def log(text):
+    await borg.send_message(LOGGER, text)
+
+
+# Returns an itunes link which can be used for on-air installation
+def get_itunes_link(link):
+    itunes_prefix = "itms-services://?action=download-manifest&url="
+    itunes_link = itunes_prefix + link
+    return itunes_link
+
+
+# Converts dropbox sharing link into usercontent link
+def get_dl_link(link):
+    if not link.startswith("https://www.dropbox.com/s/"):
+        return link
+    link = link[26:]
+    if link.endswith("?dl=0"):
+        link = link[:-5]
+    dl_link = "https://dl.dropboxusercontent.com/s/" + link
+    return dl_link
+
+
+# Downloads data to local server and returns path
+async def download(url, msg):
+    args = url
+    event = msg
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         try:
@@ -36,7 +91,7 @@ async def ipadrop(event):
         except Exception as e:
             await event.edit(str(e))
         else:
-            await event.edit(f"Downloaded IPA to {downloaded_file_name}.")
+            await event.edit(f"Downloaded IPA to `{downloaded_file_name}`.")
             ipa_split = downloaded_file_name.split("/")
             ipa = ipa_split[2]
     elif args.startswith("http"):
@@ -44,49 +99,16 @@ async def ipadrop(event):
             return await event.edit("Unsupported link!\nPlease provide a direct link to the IPA file.")
         ipa_split = args.split("/")
         ipa = ipa_split[-1]
-        ipa_noext = ipa[-4]
+        ipa_noext = ipa[:-4]
         ipa = f"{ipa_noext}_{idnum}.ipa"
-        await event.edit(f"Downloading IPA: {ipa}")
+        await event.edit(f"Downloading IPA: `{ipa}`")
         request = requests.get(args)
         with open(ipa, "wb") as f:
             f.write(request.content)
-    if not path.exists(ipa):
-        await event.edit("404: IPA not found!")
-        return
-    else:
-        ipa_link = await upload(ipa, mesg=event)
-        ipa_dl_link = get_dl_link(ipa_link)
-    get_plist(ipa_dl_link, ipa)
-    manifest = f"manifest_{name}_{idnum}.plist"
-    with open(manifest, "w") as f:
-        f.write(plist)
-    manifest_link = await upload(manifest, mesg=event, num=idnum)
-    manifest_dl_link = get_dl_link(manifest_link)
-    final_link = "itms-services://?action=download-manifest&url=" + manifest_dl_link
-    message = f"\nRun this link in safari to install {name}:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
-    await event.edit(message)
-    await log(message)
-    remove(manifest)
-    try:
-        remove(ipa)
-    except FileNotFoundError:
-        pass
+        return ipa
 
-# Simple logging
-async def log(text):
-    await borg.send_message(LOGGER, text)
 
-# Convert dropbox sharing link into usercontent link
-def get_dl_link(link):
-    if not link.startswith("https://www.dropbox.com/s/"):
-        return link
-    link = link[26:]
-    if link.endswith("?dl=0"):
-        link = link[:-5]
-    dl_link = "https://dl.dropboxusercontent.com/s/" + link
-    return dl_link
-
-# Upload data to dropbox and return sharing link
+# Uploads data to dropbox and returns sharing link
 class TransferData:
     def __init__(self, access_token):
         self.access_token = access_token
@@ -103,14 +125,14 @@ class TransferData:
                 file_size = path.getsize(file_path)
                 CHUNK_SIZE = 5 * 1024 * 1024
                 if file_size <= CHUNK_SIZE:
-                    await msg.edit(f"Processing {filename}..")
+                    await msg.edit(f"Processing `{filename}`..")
                     dbx.files_upload(f.read(), dest_path)
                 else:
                     upload_session_start_result = dbx.files_upload_session_start(
                         f.read(CHUNK_SIZE))
                     progress = int(CHUNK_SIZE/file_size*100)
                     if msg != None:
-                        await msg.edit(f"Processing {filename}: {progress}%")
+                        await msg.edit(f"Processing `{filename}`: {progress}%")
                     cursor = dropbox.files.UploadSessionCursor(
                         session_id=upload_session_start_result.session_id, offset=f.tell())
                     commit = dropbox.files.CommitInfo(path=dest_path)
@@ -118,19 +140,20 @@ class TransferData:
                         if ((file_size - f.tell()) <= CHUNK_SIZE):
                             dbx.files_upload_session_finish(
                                 f.read(CHUNK_SIZE), cursor, commit)
-                            await msg.edit(f"Processing {filename}: 100%")
+                            await msg.edit(f"Processing `{filename}`: 100%")
                         else:
                             dbx.files_upload_session_append(
                                 f.read(CHUNK_SIZE), cursor.session_id, cursor.offset)
                             cursor.offset = f.tell()
                             progress = int(f.tell()/file_size*100)
-                            await msg.edit(f"Processing {filename}: {progress}%")
+                            await msg.edit(f"Processing `{filename}`: {progress}%")
             shared_link_metadata = dbx.sharing_create_shared_link_with_settings(
                 dest_path)
             link = shared_link_metadata.url
             return link
         except FileNotFoundError:
             return False
+
 
 # Initialization for dropbox upload
 async def upload(ipa_path, mesg, num=None):
@@ -141,7 +164,8 @@ async def upload(ipa_path, mesg, num=None):
     link = await transferData.upload_file(file_from, file_to, msg=mesg, idnum=num)
     return link
 
-# Get manifest/plist for app
+
+# Returns manifest/plist for app
 def get_plist(ipaurl, ipaname):
     global plist, name
     name = ipaname
