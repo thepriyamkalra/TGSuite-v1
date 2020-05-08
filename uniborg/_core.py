@@ -116,6 +116,8 @@ async def nuke_plug_in(event):
         os.mkdir(dest_dir)
     if os.path.exists(plugin):
         try:
+            if os.path.exists(plugin_dest):
+                os.remove(plugin_dest)
             borg.remove_plugin(input_str)
             os.rename(plugin, plugin_dest)
             await mone.edit(f"{input_str} has been nuked!")
@@ -138,6 +140,8 @@ async def recover_plug_in(event):
     plugin_split.remove(plugin_split[0])
     plugin_dest = "/".join(plugin_split)
     if os.path.exists(plugin_dest):
+        if os.path.exists(plugin):
+            os.remove(plugin)
         try:
             os.rename(plugin_dest, plugin)
             try:
