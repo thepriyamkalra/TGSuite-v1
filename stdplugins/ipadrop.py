@@ -19,7 +19,6 @@ from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, LOGGER
 # Global Variables
 MODULE_LIST.append("ipadrop")
 token_file = Config.DROPBOX_TOKEN
-idnum = randint(101, 9999999999)
 
 # Driver code
 @borg.on(admin_cmd(pattern="ipadrop ?(.*)"))
@@ -28,6 +27,7 @@ async def ipadrop(event):
         return
     args = event.pattern_match.group(1)
     ipa = await download(args, event)
+    idnum = randint(101, 9999999999)
     if not path.exists(ipa):
         await event.edit("404: IPA not found!")
         return
