@@ -25,26 +25,12 @@ async def _(event):
     args = event.pattern_match.group(1)
     args_split = args.split("/")
     name = args_split[-1]
+    await event.edit(f"Trying to download {name} from {args}..\nThere is no progress bar to ensure fastest downloaded speeds & no telegram account limitations\nYou can run a speedtest and estimate the download time.")
+    request = requests.get(args)
     path = DL + name
-    await event.edit(f"Trying to download {name} from {args}..")
-    time.sleep(2)
     with open(path, "wb") as f:
-        request = requests.get(args, stream=True)
-        size = request.headers.get("content-length")
-        if size is None:
-            f.write(request.content)
-            await event.edit(f"Downloaded {name} to {path}.")
-        else:
-            dl = 0
-            for data in request.iter_content(chunk_size=10*1024):
-                dl += len(data)
-                f.write(data)
-                percentage = dl/int(size)*100
-                try:
-                    await event.edit(f"Downloading {name}:\nTotal Size: {int(int(size)/1024/1024)}MB\nDownloaded: ~{int(dl/1024/1024)}MB\nPercentage: {str(percentage)[:5]}%\n")
-                except MessageNotModifiedError:
-                    pass
-            await event.edit(f"Downloaded {name} to {path}.")
+        f.write(request.content)
+        await event.edit(f"Downloaded {name} to {path}.")
 
 
 @borg.on(admin_cmd(pattern="localdl ?(.*)"))

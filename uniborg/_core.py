@@ -109,6 +109,7 @@ async def nuke_plug_in(event):
     dest_dir = "stdplugins/nuked"
     plugin = f"stdplugins/{input_str}.py"
     plugin_split = plugin.split("/")
+    plugin_split.remove([0])
     plugin_split.insert(1, dest_dir)
     plugin_dest = "/".join(plugin_split)
     if not os.path.exists(dest_dir):
@@ -133,6 +134,7 @@ async def recover_plug_in(event):
     dest_dir = "stdplugins/nuked"
     plugin = f"stdplugins/{input_str}.py"
     plugin_split = plugin.split("/")
+    plugin_split.remove([0])
     plugin_split.insert(1, dest_dir)
     plugin_dest = "/".join(plugin_split)
     if os.path.exists(plugin_dest):
