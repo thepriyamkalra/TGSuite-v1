@@ -100,6 +100,7 @@ async def download(url, msg, id):
             await event.edit(f"Downloaded IPA to `{downloaded_file_name}`.")
             ipa_split = downloaded_file_name.split("/")
             ipa = ipa_split[2]
+            return ipa
     elif args.startswith("http"):
         if not args.endswith(".ipa"):
             return await event.edit("Unsupported link!\nPlease provide a direct link to the IPA file.")
