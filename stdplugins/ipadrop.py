@@ -11,8 +11,10 @@ from telethon import events
 from uniborg.util import admin_cmd, progress
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, LOGGER
 
+# Global Variables
 MODULE_LIST.append("ipadrop")
 token_file = Config.DROPBOX_TOKEN
+idnum = randint(101, 9999999999)
 
 
 @borg.on(admin_cmd(pattern="ipadrop ?(.*)"))
@@ -42,6 +44,8 @@ async def ipadrop(event):
             return await event.edit("Unsupported link!\nPlease provide a direct link to the IPA file.")
         ipa_split = args.split("/")
         ipa = ipa_split[-1]
+        ipa_noext = ipa[-4]
+        ipa = f"{ipa_noext}_{idnum}.ipa"
         await event.edit(f"Downloading IPA: {ipa}")
         request = requests.get(args)
         with open(ipa, "wb") as f:
@@ -53,7 +57,6 @@ async def ipadrop(event):
         ipa_link = await upload(ipa, mesg=event)
         ipa_dl_link = get_dl_link(ipa_link)
     get_plist(ipa_dl_link, ipa)
-    idnum = randint(101, 9999999999)
     manifest = f"manifest_{name}_{idnum}.plist"
     with open(manifest, "w") as f:
         f.write(plist)
@@ -69,11 +72,11 @@ async def ipadrop(event):
     except FileNotFoundError:
         pass
 
-
+# Simple logging
 async def log(text):
     await borg.send_message(LOGGER, text)
 
-
+# Convert dropbox sharing link into usercontent link
 def get_dl_link(link):
     if not link.startswith("https://www.dropbox.com/s/"):
         return link
@@ -83,7 +86,7 @@ def get_dl_link(link):
     dl_link = "https://dl.dropboxusercontent.com/s/" + link
     return dl_link
 
-
+# Upload data to dropbox and return sharing link
 class TransferData:
     def __init__(self, access_token):
         self.access_token = access_token
@@ -129,7 +132,7 @@ class TransferData:
         except FileNotFoundError:
             return False
 
-
+# Initialization for dropbox upload
 async def upload(ipa_path, mesg, num=None):
     access_token = token_file
     transferData = TransferData(access_token)
@@ -138,7 +141,7 @@ async def upload(ipa_path, mesg, num=None):
     link = await transferData.upload_file(file_from, file_to, msg=mesg, idnum=num)
     return link
 
-
+# Get manifest/plist for app
 def get_plist(ipaurl, ipaname):
     global plist, name
     name = ipaname
