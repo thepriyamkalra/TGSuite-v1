@@ -80,6 +80,7 @@ def get_dl_link(link):
 
 # Downloads data to local server and returns path
 async def download(url, msg, id):
+    idnum = id
     args = url
     event = msg
     if event.reply_to_msg_id:
