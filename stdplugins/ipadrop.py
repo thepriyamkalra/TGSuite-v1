@@ -12,7 +12,6 @@ from os import path, remove
 from dropbox import dropbox
 from datetime import datetime
 from telethon.tl import functions
-from uniborg.util import admin_cmd
 from uniborg.util import admin_cmd, progress
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, LOGGER
 
@@ -26,8 +25,8 @@ async def ipadrop(event):
     if event.fwd_from:
         return
     args = event.pattern_match.group(1)
-    ipa = await download(args, event)
     idnum = randint(101, 9999999999)
+    ipa = await download(args, event, idnum)
     if not path.exists(ipa):
         await event.edit("404: IPA not found!")
         return
@@ -80,7 +79,7 @@ def get_dl_link(link):
 
 
 # Downloads data to local server and returns path
-async def download(url, msg):
+async def download(url, msg, id):
     args = url
     event = msg
     if event.reply_to_msg_id:
