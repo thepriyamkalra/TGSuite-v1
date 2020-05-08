@@ -3,16 +3,16 @@
 # Syntax .ipadrop <ipa_direct_link> [or as a reply to IPA file]
 
 
-from os import path, remove
-from random import randint
 import time
 import requests
-from dropbox import dropbox
 import asyncio
+from random import randint
+from telethon import events
+from os import path, remove
+from dropbox import dropbox
+from datetime import datetime
 from telethon.tl import functions
 from uniborg.util import admin_cmd
-from datetime import datetime
-from telethon import events
 from uniborg.util import admin_cmd, progress
 from sql_helpers.global_variables_sql import SYNTAX, MODULE_LIST, LOGGER
 
@@ -35,7 +35,7 @@ async def ipadrop(event):
         ipa_link = await upload(ipa, event)
         ipa_dl_link = get_dl_link(ipa_link)
     get_plist(ipa_dl_link, ipa)
-    manifest = f"manifest_{name}_{idnum}.plist"
+    manifest = f"manifest_{name}.plist"
     with open(manifest, "w") as f:
         f.write(plist)
     manifest_link = await upload(manifest, event, idnum)
@@ -44,15 +44,21 @@ async def ipadrop(event):
     message = f"\nRun this link in safari to install `{name}`:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
     await event.edit(message)
     await log(message)
-    remove(manifest)
-    try:
-        remove(ipa)
-    except FileNotFoundError:
-        pass
+    clean(ipa, manifest)
+
 
 # Simple userbot logging
 async def log(text):
     await borg.send_message(LOGGER, text)
+
+
+# Cleans the files
+def clean(*args):
+    for i in args:
+        try:
+            remove(i)
+        except FileNotFoundError:
+            pass
 
 
 # Returns an itunes link which can be used for on-air installation
