@@ -31,7 +31,17 @@ CLIENT_ID = Config.G_DRIVE_CLIENT_ID
 CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
 OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
-G_DRIVE_F_PARENT_ID = Config.IPABOX_FOLDERID
+folder_link = Config.IPABOX_FOLDER
+folder_id = None
+if folder_link is not None:
+    if folder_link.endswith("?usp=sharing"):
+        folder_link = folder_link[:-12]
+    link_split = folder_link.split("/")
+    link = link[-1]
+    if link.startswith("open?id="):
+        link = link[8:]
+    folder_id = link
+G_DRIVE_F_PARENT_ID = folder_id
 token_file = Config.DROPBOX_TOKEN
 drive_acc = Config.G_DRIVE_ACCOUNT
 
@@ -77,6 +87,9 @@ async def main(mode, msg):
     manifest_dl_link = get_dl_link(mode, manifest_link)
     final_link = get_itunes_link(manifest_dl_link)
     message = f"\nRun this link in safari to install `{name}`:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
+    if G_DRIVE_F_PARENT_ID is None:
+        tip = "\n\nTIP: To store all the IPAbox files in one folder, create a folder named \"IPAbox\" in the root of your drive, copy its link and paste it in env variable \"IPABOX_FOLDER\".
+        message += tip 
     await event.edit(message)
     await log(message)
     clean(ipa, manifest)
@@ -139,7 +152,10 @@ async def download(url, msg, id):
         else:
             await event.edit(f"Downloaded IPA to `{downloaded_file_name}`.")
             ipa_split = downloaded_file_name.split("/")
-            ipa = ipa_split[2]
+            ipa_full = ipa_split[-1]
+            ipa_noext = ipa_full[:-4]
+            ipa = f"{ipa_noext}_{idnum}.ipa"
+            os.rename(ipa_full, ipa)
             return ipa
     elif args.startswith("http"):
         if not args.endswith(".ipa"):

@@ -124,7 +124,7 @@ class Config(object):
     #
     G_DRIVE_ACCOUNT = os.environ.get("G_DRIVE_ACCOUNT", None)
     #
-    IPABOX_FOLDERID = os.environ.get("IPABOX_FOLDERID", None)
+    IPABOX_FOLDER = os.environ.get("IPABOX_FOLDER", None)
 
 
 class Production(Config):
