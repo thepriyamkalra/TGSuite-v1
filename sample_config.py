@@ -21,16 +21,19 @@ class Config(object):
     if PRIVATE_GROUP_BOT_API_ID:
         PRIVATE_GROUP_BOT_API_ID = int(PRIVATE_GROUP_BOT_API_ID)
     # Send .get_id in any channel to fill this value. ReQuired for @Manuel15 inspiration to work!
-    PRIVATE_CHANNEL_BOT_API_ID = os.environ.get("PRIVATE_CHANNEL_BOT_API_ID", None)
+    PRIVATE_CHANNEL_BOT_API_ID = os.environ.get(
+        "PRIVATE_CHANNEL_BOT_API_ID", None)
     if PRIVATE_CHANNEL_BOT_API_ID:
         PRIVATE_CHANNEL_BOT_API_ID = int(PRIVATE_CHANNEL_BOT_API_ID)
     # This is required for the plugins involving the file system.
-    TMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/")
+    TMP_DOWNLOAD_DIRECTORY = os.environ.get(
+        "TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/")
     # This is required for the speech to text module. Get your USERNAME from https://console.bluemix.net/docs/services/speech-to-text/getting-started.html
     IBM_WATSON_CRED_URL = os.environ.get("IBM_WATSON_CRED_URL", None)
     IBM_WATSON_CRED_PASSWORD = os.environ.get("IBM_WATSON_CRED_PASSWORD", None)
     # This is required for the hash to torrent file functionality to work.
-    HASH_TO_TORRENT_API = os.environ.get("HASH_TO_TORRENT_API", "https://example.com/torrent/{}");
+    HASH_TO_TORRENT_API = os.environ.get(
+        "HASH_TO_TORRENT_API", "https://example.com/torrent/{}")
     # This is required for the @telegraph functionality.
     TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "UniBorg")
     # Get a Free API Key from OCR.Space
@@ -50,7 +53,8 @@ class Config(object):
     # TG API limit. A message can have maximum 4096 characters!
     MAX_MESSAGE_SIZE_LIMIT = 4095
     # set blacklist_chats where you do not want userbot's features
-    UB_BLACK_LIST_CHAT = set(int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", "").split())
+    UB_BLACK_LIST_CHAT = set(int(x) for x in os.environ.get(
+        "UB_BLACK_LIST_CHAT", "").split())
     # specify LOAD and NO_LOAD
     LOAD = []
     # foloowing plugins won't work on Heroku,
@@ -64,7 +68,8 @@ class Config(object):
     # DataBase would not work
     DB_URI = os.environ.get("DATABASE_URL", None)
     # number of rows of buttons to be displayed in .helpme command
-    NO_OF_BUTTONS_DISPLAYED_IN_H_ME_CMD = int(os.environ.get("NO_OF_BUTTONS_DISPLAYED_IN_H_ME_CMD", 5))
+    NO_OF_BUTTONS_DISPLAYED_IN_H_ME_CMD = int(
+        os.environ.get("NO_OF_BUTTONS_DISPLAYED_IN_H_ME_CMD", 5))
     # specify command handler that should be used for the plugins
     # this should be a valid "regex" pattern
     COMMAND_HAND_LER = os.environ.get("COMMAND_HAND_LER", "\.")
@@ -82,7 +87,8 @@ class Config(object):
     #
     TELE_GRAM_2FA_CODE = os.environ.get("TELE_GRAM_2FA_CODE", None)
     #
-    GROUP_REG_SED_EX_BOT_S = os.environ.get("GROUP_REG_SED_EX_BOT_S", r"(regex|moku|BananaButler_|rgx|l4mR)bot")
+    GROUP_REG_SED_EX_BOT_S = os.environ.get(
+        "GROUP_REG_SED_EX_BOT_S", r"(regex|moku|BananaButler_|rgx|l4mR)bot")
     # rapidleech plugins
     OPEN_LOAD_LOGIN = os.environ.get("OPEN_LOAD_LOGIN", "0")
     OPEN_LOAD_KEY = os.environ.get("OPEN_LOAD_KEY", "0")
@@ -115,6 +121,11 @@ class Config(object):
     USER = os.environ.get("USER", None)
     #
     DROPBOX_TOKEN = os.environ.get("DROPBOX_TOKEN", None)
+    #
+    G_DRIVE_ACCOUNT = os.environ.get("G_DRIVE_ACCOUNT", None)
+    #
+    IPABOX_FOLDER = os.environ.get("IPABOX_FOLDER", None)
+
 
 class Production(Config):
     LOGGER = False
