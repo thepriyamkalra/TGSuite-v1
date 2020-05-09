@@ -37,7 +37,7 @@ if folder_link is not None:
     if folder_link.endswith("?usp=sharing"):
         folder_link = folder_link[:-12]
     link_split = folder_link.split("/")
-    link = link[-1]
+    link = link_split[-1]
     if link.startswith("open?id="):
         link = link[8:]
     folder_id = link
