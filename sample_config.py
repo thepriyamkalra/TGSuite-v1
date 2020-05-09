@@ -123,6 +123,8 @@ class Config(object):
     DROPBOX_TOKEN = os.environ.get("DROPBOX_TOKEN", None)
     #
     G_DRIVE_ACCOUNT = os.environ.get("G_DRIVE_ACCOUNT", None)
+    #
+    IPABOX_FOLDERID = os.environ.get("IPABOX_FOLDERID", None)
 
 
 class Production(Config):

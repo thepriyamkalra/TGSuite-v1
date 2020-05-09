@@ -31,8 +31,7 @@ CLIENT_ID = Config.G_DRIVE_CLIENT_ID
 CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
 OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
-G_DRIVE_F_PARENT_ID = None
-G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
+G_DRIVE_F_PARENT_ID = Config.IPABOX_FOLDERID
 token_file = Config.DROPBOX_TOKEN
 drive_acc = Config.G_DRIVE_ACCOUNT
 
@@ -44,21 +43,21 @@ async def drive(event):
     await event.edit(message)
     return
 
-
 @borg.on(admin_cmd(pattern="ipadrop ?(.*)"))
 async def dbx(event):
+    if token_file is None:
+        return await event.edit(f"You need to set `DROPBOX_TOKEN` enviroment variable!")
     host = "dbx"
     await main(host, event)
 
-
 @borg.on(admin_cmd(pattern="ipadrive ?(.*)"))
 async def drive(event):
+    if drive_acc is None:
+        return await event.edit(f"You need to set `G_DRIVE_ACCOUNT` enviroment variable!")
     host = "drive"
     await main(host, event)
 
 # Main function that connects everything else together
-
-
 async def main(mode, msg):
     event = msg
     args = event.pattern_match.group(1)
@@ -69,14 +68,13 @@ async def main(mode, msg):
         return
     else:
         ipa_link = await upload(mode, ipa, event)
-        ipa_dl_link = get_dl_link(mode, ipa, ipa_link)
+        ipa_dl_link = get_dl_link(mode, ipa_link)
     get_plist(ipa_dl_link, ipa)
     manifest = f"manifest_{name}.plist"
     with open(manifest, "w") as f:
         f.write(plist)
     manifest_link = await upload(mode, manifest, event, idnum)
-    manifest_dl_link = get_dl_link(mode, manifest, manifest_link)
-    await event.edit(f"Manifest: {manifest_link}, IPA: {ipa_link}")
+    manifest_dl_link = get_dl_link(mode, manifest_link)
     final_link = get_itunes_link(manifest_dl_link)
     message = f"\nRun this link in safari to install `{name}`:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
     await event.edit(message)
@@ -106,9 +104,9 @@ def get_itunes_link(link):
 
 
 # Converts dropbox sharing link into usercontent link
-def get_dl_link(mode, name, link):
+def get_dl_link(mode, link):
     if mode == "drive":
-        drivetw_url = f"https://drv.tw/~{drive_acc}/gd/{name}"
+        drivetw_url = f"https://drv.tw/~{drive_acc}/gd/{link}"
         return drivetw_url
     elif mode == "dbx":
         if not link.startswith("https://www.dropbox.com/s/"):
@@ -164,6 +162,9 @@ class DriveUpload:
 
     async def upload_file(self, event, idnum=None):
         filename = self.file
+        filepath = filename
+        if G_DRIVE_F_PARENT_ID is not None:
+            filepath = f"IPAdrop/{filename}"
         if filename.startswith("manifest_"):
             display_name = filename[:int(f"-{len(str(idnum))+7}")]
         elif filename.endswith(".ipa"):
@@ -179,11 +180,12 @@ class DriveUpload:
         http = authorize(G_DRIVE_TOKEN_FILE, storage)
         mime_type = file_ops(filename)
         try:
-            await event.edit(f"Uploading {display_name.upper()} to drive..")
-            g_drive_link = await upload_to_drive(http, filename, filename, mime_type, event, G_DRIVE_F_PARENT_ID)
-            return g_drive_link
+            await event.edit(f"Processing `{display_name}`: 0%")
+            await upload_to_drive(http, filename, filename, mime_type, event, G_DRIVE_F_PARENT_ID)
+            await event.edit(f"Processing `{display_name}`: 100%")
+            return filepath
         except Exception as e:
-            await event.edit(f"Looks like something went wrong while uploading {display_name.upper()} to drive: {e}")
+            await event.edit(f"Looks like something went wrong while uploading `{display_name}` to drive: {e}")
             return
 
 
@@ -249,17 +251,54 @@ async def upload(mode, ipa_path, mesg, num=None):
         link = await dropboxupload.upload_file(file_from, file_to, msg=mesg, idnum=num)
         return link
 
+# Upload data to drive
+async def upload_to_drive(http, file_path, file_name, mime_type, event, parent_id):
+    drive_service = build("drive", "v2", http=http, cache_discovery=False)
+    media_body = MediaFileUpload(file_path, mimetype=mime_type, resumable=True)
+    body = {
+        "title": file_name,
+        "description": "Used for hosting OTA Installations - IPAbox",
+        "mimeType": mime_type,
+    }
+    if parent_id is not None:
+        body["parents"] = [{"id": parent_id}]
+    permissions = {
+        "role": "reader",
+        "type": "anyone",
+        "value": None,
+        "withLink": True
+    }
+    file = drive_service.files().insert(body=body, media_body=media_body)
+    response = None
+    display_message = ""
+    while response is None:
+        status, response = file.next_chunk()
+        await asyncio.sleep(1)
+        if status:
+            percentage = int(status.progress() * 100)
+            if display_message != percentage:  
+                try:
+                    await event.edit(f"Processing `{file_name}`: {percentage}%")
+                    display_message = percentage
+                except Exception as e:
+                    logger.info(str(e))
+                    pass
+    file_id = response.get("id")
+    try:
+        drive_service.permissions().insert(fileId=file_id, body=permissions).execute()
+    except:
+        pass
+    file = drive_service.files().get(fileId=file_id).execute()
+    download_url = file.get("webContentLink")
+    return file_id
+
 # Get mime type and name of given file
-
-
 def file_ops(file_path):
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"
     return mime_type
 
 # Run through the OAuth flow and retrieve credentials
-
-
 async def create_token_file(token_file, event):
     flow = OAuth2WebServerFlow(
         CLIENT_ID,
@@ -282,8 +321,6 @@ async def create_token_file(token_file, event):
         return storage
 
 # Get credentials
-
-
 def authorize(token_file, storage):
     if storage is None:
         storage = Storage(token_file)
@@ -293,58 +330,7 @@ def authorize(token_file, storage):
     http = credentials.authorize(http)
     return http
 
-# Upload data to drive
-
-
-async def upload_to_drive(http, file_path, file_name, mime_type, event, parent_id):
-    drive_service = build("drive", "v2", http=http, cache_discovery=False)
-    media_body = MediaFileUpload(file_path, mimetype=mime_type, resumable=True)
-    body = {
-        "title": file_name,
-        "description": "Uploaded using @UniBorg gDrive v2",
-        "mimeType": mime_type,
-    }
-    if parent_id is not None:
-        body["parents"] = [{"id": parent_id}]
-    permissions = {
-        "role": "reader",
-        "type": "anyone",
-        "value": None,
-        "withLink": True
-    }
-    file = drive_service.files().insert(body=body, media_body=media_body)
-    response = None
-    display_message = ""
-    while response is None:
-        status, response = file.next_chunk()
-        await asyncio.sleep(1)
-        if status:
-            percentage = int(status.progress() * 100)
-            progress_str = "[{0}{1}]\nProgress: {2}%\n".format(
-                "".join(["█" for i in range(math.floor(percentage / 5))]),
-                "".join(["░" for i in range(20 - math.floor(percentage / 5))]),
-                round(percentage, 2)
-            )
-            current_message = f"uploading to gDrive\nFile Name: {file_name}\n{progress_str}"
-            if display_message != current_message:
-                try:
-                    await event.edit(current_message)
-                    display_message = current_message
-                except Exception as e:
-                    logger.info(str(e))
-                    pass
-    file_id = response.get("id")
-    try:
-        drive_service.permissions().insert(fileId=file_id, body=permissions).execute()
-    except:
-        pass
-    file = drive_service.files().get(fileId=file_id).execute()
-    download_url = file.get("webContentLink")
-    return download_url
-
 # Returns manifest/plist for app
-
-
 def get_plist(ipaurl, ipaname):
     global plist, name
     name = ipaname
@@ -403,10 +389,12 @@ def get_plist(ipaurl, ipaname):
 
 
 SYNTAX.update({
-    "ipadrop": "\
-**Requested Module --> ipadrop**\
+    "ipabox": "\
+**Requested Module --> ipabox**\
 \n\n**Detailed usage of fuction(s):**\
 \n\n```.ipadrop <ipa_direct_link> [or as a reply to IPA file]```\
-\nUsage: Provide a direct link or reply to an IPA file to get an OTA app installation link.\
+\nUsage: Provide a direct link or reply to an IPA file to host an OTA installation via dropbox.\
+\n\n```.ipadrive <ipa_direct_link> [or as a reply to IPA file]```\
+\nUsage: Provide a direct link or reply to an IPA file to host an OTA installation via google drive.\
 "
 })
