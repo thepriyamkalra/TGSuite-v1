@@ -38,16 +38,23 @@ drive_acc = Config.G_DRIVE_ACCOUNT
 
 
 # Select a mode - dbx or drive
+@borg.on(admin_cmd(pattern="ipabox"))
+async def drive(event):
+    message = "Please specify as valid mode:\nUse .ipadrive to use google drive or .ipadrop to use dropbox for hosting installations."
+    await event.edit(message)
+    return
+
+
 @borg.on(admin_cmd(pattern="ipadrop ?(.*)"))
 async def dbx(event):
     host = "dbx"
-    main(host, event)
+    await main(host, event)
 
 
 @borg.on(admin_cmd(pattern="ipadrive ?(.*)"))
 async def drive(event):
     host = "drive"
-    main(host, event)
+    await main(host, event)
 
 # Main function that connects everything else together
 
@@ -57,7 +64,7 @@ async def main(mode, msg):
     args = event.pattern_match.group(1)
     idnum = randint(101, 9999999999)
     ipa = await download(args, event, idnum)
-    if not os.pathexists(ipa):
+    if not os.path.exists(ipa):
         await event.edit("404: IPA not found!")
         return
     else:
@@ -69,6 +76,7 @@ async def main(mode, msg):
         f.write(plist)
     manifest_link = await upload(mode, manifest, event, idnum)
     manifest_dl_link = get_dl_link(mode, manifest, manifest_link)
+    await event.edit(f"Manifest: {manifest_link}, IPA: {ipa_link}")
     final_link = get_itunes_link(manifest_dl_link)
     message = f"\nRun this link in safari to install `{name}`:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
     await event.edit(message)
@@ -100,9 +108,8 @@ def get_itunes_link(link):
 # Converts dropbox sharing link into usercontent link
 def get_dl_link(mode, name, link):
     if mode == "drive":
-        if name and drive_acc:
-            drivetw_url = f"https://drv.tw/{drive_acc}/gd/{name}"
-            return drivetw_url
+        drivetw_url = f"https://drv.tw/~{drive_acc}/gd/{name}"
+        return drivetw_url
     elif mode == "dbx":
         if not link.startswith("https://www.dropbox.com/s/"):
             return link
@@ -161,25 +168,22 @@ class DriveUpload:
             display_name = filename[:int(f"-{len(str(idnum))+7}")]
         elif filename.endswith(".ipa"):
             display_name = filename[:-4]
+        if not filename:
+            return await event.edit("404: IPA not found")
+        if Config.G_DRIVE_AUTH_TOKEN_DATA is not None:
+            with open(G_DRIVE_TOKEN_FILE, "w") as t_file:
+                t_file.write(Config.G_DRIVE_AUTH_TOKEN_DATA)
+        storage = None
+        if not os.path.isfile(G_DRIVE_TOKEN_FILE):
+            storage = await create_token_file(G_DRIVE_TOKEN_FILE, event)
+        http = authorize(G_DRIVE_TOKEN_FILE, storage)
+        mime_type = file_ops(filename)
         try:
-            if not required_file_name:
-                return await event.edit("404: IPA not found")
-            if Config.G_DRIVE_AUTH_TOKEN_DATA is not None:
-                with open(G_DRIVE_TOKEN_FILE, "w") as t_file:
-                    t_file.write(Config.G_DRIVE_AUTH_TOKEN_DATA)
-            storage = None
-            if not os.path.isfile(G_DRIVE_TOKEN_FILE):
-                storage = await create_token_file(G_DRIVE_TOKEN_FILE, event)
-            http = authorize(G_DRIVE_TOKEN_FILE, storage)
-            mime_type = file_ops(required_file_name)
-            try:
-                await event.edit(f"Uploading {display_name.upper()} to drive..")
-                g_drive_link = await upload_to_drive(http, filename, filename, mime_type, event, G_DRIVE_F_PARENT_ID)
-                return g_drive_link
-            except Exception as e:
-                await event.edit(f"Looks like something went wrong while uploading {display_name.upper()} to drive: {e}")
-                return
-        except:
+            await event.edit(f"Uploading {display_name.upper()} to drive..")
+            g_drive_link = await upload_to_drive(http, filename, filename, mime_type, event, G_DRIVE_F_PARENT_ID)
+            return g_drive_link
+        except Exception as e:
+            await event.edit(f"Looks like something went wrong while uploading {display_name.upper()} to drive: {e}")
             return
 
 
@@ -197,7 +201,7 @@ class DropboxUpload:
             filename = filename[:-4]
         try:
             with open(file_path, "rb") as f:
-                file_size = os.pathgetsize(file_path)
+                file_size = os.path.getsize(file_path)
                 CHUNK_SIZE = 5 * 1024 * 1024
                 if file_size <= CHUNK_SIZE:
                     await msg.edit(f"Processing `{filename}`..")
@@ -234,9 +238,8 @@ class DropboxUpload:
 async def upload(mode, ipa_path, mesg, num=None):
     if mode == "drive":
         origin = ipa_path
-        destination = f"IPAdriveTG/{origin}"
-        DriveUpload(destination)
-        link = await DriveUpload.upload_file(msg=mesg)
+        driveupload = DriveUpload(ipa_path)
+        link = await driveupload.upload_file(mesg, num)
         return link
     elif mode == "dbx":
         access_token = token_file
@@ -369,7 +372,7 @@ def get_plist(ipaurl, ipaname):
 					<key>needs-shine</key>
 					<true/>
 					<key>url</key>
-					<string>https://raw.githubusercontent.com/Priyam005/IPAdrop/master/icon.png</string>
+					<string>https://raw.githubusercontent.com/Priyam005/IPAbox/master/icon.png</string>
 				</dict>
                <dict>
                    <key>kind</key>
@@ -377,7 +380,7 @@ def get_plist(ipaurl, ipaname):
                    <key>needs-shine</key>
                    <true/>
                    <key>url</key>
-                   <string>https://raw.githubusercontent.com/Priyam005/IPAdrop/master/icon.png</string>
+                   <string>https://raw.githubusercontent.com/Priyam005/IPAbox/master/icon.png</string>
                </dict>
            </array><key>metadata</key>
            <dict>
