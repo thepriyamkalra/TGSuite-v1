@@ -88,7 +88,7 @@ async def main(mode, msg):
     final_link = get_itunes_link(manifest_dl_link)
     message = f"\nRun this link in safari to install `{name}`:\n`{final_link}`\nIf the app icon is grey after installation, the IPA file has expired."
     if G_DRIVE_F_PARENT_ID is None:
-        tip = "\n\nTIP: To store all the IPAbox files in one folder, create a folder named \"IPAbox\" in the root of your drive, copy its link and paste it in env variable \"IPABOX_FOLDER\".
+        tip = "\n\nTIP: To store all the IPAbox files in one folder, create a folder named \"IPAbox\" in the root of your drive, copy its link and paste it in env variable \"IPABOX_FOLDER\"."
         message += tip 
     await event.edit(message)
     await log(message)
