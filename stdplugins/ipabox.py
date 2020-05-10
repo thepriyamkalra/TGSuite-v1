@@ -180,7 +180,7 @@ class DriveUpload:
         filename = self.file
         filepath = filename
         if G_DRIVE_F_PARENT_ID is not None:
-            filepath = f"IPAdrop/{filename}"
+            filepath = f"IPAbox/{filename}"
         if filename.startswith("manifest_"):
             display_name = filename[:int(f"-{len(str(idnum))+7}")]
         elif filename.endswith(".ipa"):
