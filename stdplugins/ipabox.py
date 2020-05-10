@@ -374,7 +374,7 @@ def get_plist(ipaurl, ipaname):
 					<key>needs-shine</key>
 					<true/>
 					<key>url</key>
-					<string>https://raw.githubusercontent.com/Priyam005/IPAbox/master/icon.png</string>
+					<string>https://raw.githubusercontent.com/PriyamKalra/IPAbox/master/icon.png</string>
 				</dict>
                <dict>
                    <key>kind</key>
@@ -382,7 +382,7 @@ def get_plist(ipaurl, ipaname):
                    <key>needs-shine</key>
                    <true/>
                    <key>url</key>
-                   <string>https://raw.githubusercontent.com/Priyam005/IPAbox/master/icon.png</string>
+                   <string>https://raw.githubusercontent.com/PriyamKalra/IPAbox/master/icon.png</string>
                </dict>
            </array><key>metadata</key>
            <dict>
