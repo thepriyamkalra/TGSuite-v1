@@ -27,11 +27,7 @@ async def _(event):
     await event.edit(f"```Quoting this message...```")
 
     async with borg.conversation(bot) as bot_conv:
-        if True:
-            response = await silently_send_message(bot_conv, "/start")
-            if not response.text.startswith("**Hi!**"):
-                await event.edit(f"{response.text}")
-                return
+        if True: #lazy indentation workaround xD
             if input_str:
               response = await silently_send_message(bot_conv, quote)
             elif reply:
