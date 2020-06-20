@@ -29,7 +29,7 @@ youtube-dl
 git+https://github.com/ahupp/python-magic
 google-api-python-client
 oauth2client
-httplib2==0.15.0
+httplib2==0.18.0
 pyGithub
 coffeehouse
 pymongo
