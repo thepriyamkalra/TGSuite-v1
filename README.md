@@ -87,6 +87,6 @@ You can learn alot more by reading some of the preinstalled plugins, enjoy makin
 ## Credits
 Repositories from which I have taken code to make things work:
 (Remind me if I forgot some) 
-https://github.com/SpEcHiDe/UniBorg
-https://github.com/friendly-telegram/modules-repo
-https://github.com/RaphielGang/Telegram-Paperplane
+* https://github.com/SpEcHiDe/UniBorg
+* https://github.com/friendly-telegram/modules-repo
+* https://github.com/RaphielGang/Telegram-Paperplane
