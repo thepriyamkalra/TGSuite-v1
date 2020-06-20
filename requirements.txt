@@ -1,2 +1,2 @@
-telethon==1.10.10
--r ./requirements-stdborg.txt
+telethon==1.14.0
+-r ./requirements-optional.txt
