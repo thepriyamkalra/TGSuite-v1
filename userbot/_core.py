@@ -162,7 +162,7 @@ async def _(event):
         return
     key = event.pattern_match.group(1)
     if not key:
-        msg = "The-TG-Bot v3.0 Modules:"
+        msg = "💫 The-TG-Bot v3.0 Modules:"
         title = ""
         for key, value in sorted(syntax.items()):
             new_title = f"\n\n{key[0].upper()}\n\n"
@@ -170,7 +170,7 @@ async def _(event):
                 title = "\n"
             else:
                 title = new_title
-            msg += f"{title}~ {key}"
+            msg += f"{title}-  {key}"
             title = new_title
         msg += f"\n\nNumber of modules: **{modcount}**\nSend .help <module_name> to get help regarding a module."
         await event.edit(msg)
@@ -181,7 +181,7 @@ async def _(event):
         await event.edit(msg)
 
 
-@bot.on(command(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
+@bot.on(command(pattern="about ?(.*)", allow_sudo=True))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
@@ -206,7 +206,7 @@ syntax.update({
     "core": "\
 ```.load <as_a_reply_to_a_module_file>```\
 \nUsage: Load a specified module.\
-\n\n```.alive```\
+\n\n```.about```\
 \nUsage: Returns userbot's system stats and some general information.\
 \n\n```.reload <module_name>```\
 \nUsage: Reload any module that was unloaded.\
