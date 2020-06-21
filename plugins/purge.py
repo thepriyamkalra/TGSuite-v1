@@ -10,7 +10,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.reply_to_msg_id:
-        i = 2
+        i = 1 + 1
         msgs = []
         from_user = None
         input_str = event.pattern_match.group(1)
