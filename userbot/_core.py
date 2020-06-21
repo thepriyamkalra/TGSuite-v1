@@ -165,12 +165,12 @@ async def _(event):
         msg = "💫 The-TG-Bot v3.0 Modules:"
         title = ""
         for key, value in sorted(syntax.items()):
-            new_title = f"\n\n{key[0].upper()}\n\n"
+            new_title = f"\n\n**{key[0].upper()}**\n"
             if new_title == title:
                 title = "\n"
             else:
                 title = new_title
-            msg += f"{title}-  {key}"
+            msg += f"{title}• {key}"
             title = new_title
         msg += f"\n\nNumber of modules: **{modcount}**\nSend .help <module_name> to get help regarding a module."
         await event.edit(msg)
