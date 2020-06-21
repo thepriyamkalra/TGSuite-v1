@@ -18,7 +18,7 @@ from humanize import naturalsize
 
 from userbot.util import register
 
-@register(outgoing=True, pattern=r"^.direct(?: |$)([\s\S]*)")
+@bot.on(command(pattern="direct ?(.*)"))
 async def direct_link_generator(request):
     """ direct links generator """
     await request.edit("`Processing...`")
