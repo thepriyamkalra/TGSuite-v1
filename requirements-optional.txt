@@ -2,6 +2,7 @@ aiofiles
 aiohttp
 aria2p
 beautifulsoup4
+bs4
 cfscrape
 cryptg
 emoji
@@ -10,6 +11,7 @@ google_images_download
 gsearch
 gtts
 hachoir
+humanize
 Pillow
 psycopg2
 psutil
