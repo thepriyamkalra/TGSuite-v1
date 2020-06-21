@@ -16,7 +16,7 @@ import requests
 from bs4 import BeautifulSoup
 from humanize import naturalsize
 
-from userbot.util import register
+from userbot import syntax
 
 @bot.on(command(pattern="direct ?(.*)"))
 async def direct_link_generator(request):
