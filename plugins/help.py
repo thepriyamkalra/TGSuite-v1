@@ -11,7 +11,7 @@ async def _(event):
         return
     key = event.pattern_match.group(1)
     if not key:
-        msg = "Available Modules:"
+        msg = "💫 List of Available Modules:"
         title = ""
         for key, value in sorted(syntax.items()):
             new_title = f"\n\n{key[0].upper()}\n\n"
@@ -19,7 +19,7 @@ async def _(event):
                 title = "\n"
             else:
                 title = new_title
-                msg += f"{title}~ {key}"
+                msg += f"{title}-  {key}"
                 title = new_title
         msg += f"\n\nSend {Config.COMMAND_HANDLER}help <module_name> to get help regarding a module."
         await event.edit(msg)
