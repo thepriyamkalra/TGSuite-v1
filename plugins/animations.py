@@ -3,10 +3,9 @@ from telethon.tl.functions.users import GetFullUserRequest
 import asyncio
 
 from telethon.tl.types import ChannelParticipantsAdmins
-from userbot.util import admin_cmd
 from userbot import syntax
 
-@bot.on(command("gmailhack(.*)"))
+@bot.on(command("gmailhack ?(.*)"))
 
 async def _(event):
 
@@ -70,7 +69,7 @@ async def _(event):
 
 
 
-@borg.on(events.NewMessage(pattern=r"\.(.*)", outgoing=True))
+@bot.on(commamd("hack ?(.*)"))
 
 async def _(event):
 
