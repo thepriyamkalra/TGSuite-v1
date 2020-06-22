@@ -73,7 +73,7 @@ async def _(event):
 
 async def func(var):
 
-    if event.fwd_from:
+    if var.fwd_from:
 
         return
 
