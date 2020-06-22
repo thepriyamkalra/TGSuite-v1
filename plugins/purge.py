@@ -2,6 +2,7 @@
 # Syntax (.purge as a reply to a msg)
 
 import asyncio
+from asyncio import sleep
 from userbot import syntax
 
 
