@@ -56,7 +56,6 @@ async def fastpurger(event):
 
 
 @bot.on(command("edit ?(.*)"))
-@errors_handler
 async def editer(edit):
     """ For .edit command, edit your last message. """
     message = edit.text
