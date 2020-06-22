@@ -10,7 +10,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.reply_to_msg_id:
-        i = 1
+        i = 0
         msgs = []
         from_user = None
         input_str = event.pattern_match.group(1)
@@ -26,10 +26,10 @@ async def _(event):
             msgs.append(message)
             if len(msgs) == 100:
                 await bot.delete_messages(event.chat_id, msgs)
-                msgs = [] + 1
+                msgs = []
         if len(msgs) <= 100:
             await bot.delete_messages(event.chat_id, msgs)
-            msgs = [] + 1
+            msgs = []
             await event.delete()
         else:
             await event.edit("**PURGE** Failed!")
