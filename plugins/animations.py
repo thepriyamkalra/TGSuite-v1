@@ -71,7 +71,7 @@ async def _(event):
 
 @bot.on(command("hack ?(.*)"))
 
-async def _(event):
+async def func(var):
 
     if event.fwd_from:
 
@@ -84,12 +84,6 @@ async def _(event):
     animation_interval = 2
 
     animation_ttl = range(0, 21)
-   
-    input_str = event.pattern_match.group(1)
-
-    if input_str == "hack":
-
-        await event.edit(input_str)
         
         animation_chars = [
         
@@ -120,7 +114,7 @@ async def _(event):
 
             await asyncio.sleep(animation_interval)
 
-            await event.edit(animation_chars[i % 21])
+            await var.edit(animation_chars[i % 21])
             
             
 
