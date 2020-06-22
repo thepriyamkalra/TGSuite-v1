@@ -69,7 +69,7 @@ async def _(event):
 
 
 
-@bot.on(commamd("hack ?(.*)"))
+@bot.on(command("hack ?(.*)"))
 
 async def _(event):
 
