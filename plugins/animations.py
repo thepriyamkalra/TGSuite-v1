@@ -85,36 +85,36 @@ async def func(var):
 
     animation_ttl = range(0, 21)
         
-        animation_chars = [
+    animation_chars = [
         
-            "`Connecting To DarkWEB Secret Server...`",
-            "`Connection Successful!`",
-            "`Targetting your Telegram Account`",
-            "`Target Selected.`",
-            "`Attempting method 1... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Method 1 FAILED!`",
-            "`Attempting method 2... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Removing Encryption... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Getting API ID and API Hash.. 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Getting API ID and API Hash... 17%\n████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Uploding Information... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Hacking. 29%\n███████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Hacking.. 35%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`Hacking... 43%\n███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`modifying INFORMATION... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
-            "`MODIFYING information... 58%\n███████████████▒▒▒▒▒▒▒▒▒▒ `",
-            "`modifying INFORMATION... 69%\n█████████████████▒▒▒▒▒▒▒▒ `",
-            "`Adding Modules... 84%\n█████████████████████▒▒▒▒ `",
-            "`Adding Finishing Touches... 98%\n████████████████████████▒`",
-            "`HACKED... 100%\n█████████████████████████ `",
-            f"`Your Telegram Account Hacked Successfully...`\n__Your userbot will now start spamming everywhere...__\n\n**Pay 25$ To** {botuser} **Or delete your account.**"
-        ]
+        "`Connecting To DarkWEB Secret Server...`",
+        "`Connection Successful!`",
+        "`Targetting your Telegram Account`",
+        "`Target Selected.`",
+        "`Attempting method 1... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Method 1 FAILED!`",
+        "`Attempting method 2... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Removing Encryption... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Getting API ID and API Hash.. 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Getting API ID and API Hash... 17%\n████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Uploding Information... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Hacking. 29%\n███████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Hacking.. 35%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Hacking... 43%\n███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`modifying INFORMATION... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`MODIFYING information... 58%\n███████████████▒▒▒▒▒▒▒▒▒▒ `",
+        "`modifying INFORMATION... 69%\n█████████████████▒▒▒▒▒▒▒▒ `",
+        "`Adding Modules... 84%\n█████████████████████▒▒▒▒ `",
+        "`Adding Finishing Touches... 98%\n████████████████████████▒`",
+        "`HACKED... 100%\n█████████████████████████ `",
+        f"`Your Telegram Account Hacked Successfully...`\n__Your userbot will now start spamming everywhere...__\n\n**Pay 25$ To** {botuser} **Or delete your account.**"
+    ]
 
-        for i in animation_ttl:
+    for i in animation_ttl:
 
-            await asyncio.sleep(animation_interval)
+        await asyncio.sleep(animation_interval)
 
-            await var.edit(animation_chars[i % 21])
+        await var.edit(animation_chars[i % 21])
             
             
 
