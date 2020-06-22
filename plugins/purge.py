@@ -10,7 +10,7 @@ async def _(event):
     if event.fwd_from:
         return
     if event.reply_to_msg_id:
-        i = 0
+        count = 0
         msgs = []
         from_user = None
         input_str = event.pattern_match.group(1)
@@ -22,7 +22,7 @@ async def _(event):
             min_id=event.reply_to_msg_id,
             from_user=from_user
         ):
-            i = i + 1
+            count = count + 1
             msgs.append(message)
             if len(msgs) == 100:
                 await bot.delete_messages(event.chat_id, msgs)
