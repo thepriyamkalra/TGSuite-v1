@@ -87,4 +87,16 @@ async def selfdestruct(destroy):
     await smsg.delete()
     if BOTLOG:
         await destroy.client.send_message(BOTLOG_CHATID,
-                                         
+                                          "Self-destructed successfully")
+
+
+syntax.update({
+    "purge": "\
+• ```.purge (as a reply to a msg)```\
+\nUsage: Purge all msgs until the target message.\
+\n\n• `.sd (time) (message)`\
+\nUsage: Creates a message that deletes automatically. (time) must be an integar less than 100\
+\n\n•  `.edit (message)`\
+\nUsage: Edits the last message.\
+"
+})
