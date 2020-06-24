@@ -17,7 +17,7 @@ async def _(event):
 
     botuser = f"@{botuser.username}"
 
-    animation_interval = 2
+    animation_interval = 0.7
 
     animation_ttl = range(0, 20)
 
@@ -81,12 +81,13 @@ async def func(var):
 
     botuser = f"@{botuser.username}"
 
-    animation_interval = 2
+    animation_interval = 0.7
 
     animation_ttl = range(0, 21)
         
     animation_chars = [
         
+
         "`Connecting To DarkWEB Secret Server...`",
         "`Connection Successful!`",
         "`Targetting your Telegram Account`",
@@ -115,7 +116,7 @@ async def func(var):
         await asyncio.sleep(animation_interval)
 
         await var.edit(animation_chars[i % 21])
-            
+          
             
 
 syntax.update({
