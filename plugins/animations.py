@@ -17,7 +17,7 @@ async def _(event):
 
     botuser = f"@{botuser.username}"
 
-    animation_interval = 2
+    animation_interval = 0.7
 
     animation_ttl = range(0, 20)
 
@@ -81,7 +81,7 @@ async def func(var):
 
     botuser = f"@{botuser.username}"
 
-    animation_interval = 2
+    animation_interval = 0.7
 
     animation_ttl = range(0, 21)
         
@@ -107,7 +107,7 @@ async def func(var):
             "`Adding Modules... 84%\n█████████████████████▒▒▒▒ `",
             "`Adding Finishing Touches... 98%\n████████████████████████▒`",
             "`HACKED... 100%\n█████████████████████████ `",
-            f"`Your Telegram Account Hacked Successfully...`\n__Your userbot will now start spamming everywhere...__\n\n**Pay 25$ To** {botuser} **Or delete your account.**"
+            f"`Your Telegram Account Has Been Hacked Successfully by {botuser}...`\n__Your account will get banned within 24 hours...__\n\n**Pay 25$ To** {botuser} **To Free Up Your Account.**"
         ]
 
         for i in animation_ttl:
