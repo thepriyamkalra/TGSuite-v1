@@ -37,19 +37,19 @@ async def magisk(event):
 
 
 
-@borg.on(events.NewMessage(pattern=r"\.twrp", outgoing=True))
+@bot.on(command(pattern="twrp ?(.*)"))
 async def twrp(event):
     if event.fwd_from:
         return
-    """ get android device twrp """
-    textx = await event.get_reply_message()
+    device = event.pattern_match.group(1)
+    if not device:
+        clip = await event.get_reply_message()
+        device = clip.text
     device = event.pattern_match.group(1)
     if device:
         pass
-    elif textx:
-        device = textx.text.split(' ')[0]
     else:
-        await event.edit("`Usage: .twrp <codename>`")
+        await event.edit("**Usage:** `.twrp <codename>`")
         return
     url = get(f'https://dl.twrp.me/{device}/')
     if url.status_code == 404:
