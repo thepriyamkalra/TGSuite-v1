@@ -1,6 +1,6 @@
 # Adapted from OpenUserBot for Uniborg, X-tra-Telegram
 # Ported to The-TG-Bot
-# For personal use only
+# For personal use of me(@Techy05) only. I don't own this plugin nor contributed in this.
 
 """Download & Upload Images on Telegram\n
 Syntax: `.img <Name>` or `.img (replied message)`
@@ -14,7 +14,7 @@ from re import findall
 from userbot import syntax
 
 
-@borg.on(admin_cmd(pattern="img ?(.*)"))
+@bot.on(command("img ?(.*)"))
 async def img_sampler(event):
     await event.edit("`Processing...`")
     reply = await event.get_reply_message()
