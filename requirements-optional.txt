@@ -27,7 +27,7 @@ sqlalchemy
 telegraph
 urbandict
 wikipedia
-youtube-dl
+youtube_dl
 git+https://github.com/ahupp/python-magic
 google-api-python-client
 oauth2client
