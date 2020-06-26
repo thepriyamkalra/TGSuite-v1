@@ -21,7 +21,6 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import MessageEntityMentionName
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from userbot import YOUTUBE_API_KEY
 from userbot import syntax
 
 
