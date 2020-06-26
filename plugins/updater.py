@@ -39,7 +39,7 @@ INVALID_APP_NAME = "INVALID APP NAME: Please set the name of your bot in ENV var
 
 @bot.on(command(pattern="update ?(.*)", allow_sudo=True))
 async def updater(message):
-    await message.edit("Searching for updates.. - The-TG-Bot v3.0")
+    await message.edit("Looking for updates // The-TG-Bot v3.0")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as e:
@@ -125,7 +125,7 @@ async def updater(message):
             else:
                 remote = repo.create_remote("heroku", heroku_git_url)
             asyncio.get_event_loop().create_task(
-                deploy_start(bot, message, HEROKU_GIT_REF_SPEC, remote))
+                deploy_start(bot, message, HEROKU_GIT_REF_SPEC, remote, message_one))
         else:
             await message.edit(NO_HEROKU_APP_CFGD)
     else:
@@ -140,10 +140,10 @@ def generate_change_log(git_repo, diff_marker):
     return out_put_str
 
 
-async def deploy_start(bot, message, refspec, remote):
+async def deploy_start(bot, message, refspec, remote, update):
     try:
+        await message.edit(update)
         await remote.push(refspec=refspec)
-        await message.edit(message_one)
     except TypeError:
         await message.edit("The-TG-Bot v3.0 is update-to-date.")
     await bot.disconnect()
