@@ -191,6 +191,13 @@ async def _(event):
     await bot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
+@bot.on(command(pattern="alive ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    await event.edit("Yeah!")
+    await event.edit("Yeah! 👍🏻 I'm Alive 🍻")
+
 @bot.on(command(pattern="about ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
