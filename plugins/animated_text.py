@@ -1,7 +1,8 @@
 # For The-TG-Bot-3.0
-# Syntax .type <text>
+# Syntax .type <text>, .say <text>
 
 import asyncio
+import time
 from userbot import syntax
 
 
@@ -25,9 +26,29 @@ async def _(event):
         await asyncio.sleep(DELAY_BETWEEN_EDITS)
 
 
+@bot.on(command(pattern="say ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    input = event.pattern_match.group(1)
+    if not input:
+        abe = await event.get_reply_message()
+        input = abe.text
+    strings = input.split()
+    count = 0
+    output = ""
+    for _ in strings:
+        output += f"{strings[count]}\n"
+        count += 1
+        await event.edit(output)
+        time.sleep(0.25)
+
+
 syntax.update({
-    "type": "\
-```.type <text_to_type>```\
+    "animated text": "\
+• ```.type <text_to_type>```\
 \nUsage: Type text with a fancy typing animation.\
+\n\n• ```.say <text_to_print> (or as a reply to target message)```\
+\nUsage: Says anything you want it to say.\
 "
 })
