@@ -200,17 +200,6 @@ async def _(event):
     await event.edit(help_string + "\n\n")
 
 
-@bot.on(command(pattern="restart ?(.*)", allow_sudo=True))
-async def handler(message):
-    await message.edit("The-TG-Bot has been successfully restarted.\n")
-    asyncio.get_event_loop().create_task(restart())
-
-
-async def restart():
-    await bot.disconnect()
-    os.execl(sys.executable, sys.executable, *sys.argv)
-
-
 def get_size(bytes, suffix="B"):
     factor = 1024
     for unit in ["", "K", "M", "G", "T", "P"]:
