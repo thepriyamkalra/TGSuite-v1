@@ -34,8 +34,7 @@ async def _(event):
         silent=True
     )
 
-syntax.update({"curtana": "\
-```.realme1 <rom_name>```\
+syntax.update({"realme 1": "\
+```• .realme1 <rom_name>```\
 \nUsage: Returns the latest build for a custom rom.\
-\n\nUsing .realme1 rom will return latest rom or kernel.\
 "})
