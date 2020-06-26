@@ -1,12 +1,12 @@
 # For The-TG-Bot-3.0
-# Syntax .coinflip
+# Syntax .toss
 
 import random
 import re
 from userbot import syntax
 
 
-@bot.on(command("coinflip ?(.*)"))
+@bot.on(command("toss ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -18,14 +18,14 @@ async def _(event):
         if input_str == "heads":
             await event.edit("**Heads**. \n You were correct.")
         elif input_str == "tails":
-            await event.edit("**Heads**. \n Better luck next time!...")
+            await event.edit("**Heads**. \n You Lose.")
         else:
             await event.edit("**Heads**.")
     elif r % 2 == 0:
         if input_str == "tails":
             await event.edit("**Tails**. \n You were correct.")
         elif input_str == "heads":
-            await event.edit("**Tails**. \n Better luck next time!...")
+            await event.edit("**Tails**. \n You Lose.")
         else:
             await event.edit("**Tails**.")
     else:
@@ -33,8 +33,8 @@ async def _(event):
 
 
 syntax.update({
-    "coinflip": "\
-```.coinflip <optional_choice>```\
+    "toss": "\
+```.toss <heads/tails>```\
 \nUsage: Flips a virtual coin and returns the outcome, test your luck!\
 "
 })
