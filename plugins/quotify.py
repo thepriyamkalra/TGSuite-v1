@@ -15,7 +15,7 @@ async def _(event):
         return
     string = event.pattern_match.group(1)
     await event.edit("Quotifying input text!")
-    get_sticker(string)
+    result = get_sticker(string)
     sleep(1)
     await event.edit(result)
     await bot.send_file(event.chat_id, sticker)
@@ -25,7 +25,6 @@ async def _(event):
 
 
 def get_sticker(text):
-    global result
     result = "Task complete!"
     string = str(text).split()
     img = Image.new("RGB", (250, 250))
@@ -40,7 +39,7 @@ def get_sticker(text):
     else:
         fnt = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     font = ImageFont.truetype(fnt, 25)
-    if str(text).startswith("-x "):
+    if str(text).startswith("--ex "):
         x_mode = True
         string = string[1:]
     for char in string:
@@ -55,13 +54,14 @@ def get_sticker(text):
             cords_x += len(char)+spacing
         cords_y += len(char) + spacing
     img.save(sticker, "WEBP")
+    return result
 
 
 syntax.update({
     "quotify": "\
 ```.quotify <text_to_quotify>```\
 \nUsage: Quotify the input text ^_^.\
-\n\n```.quotify -x <text_to_quotify>```\
+\n\n```.quotify --ex <text_to_quotify>```\
 \nUsage: Same as default .quotify but intends everyword.\
 "
 })
