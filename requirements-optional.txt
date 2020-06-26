@@ -4,6 +4,7 @@ aria2p
 beautifulsoup4
 bs4
 cfscrape
+cowpy
 cryptg
 emoji
 googletrans
