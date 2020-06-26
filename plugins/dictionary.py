@@ -10,7 +10,7 @@ import asyncurban
 from userbot import syntax
 
 
-@bot.on(command("search (.*)"))
+@bot.on(command("dictionary (.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -25,7 +25,7 @@ async def _(event):
 
 
 syntax.update({
-    "search": "\
-```.search <keyword>```\
+    "dictionary": "\
+```.dictionary <keyword>```\
 \nUsage: Search UrbanDictionary for a selected keyword.\
 "})
