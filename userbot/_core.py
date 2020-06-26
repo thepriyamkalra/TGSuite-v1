@@ -14,6 +14,9 @@ from userbot import util, syntax
 from telethon import __version__
 
 DELETE_TIMEOUT = 5
+os.mkdir(Config.DOWNLOAD_DIRECTORY)
+
+
 @bot.on(command(pattern="reload (?P<shortname>\w+)$"))  # pylint:disable=E0602
 async def reload_plug_in(event):
     await event.delete()
@@ -183,13 +186,6 @@ async def _(event):
             msg = f"**{key}** module doesnt exist!"
         await event.edit(msg)
 
-@bot.on(command(pattern="restart", allow_sudo=True))
-async def _(event):
-    if event.fwd_from:
-        return
-    await event.edit("Restart complete!")
-    await bot.disconnect()
-    os.execl(sys.executable, sys.executable, *sys.argv)
 
 @bot.on(command(pattern="alive ?(.*)", allow_sudo=True))
 async def _(event):
@@ -202,6 +198,17 @@ async def _(event):
     specs = f"`System: {uname.system}\nRelease: {uname.release}\nVersion: {uname.version}\nProcessor: {uname.processor}\nMemory [RAM]: {get_size(memory.total)}`"
     help_string = f"**The-TG-Bot v3.0 is running.**\n\n**General Info:**\n`Build Version: {build} {botuser}`Github Repository: `{Config.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Developed By:** @A_FRICKING_GAMER"
     await event.edit(help_string + "\n\n")
+
+
+@bot.on(command(pattern="restart ?(.*)", allow_sudo=True))
+async def handler(message):
+    await message.edit("The-TG-Bot has been successfully restarted.\n")
+    asyncio.get_event_loop().create_task(restart())
+
+
+async def restart():
+    await bot.disconnect()
+    os.execl(sys.executable, sys.executable, *sys.argv)
 
 
 def get_size(bytes, suffix="B"):

@@ -40,14 +40,15 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     if input_str:
         input_str = input_str.split()
-        try:
-            pack_id = int(input_str[0])
-        except:
-            pass
-        try:
-            sticker_emoji = input_str[1]
-        except:
-            pass
+        is_int = False
+        for char in input_str:
+            try:
+                is_int = int(char)
+            except:
+                is_int = False
+                sticker_emoji = char
+            if is_int:
+                pack_id = char
 
     botuser = await bot.get_me()
     botuser = f"@{botuser.username}"
@@ -73,7 +74,7 @@ async def _(event):
             sticker.seek(0)
             uploaded_sticker = await bot.upload_file(sticker, file_name=file_ext_ns_ion)
 
-    await event.edit("```Using black magic to kang this sticker...```")
+    await event.edit("```Using a crack in the fabric of time to kang this sticker...```")
 
     async with bot.conversation("@Stickers") as bot_conv:
         now = datetime.datetime.now()
@@ -89,7 +90,7 @@ async def _(event):
                 return
             response = await silently_send_message(bot_conv, packname)
             if not response.text.startswith("Alright!"):
-                await event.edit(f"**FAILED**! @Stickers replied: {response.text}")
+                await event.edit(f"{packname} is full, try .kang <optional_emoji> {pack_id+1}")
                 return
             w = await bot_conv.send_file(
                 file=uploaded_sticker,
@@ -349,7 +350,7 @@ def zipdir(path, ziph):
 
 syntax.update({
     "kang": "\
-```.kang <pack_no> <optional_emoji>```\
+```.kang <optional_emoji> <optional_pack_number>```\
 \nUsage: Adds sticker to your own sticker pack!\
 "
 })
