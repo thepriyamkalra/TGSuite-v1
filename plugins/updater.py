@@ -16,17 +16,8 @@ IS_SELECTED_DIFFERENT_BRANCH = (
     "`Please switch to a stable build, and restart the updater.`"
 )
 OFFICIAL_UPSTREAM_REPO = "https://github.com/PriyamKalra/The-TG-Bot-3.0/"
-BOT_IS_UP_TO_DATE = "`The-TG-Bot up-to-date.\nEnjoy!`"
-NEW_BOT_UP_DATE_FOUND = (
-    "`New update found for {branch_name}\n`"
-    "`Changelog: \n\n{changelog}\n`"
-    "`The-TG-Bot update is on its way!\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
-)
-NEW_UP_DATE_FOUND = (
-    "New update found for {branch_name}\n"
-    "`Starting update..\n`"
-    "`All services will be unavailable for a few minutes`"
-)
+BOT_IS_UP_TO_DATE = "`The-TG-Bot is up-to-date.\nEnjoy!`"
+NEW_BOT_UP_DATE_FOUND = "`New update found for {branch_name}\n{changelog}``The-TG-Bot update is on its way!\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
 REPO_REMOTE_NAME = "temponame"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
@@ -72,27 +63,15 @@ async def updater(message):
             branch_name=active_branch_name
         )
     )
-
     if not changelog:
-        await asyncio.sleep(3)
+        changelog = "\n"
+    else:
+        changelog = f"`Changelog: \n\n{changelog}\n`"
 
     message_one = NEW_BOT_UP_DATE_FOUND.format(
         branch_name=active_branch_name,
         changelog=changelog
     )
-
-    if len(message_one) > 4095:
-        with open("change.log", "w+", encoding="utf8") as out_file:
-            out_file.write(str(message_one))
-        await bot.send_message(
-            message.chat_id,
-            document="change.log",
-            caption=message_two
-        )
-        os.remove("change.log")
-    else:
-        # await message.edit(message_one)
-        await asyncio.sleep(3)
 
     temp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
@@ -140,12 +119,12 @@ def generate_change_log(git_repo, diff_marker):
     return out_put_str
 
 
-async def deploy_start(bot, message, refspec, remote, update):
-    await message.edit(update)
+async def deploy_start(bot, message, refspec, remote, update_str):
     try:
         await remote.push(refspec=refspec)
     except TypeError:
-        await message.edit("The-TG-Bot v3.0 is update-to-date.")
+        return await message.edit(BOT_IS_UP_TO_DATE)
+    await message.edit(update_str)
     await bot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 

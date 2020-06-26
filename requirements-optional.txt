@@ -9,6 +9,7 @@ googletrans
 google_images_download
 gsearch
 gtts
+gitpython
 hachoir
 Pillow
 psycopg2
