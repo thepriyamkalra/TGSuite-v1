@@ -23,7 +23,7 @@ async def _(event):
     name = args_split[-1]
     await event.edit(f"Trying to download {name} from {args}..\nThere is no progress bar to ensure fastest downloaded speeds & no telegram account limitations\nYou can run a speedtest and estimate the download time.")
     request = requests.get(args)
-    path = DL + name
+    path = Config.DOWNLOAD_DIRECTORY + name
     with open(path, "wb") as f:
         f.write(request.content)
         await event.edit(f"Downloaded {name} to {path}.")
