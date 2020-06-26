@@ -184,7 +184,7 @@ async def _(event):
         await event.edit(msg)
 
 
-@bot.on(command(pattern="about ?(.*)", allow_sudo=True))  # pylint:disable=E0602
+@bot.on(command(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
@@ -209,7 +209,7 @@ syntax.update({
     "core": "\
 ```.load <as_a_reply_to_a_module_file>```\
 \nUsage: Load a specified module.\
-\n\n```.about```\
+\n\n```.alive```\
 \nUsage: Returns userbot's system stats and some general information.\
 \n\n```.reload <module_name>```\
 \nUsage: Reload any module that was unloaded.\
