@@ -15,10 +15,10 @@ import sys
 
 import random
 
-from sql.global_variables_sql import SYNTAX, MODULE_LIST
+from userbot import syntax
 
 
-@borg.on(events.NewMessage(pattern=r"\.logic", outgoing=True))
+@bot.on(command("logic ?(.*)"))
 
 async def _(event):
 
