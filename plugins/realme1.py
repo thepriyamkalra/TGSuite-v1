@@ -1,11 +1,11 @@
 # For The-TG-Bot-3.0
-# By Priyam Kalra
-# Syntax .search <text>
+# By Priyam Kalra for curtana
+# Ported for realme 1 (cph1859)
 
 from userbot import syntax
 
 
-@bot.on(command(pattern="curtana ?(.*)"))
+@bot.on(command(pattern="realme1 ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
@@ -14,7 +14,7 @@ async def _(event):
     # Tweak input for lower chance of failure
     args = input_args.split()[0]
     args = f"#{args}"
-    chat = "@curtanaupdates"
+    chat = "@realme1updates"
     async for message in bot.iter_messages(chat):
         msg = message.text
         if msg is None:
@@ -35,11 +35,7 @@ async def _(event):
     )
 
 syntax.update({"curtana": "\
-```.curtana <rom_name>```\
+```.realme1 <rom_name>```\
 \nUsage: Returns the latest build for a custom rom.\
-\n```.curtana <kernel_name>```\
-\nUsage: Returns the latest build for a custom kernel.\
-\n```.curtana lrtwrp```\
-\nUsage: Returns the latest lrtwrp build.\
-\n\nUsing .curtana rom / .curtana kernel will return latest rom or kernel.\
+\n\nUsing .realme1 rom will return latest rom or kernel.\
 "})
