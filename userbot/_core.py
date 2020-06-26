@@ -191,7 +191,7 @@ async def _(event):
     await bot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-@bot.on(command(pattern="alive ?(.*)", allow_sudo=True))
+@bot.on(command(pattern="about ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -220,8 +220,10 @@ syntax.update({
 \nUsage: Reload any module that was unloaded.\
 \n\n```.unload <module_name>```\
 \nUsage: Unload any loaded module.\
-\n\n```.alive```\
+\n\n```.about```\
 \nUsage: Returns userbot's system stats and some general information.\
+\n\n```.alive```\
+\nUsage: Checks if The-TG-Bot is alive or not.\
 \n\n```.help <optional_module_name>```\
 \nUsage: Returns help strings for various modules of this userbot.\
 \n\n```.restart```\
