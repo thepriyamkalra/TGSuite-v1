@@ -4,14 +4,17 @@ aria2p
 beautifulsoup4
 bs4
 cfscrape
+coffeehouse
 cowpy
 cryptg
+dropbox
 emoji
 googletrans
 google_images_download
 gsearch
 gtts
 hachoir
+heroku3
 humanize
 Pillow
 psycopg2
@@ -19,6 +22,7 @@ psutil
 pySmartDL
 python-barcode
 python-magic
+pymongo
 qrcode
 regex
 requests
@@ -34,6 +38,3 @@ google-api-python-client
 oauth2client
 httplib2==0.15.0
 pyGithub
-coffeehouse
-pymongo
-dropbox
