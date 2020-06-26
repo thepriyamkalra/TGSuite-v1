@@ -39,6 +39,7 @@ INVALID_APP_NAME = "INVALID APP NAME: Please set the name of your bot in ENV var
 
 @bot.on(command(pattern="update ?(.*)", allow_sudo=True))
 async def updater(message):
+    await message.edit("Searching for updates.. - The-TG-Bot v3.0")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as e:
@@ -142,7 +143,7 @@ def generate_change_log(git_repo, diff_marker):
 async def deploy_start(bot, message, refspec, remote):
     try:
         await remote.push(refspec=refspec)
-        await event.edit(message_one)
+        await message.edit(message_one)
     except TypeError:
         await message.edit("The-TG-Bot v3.0 is update-to-date.")
     await bot.disconnect()
