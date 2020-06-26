@@ -28,8 +28,8 @@ sqlalchemy
 telegraph
 asyncurban
 wikipedia
-youtube_dl
-git+https://github.com/ahupp/python-magic
+youtube-dl
+git
 google-api-python-client
 oauth2client
 httplib2==0.15.0
