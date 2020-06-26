@@ -7,6 +7,7 @@ import sys
 import git
 import asyncio
 import requests
+from time import sleep
 from userbot import syntax
 
 # -- Constants -- #
@@ -121,10 +122,11 @@ def generate_change_log(git_repo, diff_marker):
 
 async def deploy_start(bot, message, refspec, remote, update_str):
     try:
+        await message.edit(update_str)
+        sleep(5)
         await remote.push(refspec=refspec)
     except TypeError:
-        return await message.edit(BOT_IS_UP_TO_DATE)
-    await message.edit(update_str)
+        await message.edit(BOT_IS_UP_TO_DATE)
     await bot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
