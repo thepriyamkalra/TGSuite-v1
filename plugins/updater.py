@@ -18,7 +18,7 @@ IS_SELECTED_DIFFERENT_BRANCH = (
 )
 OFFICIAL_UPSTREAM_REPO = "https://github.com/PriyamKalra/The-TG-Bot-3.0/"
 BOT_IS_UP_TO_DATE = "`The-TG-Bot is up-to-date.\nEnjoy!`"
-NEW_BOT_UP_DATE_FOUND = "`New update found for {branch_name}\n{changelog}``The-TG-Bot update is on its way!\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
+NEW_BOT_UP_DATE_FOUND = "The-TG-Bot update is on its way!\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
 REPO_REMOTE_NAME = "temponame"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
@@ -57,22 +57,7 @@ async def updater(message):
     temp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     temp_upstream_remote.fetch(active_branch_name)
 
-    changelog = generate_change_log(
-        repo,
-        DIFF_MARKER.format(
-            remote_name=REPO_REMOTE_NAME,
-            branch_name=active_branch_name
-        )
-    )
-    if not changelog:
-        changelog = "\n"
-    else:
-        changelog = f"`Changelog: \n\n{changelog}\n`"
-
-    message_one = NEW_BOT_UP_DATE_FOUND.format(
-        branch_name=active_branch_name,
-        changelog=changelog
-    )
+    await event.edit(NEW_BOT_UP_DATE_FOUND)
 
     temp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
@@ -105,7 +90,7 @@ async def updater(message):
             else:
                 remote = repo.create_remote("heroku", heroku_git_url)
             asyncio.get_event_loop().create_task(
-                deploy_start(bot, message, HEROKU_GIT_REF_SPEC, remote, message_one))
+                deploy_start(bot, message, HEROKU_GIT_REF_SPEC, remote))
         else:
             await message.edit(NO_HEROKU_APP_CFGD)
     else:
@@ -120,10 +105,8 @@ def generate_change_log(git_repo, diff_marker):
     return out_put_str
 
 
-async def deploy_start(bot, message, refspec, remote, update_str):
+async def deploy_start(bot, message, refspec, remote):
     try:
-        await message.edit(update_str)
-        sleep(5)
         await remote.push(refspec=refspec)
     except TypeError:
         await message.edit(BOT_IS_UP_TO_DATE)
