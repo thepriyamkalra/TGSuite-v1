@@ -24,9 +24,6 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from userbot import YOUTUBE_API_KEY
 from userbot import syntax
 
-botuser = await bot.get_me()
-botuser = f"@{botuser.username}"
-
 
 
 # ================= CONSTANT =================
@@ -603,6 +600,8 @@ async def hoi(hello):
 			  
 @bot.on(command("kill ?(.*)"))
 async def killing (killed):
+    botuser = await bot.get_me()
+    botuser = f"@{botuser.username}"
     if not killed.text[0].isalpha() and killed.text[0] not in ("/", "#", "@", "!"):
         if await killed.get_reply_message():
             await killed.edit(
