@@ -72,6 +72,14 @@
       "description": "Set a valid Lydia API key to use Lydia AI",
       "required": false
     },
+    "HEROKU_API_KEY": {
+      "description": "Required to update the userbot, get from https://dashboard.heroku.com/account",
+      "required": false
+    },
+    "TG_APP_NAME": {
+      "description": "Required to update the userbot if you have multiple heroku apps.",
+      "required": false
+    },
     "GITHUB_REPO_LINK": {
       "description": "Set the link to your github repository here, default is https://github.com/PriyamKalra/The-TG-Bot-3.0",
       "required": false

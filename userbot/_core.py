@@ -177,7 +177,10 @@ async def _(event):
     else:
         msg = ""
         msg += f"Available commands for **{key}** module:\n\n"
-        msg += syntax[key]
+        try:
+            msg += syntax[key]
+        except KeyError:
+            msg = f"**{key}** module doesnt exist!"
         await event.edit(msg)
 
 
@@ -190,7 +193,7 @@ async def _(event):
     botuser = f"\nUser: `@{botuser.username}\n"
     memory = psutil.virtual_memory()
     specs = f"`System: {uname.system}\nRelease: {uname.release}\nVersion: {uname.version}\nProcessor: {uname.processor}\nMemory [RAM]: {get_size(memory.total)}`"
-    help_string = f"**The-TG-Bot v3.0 is running.**\n\n**General Info:**\n`Build Version: {build} {botuser}`Github Repository: `https://github.com/PriyamKalra/The-TG-Bot-3.0\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Developed By:** @A_FRICKING_GAMER"
+    help_string = f"**The-TG-Bot v3.0 is running.**\n\n**General Info:**\n`Build Version: {build} {botuser}`Github Repository: `{Config.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Developed By:** @A_FRICKING_GAMER"
     await event.edit(help_string + "\n\n")
 
 

@@ -3,7 +3,7 @@ import os
 
 class Config(object):
     LOGGER = True
-    MAX_MESSAGE_SIZE_LIMIT = 4095 # TG API Limit
+    MAX_MESSAGE_SIZE_LIMIT = 4095  # TG API Limit
     LOAD = []
     NO_LOAD = []
     DB_URI = os.environ.get("DATABASE_URL", None)
@@ -24,7 +24,10 @@ class Config(object):
     DRIVE_CLIENT_SECRET = os.environ.get("DRIVE_CLIENT_SECRET", None)
     DRIVE_AUTH_TOKEN_DATA = os.environ.get("DRIVE_AUTH_TOKEN_DATA", None)
     LYDIA_API = os.environ.get("LYDIA_API", None)
-    GITHUB_REPO_LINK = os.environ.get("GITHUB_REPO_LINK", "https://github.com/PriyamKalra/The-TG-Bot-3.0")
+    GITHUB_REPO_LINK = os.environ.get(
+        "GITHUB_REPO_LINK", "https://github.com/PriyamKalra/The-TG-Bot-3.0")
     DROPBOX_TOKEN = os.environ.get("DROPBOX_TOKEN", None)
     DRIVE_ACCOUNT = os.environ.get("DRIVE_ACCOUNT", None)
     IPABOX_FOLDER = os.environ.get("IPABOX_FOLDER", None)
+    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
+    TG_APP_NAME = os.environ.get("TG_APP_NAME", None)

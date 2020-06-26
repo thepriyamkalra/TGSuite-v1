@@ -2,6 +2,7 @@
 # Syntax .pmpermit
 # Syntax (.approve, .block)
 
+from userbot import syntax
 import asyncio
 import json
 from sqlhelpers.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
@@ -16,7 +17,6 @@ THETGBOT_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 THETGBOT_USER_BOT_NO_WARN = """```
 Bleep blop! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease wait for my master to look in, he mostly approves PMs.\nAs far as I know, he doesn't usually approve retards though.
 \nIf you continue sending messages you will be blocked.```"""
-from userbot import syntax
 
 
 @bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
@@ -48,7 +48,7 @@ async def monito_p_m_s(event):
                     await bot.storage.PREV_REPLY_MESSAGE[chat.id].delete()
                 bot.storage.PREV_REPLY_MESSAGE[chat.id] = r
                 return
-            r = await event.reply(THETGBOT_USER_BOT_NO_WARN)
+            r = await event.reply(f"{THETGBOT_USER_BOT_NO_WARN}\n`Messages remaining: {int(Config.MAX_PM_FLOOD - bot.storage.PM_WARNS[chat.id])}`")
             bot.storage.PM_WARNS[chat.id] += 1
             if chat.id in bot.storage.PREV_REPLY_MESSAGE:
                 await bot.storage.PREV_REPLY_MESSAGE[chat.id].delete()
