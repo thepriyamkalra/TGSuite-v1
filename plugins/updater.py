@@ -15,7 +15,7 @@ IS_SELECTED_DIFFERENT_BRANCH = (
     "`is being used:\n`"
     "`Please switch to a stable build, and restart the updater.`"
 )
-OFFICIAL_UPSTREAM_REPO = "https://github.com/PriyamKalra/The-TG-Bot-3.0/"
+OFFICIAL_UPSTREAM_REPO = "https://github.com/Techy05/The-TG-Bot-3.0/"
 BOT_IS_UP_TO_DATE = "`The-TG-Bot up-to-date.\nEnjoy!`"
 NEW_BOT_UP_DATE_FOUND = (
     "`New update found for {branch_name}\n`"
