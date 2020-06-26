@@ -187,6 +187,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
+    await event.edit("Restart complete!")
     await bot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 

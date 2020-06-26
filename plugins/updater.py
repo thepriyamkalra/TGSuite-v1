@@ -20,8 +20,7 @@ BOT_IS_UP_TO_DATE = "`The-TG-Bot up-to-date.\nEnjoy!`"
 NEW_BOT_UP_DATE_FOUND = (
     "`New update found for {branch_name}\n`"
     "`Changelog: \n\n{changelog}\n`"
-    "`Starting update..\n`"
-    "`All services will be unavailable for a few minutes`"
+    "`The-TG-Bot update is on its way!\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
 )
 NEW_UP_DATE_FOUND = (
     "New update found for {branch_name}\n"
@@ -33,7 +32,6 @@ IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "`No heroku application found, invalid key provided.`"
 HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
-RESTARTING_APP = "`The-TG-Bot update is on its way!..\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
 INVALID_HEROKU_API_KEY = "INVALID API KEY: To get a valid API key, goto https://dashboard.heroku.com/account \nOn the this website open API key tab.. \nThen click on **REVEAL** button and you will see your **HEROKU API key** \n**Copy and paste that in ENV variable `HEROKU_API_KEY`**"
 INVALID_APP_NAME = "INVALID APP NAME: Please set the name of your bot in ENV variable `TG_APP_NAME`"
 # -- Constants End -- #
@@ -81,9 +79,6 @@ async def updater(message):
         branch_name=active_branch_name,
         changelog=changelog
     )
-    message_two = NEW_UP_DATE_FOUND.format(
-        branch_name=active_branch_name
-    )
 
     if len(message_one) > 4095:
         with open("change.log", "w+", encoding="utf8") as out_file:
@@ -95,7 +90,7 @@ async def updater(message):
         )
         os.remove("change.log")
     else:
-        await message.edit(message_one)
+        # await message.edit(message_one)
         await asyncio.sleep(3)
 
     temp_upstream_remote.fetch(active_branch_name)
@@ -103,11 +98,11 @@ async def updater(message):
 
     if Config.HEROKU_API_KEY is not None:
         import heroku3
-        logger.info("UPDATER: Heroku API Key: "+Config.HEROKU_API_KEY)
+        logger.info("Heroku API Key: "+Config.HEROKU_API_KEY)
         heroku = heroku3.from_key(Config.HEROKU_API_KEY)
         heroku_applications = heroku.apps()
         if len(heroku_applications) >= 1:
-            logger.info("UPDATER: Heroku APP: "+Config.TG_APP_NAME)
+            logger.info("Heroku APP: "+Config.TG_APP_NAME)
             heroku_app = None
             for i in heroku_applications:
                 if i.name == Config.TG_APP_NAME:
@@ -145,8 +140,11 @@ def generate_change_log(git_repo, diff_marker):
 
 
 async def deploy_start(bot, message, refspec, remote):
-    await message.edit(RESTARTING_APP)
-    await remote.push(refspec=refspec)
+    try:
+        await remote.push(refspec=refspec)
+        await event.edit(message_one)
+    except TypeError:
+        await message.edit("The-TG-Bot v3.0 is update-to-date.")
     await bot.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
