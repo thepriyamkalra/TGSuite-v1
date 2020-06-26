@@ -57,7 +57,7 @@ async def updater(message):
     temp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     temp_upstream_remote.fetch(active_branch_name)
 
-    await event.edit(NEW_BOT_UP_DATE_FOUND)
+    await message.edit(NEW_BOT_UP_DATE_FOUND)
 
     temp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
