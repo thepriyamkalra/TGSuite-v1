@@ -24,7 +24,10 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from userbot import YOUTUBE_API_KEY
 from userbot import syntax
 
-BOSS = str(ALIVE_NAME) if ALIVE_NAME else "**No Name set yet.** [Check Guide.](https://how2techy.com/xtra-guide1/)"
+botuser = await bot.get_me()
+botuser = f"@{botuser.username}"
+
+
 
 # ================= CONSTANT =================
 NOOBSTR = [
@@ -227,121 +230,17 @@ UWUS = [
     "((+_+))",
 ]
 
-FACEREACTS = [
-    "ʘ‿ʘ",
-    "ヾ(-_- )ゞ",
-    "(っ˘ڡ˘ς)",
-    "(´ж｀ς)",
-    "( ಠ ʖ̯ ಠ)",
-    "(° ͜ʖ͡°)╭∩╮",
-    "(ᵟຶ︵ ᵟຶ)",
-    "(งツ)ว",
-    "ʚ(•｀",
-    "(っ▀¯▀)つ",
-    "(◠﹏◠)",
-    "( ͡ಠ ʖ̯ ͡ಠ)",
-    "( ఠ ͟ʖ ఠ)",
-    "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ",
-    "(⊃｡•́‿•̀｡)⊃",
-    "(._.)",
-    "{•̃_•̃}",
-    "(ᵔᴥᵔ)",
-    "♨_♨",
-    "⥀.⥀",
-    "ح˚௰˚づ ",
-    "(҂◡_◡)",
-    "ƪ(ړײ)‎ƪ​​",
-    "(っ•́｡•́)♪♬",
-    "◖ᵔᴥᵔ◗ ♪ ♫ ",
-    "(☞ﾟヮﾟ)☞",
-    "[¬º-°]¬",
-    "(Ծ‸ Ծ)",
-    "(•̀ᴗ•́)و ̑̑",
-    "ヾ(´〇`)ﾉ♪♪♪",
-    "(ง'̀-'́)ง",
-    "ლ(•́•́ლ)",
-    "ʕ •́؈•̀ ₎",
-    "♪♪ ヽ(ˇ∀ˇ )ゞ",
-    "щ（ﾟДﾟщ）",
-    "( ˇ෴ˇ )",
-    "눈_눈",
-    "(๑•́ ₃ •̀๑) ",
-    "( ˘ ³˘)♥ ",
-    "ԅ(≖‿≖ԅ)",
-    "♥‿♥",
-    "◔_◔",
-    "⁽⁽ଘ( ˊᵕˋ )ଓ⁾⁾",
-    "乁( ◔ ౪◔)「      ┑(￣Д ￣)┍",
-    "( ఠൠఠ )ﾉ",
-    "٩(๏_๏)۶",
-    "┌(ㆆ㉨ㆆ)ʃ",
-    "ఠ_ఠ",
-    "(づ｡◕‿‿◕｡)づ",
-    "(ノಠ ∩ಠ)ノ彡( \\o°o)\\",
-    "“ヽ(´▽｀)ノ”",
-    "༼ ༎ຶ ෴ ༎ຶ༽",
-    "｡ﾟ( ﾟஇ‸இﾟ)ﾟ｡",
-    "(づ￣ ³￣)づ",
-    "(⊙.☉)7",
-    "ᕕ( ᐛ )ᕗ",
-    "t(-_-t)",
-    "(ಥ⌣ಥ)",
-    "ヽ༼ ಠ益ಠ ༽ﾉ",
-    "༼∵༽ ༼⍨༽ ༼⍢༽ ༼⍤༽",
-    "ミ●﹏☉ミ",
-    "(⊙_◎)",
-    "¿ⓧ_ⓧﮌ",
-    "ಠ_ಠ",
-    "(´･_･`)",
-    "ᕦ(ò_óˇ)ᕤ",
-    "⊙﹏⊙",
-    "(╯°□°）╯︵ ┻━┻",
-    r"¯\_(⊙︿⊙)_/¯",
-    "٩◔̯◔۶",
-    "°‿‿°",
-    "ᕙ(⇀‸↼‶)ᕗ",
-    "⊂(◉‿◉)つ",
-    "V•ᴥ•V",
-    "q(❂‿❂)p",
-    "ಥ_ಥ",
-    "ฅ^•ﻌ•^ฅ",
-    "ಥ﹏ಥ",
-    "（ ^_^）o自自o（^_^ ）",
-    "ಠ‿ಠ",
-    "ヽ(´▽`)/",
-    "ᵒᴥᵒ#",
-    "( ͡° ͜ʖ ͡°)",
-    "┬─┬﻿ ノ( ゜-゜ノ)",
-    "ヽ(´ー｀)ノ",
-    "☜(⌒▽⌒)☞",
-    "ε=ε=ε=┌(;*´Д`)ﾉ",
-    "(╬ ಠ益ಠ)",
-    "┬─┬⃰͡ (ᵔᵕᵔ͜ )",
-    "┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻",
-    r"¯\_(ツ)_/¯",
-    "ʕᵔᴥᵔʔ",
-    "(`･ω･´)",
-    "ʕ•ᴥ•ʔ",
-    "ლ(｀ー´ლ)",
-    "ʕʘ̅͜ʘ̅ʔ",
-    "（　ﾟДﾟ）",
-    r"¯\(°_o)/¯",
-    "(｡◕‿◕｡)",
-]
-
 RUNSREACTS = [
-    "`Runs to Thanos`",
     "`Runs far, far away from earth`",
     "`Running faster than supercomputer, cuzwhynot`",
-    "`Runs to SunnyLeone`",
     "`ZZzzZZzz... Huh? what? oh, just them again, nevermind.`",
     "`Look out for the wall!`",
     "Don't leave me alone with them!!",
     "`You run, you die.`",
     "`Jokes on you, I'm everywhere`",
     "You could also try /kickme, I hear that's fun.",
+    "You could also try /banme, I hear that's fun.",
     "`You can run, but you can't hide.`",
-    "I'm behind you...",
     "We can do this the easy way, or the hard way.",
     "You just don't get it, do you?",
     "Yeah, you better run!",
@@ -352,9 +251,6 @@ RUNSREACTS = [
     "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
     "Yeah yeah, just tap /kickme already.",
     "Here, take this ring and head to Mordor while you're at it.",
-    "Here, take this ring and head to Mordor while you're at it.",
-    "Here, take this ring and head to Mordor while you're at it.",
-    "Here, take this ring and head to Mordor while you're at it.",
     "Legend has it, they're still running...",
     "Unlike Harry Potter, your parents can't protect you from me.",
     "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might "
@@ -363,7 +259,6 @@ RUNSREACTS = [
     "You're a wiza- Oh. Wait. You're not Harry, keep moving.",
     "NO RUNNING IN THE HALLWAYS!",
     "Hasta la vista, baby.",
-    "Who let the dogs out?",
     "My milkshake brings all the boys to yard... So run faster!",
     "A long time ago, in a galaxy far far away... Someone would've cared about that. Not anymore though.",
     "Hey, look at them! They're running from the inevitable banhammer... Cute.",
@@ -724,7 +619,7 @@ async def proo (pros):
         await pros.edit(reply_text)
 
 
-@register(outgoing=True, pattern="^.owo(?: |$)(.*)")
+@bot.on(command("owo ?(.*)"))
 async def faces(owo):
     """ UwU """
     if not owo.text[0].isalpha() and owo.text[0] not in ("/", "#", "@", "!"):
@@ -748,44 +643,26 @@ async def faces(owo):
         await owo.edit(reply_text)
 
 
-@register(outgoing=True, pattern="^.react$")
-async def react_meme(react):
-    """ Make your userbot react to everything. """
-    if not react.text[0].isalpha() and react.text[0] not in ("/", "#", "@", "!"):
-        await react.edit(random.choice(FACEREACTS))
-
-
-@register(outgoing=True, pattern="^.shruggie$")
+@bot.on(command("shruggie ?(.*)"))
 async def shrugger(shg):
     r""" ¯\_(ツ)_/¯ """
     if not shg.text[0].isalpha() and shg.text[0] not in ("/", "#", "@", "!"):
         await shg.edit(random.choice(SHGS))
 
 
-@register(outgoing=True, pattern="^.runs$")
+@bot.on(command("runs ?(.*)"))
 async def runner_lol(run):
     """ Run, run, RUNNN! """
     if not run.text[0].isalpha() and run.text[0] not in ("/", "#", "@", "!"):
         await run.edit(random.choice(RUNSREACTS))
 
-@register(outgoing=True, pattern="^.noob$")
+@bot.on(command("noob ?(.*)"))
 async def metoo(hahayes):
     """ Haha yes """
     if not hahayes.text[0].isalpha() and hahayes.text[0] not in ("/", "#", "@", "!"):
         await hahayes.edit(random.choice(NOOBSTR))
 			  
-@register(outgoing=True, pattern="^.rendi$")
-async def metoo(hahayes):
-    """ Haha yes """
-    if not hahayes.text[0].isalpha() and hahayes.text[0] not in ("/", "#", "@", "!"):
-        await hahayes.edit(random.choice(RENDISTR))
-			 			  
-@register(outgoing=True, pattern="^.wheelchair$")
-async def iqless(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("♿")
-
-@register(outgoing=True, pattern="^.moon$")
+@bot.on(command("moon ?(.*)"))
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
 	    if event.fwd_from:
@@ -796,7 +673,7 @@ async def _(event):
 		    await event.edit("".join(deq))
 		    deq.rotate(1)
 
-@borg.on(events.NewMessage(pattern=r"\.earth", outgoing=True))
+@bot.on(command("earth ?(.*)"))
 async def _(event):
 	if event.fwd_from:
 		return
@@ -806,7 +683,7 @@ async def _(event):
 		await event.edit("".join(deq))
 		deq.rotate(1)
     
-@register(outgoing=True, pattern="^.clock$")
+@bot.on(command("clock ?(.*)"))
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
 	    if event.fwd_from:
@@ -817,7 +694,7 @@ async def _(event):
 		    await event.edit("".join(deq))
 		    deq.rotate(1)
 
-@register(outgoing=True, pattern="^.mock(?: |$)(.*)")
+@bot.on(command("mock ?(.*)"))
 async def spongemocktext(mock):
     """ Do it and find the real fun. """
     if not mock.text[0].isalpha() and mock.text[0] not in ("/", "#", "@", "!"):
@@ -842,9 +719,8 @@ async def spongemocktext(mock):
         await mock.edit("".join(reply_text))
 
 
-@register(outgoing=True, pattern="^.clap(?: |$)(.*)")
+@bot.on(command("clap ?(.*)"))
 async def claptext(memereview):
-    """ Praise people! """
     if not memereview.text[0].isalpha() and memereview.text[0] not in ("/", "#", "@", "!"):
         textx = await memereview.get_reply_message()
         message = memereview.pattern_match.group(1)
@@ -861,37 +737,7 @@ async def claptext(memereview):
         await memereview.edit(reply_text)
 
 
-@register(outgoing=True, pattern="^.bt$")
-async def bluetext(bt_e):
-    """ Believe me, you will find this useful. """
-    if not bt_e.text[0].isalpha() and bt_e.text[0] not in ("/", "#", "@", "!"):
-        if await bt_e.get_reply_message():
-            await bt_e.edit(
-                "`BLUETEXT MUST CLICK.`\n"
-                "`Are you a stupid animal which is attracted to colours?`"
-            )
-
-
-@register(outgoing=True, pattern="^.smk (.*)")
-async def smrk(smk):
-        if not smk.text[0].isalpha() and smk.text[0] not in ("/", "#", "@", "!"):
-            textx = await smk.get_reply_message()
-            message = smk.text
-        if message[5:]:
-            message = str(message[5:])
-        elif textx:
-            message = textx
-            message = str(message.message)
-        if message == 'dele':
-            await smk.edit( message +'te the hell' + "ツ" )
-            await smk.edit("ツ")
-        else:
-             smirk = " ツ"
-             reply_text = message + smirk
-             await smk.edit(reply_text)
-
-
-@register(outgoing=True, pattern=r"\.f (.*)")
+@bot.on(command("f ?(.*)"))
 async def payf(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         paytext = e.pattern_match.group(1)
@@ -921,7 +767,7 @@ async def let_me_google_that_for_you(lmgtfy_q):
             )
 
 
-@register(outgoing=True, pattern=r".yt_dl (\S*) ?(\S*)")
+@bot.on(command("yt_dl ?(.*)"))
 async def download_video(v_url):
     """ For .yt_dl command, download videos from YouTube. """
     if not v_url.text[0].isalpha() and v_url.text[0] not in ("/", "#", "@", "!"):
@@ -994,7 +840,7 @@ async def download_video(v_url):
         os.remove('thumbnail.jpg')
         await v_url.delete()
 			  
-@register(pattern='.type(?: |$)(.*)')
+@bot.on(command("type ?(.*)"))
 async def typewriter(typew):
     """ Just a small command to make your keyboard become a typewriter! """
     if not typew.text[0].isalpha() and typew.text[0] not in ("/", "#", "@", "!"):
@@ -1020,7 +866,7 @@ async def typewriter(typew):
             await typew.edit(old_text)
             await asyncio.sleep(sleep_time)
             
-@register(pattern='.cmd(?: |$)(.*)')
+@bot.on(command("cmd ?(.*)"))
 async def typewriter(typew):
     """ Just a small command to make your keyboard become a terminal!"""
     if not typew.text[0].isalpha() and typew.text[0] not in ("/", "#", "@", "!"):
@@ -1050,19 +896,13 @@ async def typewriter(typew):
 syntax.update({
     "memes": "\
 **A page of Dictionary for memes module**\
-\n\n• ```.:/```\
-\nUsage: Check yourself ;)\
 \n\n• ```.-_-```\
 \nUsage: Ok...\
-\n\n• ```.;_;```\
-\nUsage: Like `-_-` but crying.\
 \n\n• ```.vapor```\
 \nUsage: Vaporize everything!\
 \n\n• ```.stretch```\
 \nUsage: Stretch it.\
-\n\n• ```.wheelchair```\
-\nUsage: Brings out the emoji of wheelchair. !!\
-\n\n• ```.zal```\
+\n\n• ```.zalgofy```\
 \nUsage: Invoke the feeling of chaos.\
 \n\n• ```.moon```\
 \nUsage: kensar moon animation.\
@@ -1076,8 +916,6 @@ syntax.update({
 \nUsage: Greet everyone!\
 \n\n• ```.owo```\
 \nUsage: UwU\
-\n\n• ```.react```\
-\nUsage: Make your userbot react to everything.\
 \n\n• ```.slap```\
 \nUsage: reply to slap them with random objects !!\
 \n\n• ```.cry```\
@@ -1094,16 +932,10 @@ syntax.update({
 \nUsage: Praise people!\
 \n\n• ```.f <emoji/character>```\
 \nUsage: Pay Respects.\
-\n\n• ```.bt```\
-\nUsage: Believe me, you will find this useful.\
-\n\n• ```.smk <text/reply>```\
-\nUsage: A shit module for ツ , who cares.\
 \n\n• ```.type <text>```\
 \nUsage: Just a small command to make your keyboard become a typewriter!\
 \n\n• ```.cmd <text>```\
 \nUsage: Just a small command to make your keyboard become a terminal!\
-\n\n• ```.lfy <query>```\
-\nUsage: Let me Google that for you real quick !!\
 \n\n• ```.decide```\
 \nUsage: Make a quick decision.\
 \n\n• ```.noob```\
