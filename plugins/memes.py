@@ -743,28 +743,6 @@ async def payf(e):
         await e.edit(pay)
 
 
-@register(outgoing=True, pattern="^.lfy (.*)",)
-async def let_me_google_that_for_you(lmgtfy_q):
-    if not lmgtfy_q.text[0].isalpha() and lmgtfy_q.text[0] not in ("/", "#", "@", "!"):
-        textx = await lmgtfy_q.get_reply_message()
-        query = lmgtfy_q.text
-        if query[5:]:
-            query = str(query[5:])
-        elif textx:
-            query = textx
-            query = query.message
-        query_encoded = query.replace(" ", "+")
-        lfy_url = f"http://lmgtfy.com/?s=g&iie=1&q={query_encoded}"
-        payload = {'format': 'json', 'url': lfy_url}
-        r = requests.get('http://is.gd/create.php', params=payload)
-        await lmgtfy_q.edit(f"[{query}]({r.json()['shorturl']})")
-        if BOTLOG:
-            await bot.send_message(
-                BOTLOG_CHATID,
-                "LMGTFY query `" + query + "` was executed successfully",
-            )
-
-
 @bot.on(command("yt_dl ?(.*)"))
 async def download_video(v_url):
     """ For .yt_dl command, download videos from YouTube. """
