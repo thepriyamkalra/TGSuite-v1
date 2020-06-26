@@ -141,8 +141,8 @@ def generate_change_log(git_repo, diff_marker):
 
 
 async def deploy_start(bot, message, refspec, remote, update):
+    await message.edit(update)
     try:
-        await message.edit(update)
         await remote.push(refspec=refspec)
     except TypeError:
         await message.edit("The-TG-Bot v3.0 is update-to-date.")
