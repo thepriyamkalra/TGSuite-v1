@@ -183,8 +183,14 @@ async def _(event):
             msg = f"**{key}** module doesnt exist!"
         await event.edit(msg)
 
+@bot.on(command(pattern="restart", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    await bot.disconnect()
+    os.execl(sys.executable, sys.executable, *sys.argv)
 
-@bot.on(command(pattern="alive ?(.*)", allow_sudo=True))  # pylint:disable=E0602
+@bot.on(command(pattern="alive ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -209,12 +215,16 @@ syntax.update({
     "core": "\
 ```.load <as_a_reply_to_a_module_file>```\
 \nUsage: Load a specified module.\
-\n\n```.alive```\
-\nUsage: Returns userbot's system stats and some general information.\
 \n\n```.reload <module_name>```\
 \nUsage: Reload any module that was unloaded.\
 \n\n```.unload <module_name>```\
 \nUsage: Unload any loaded module.\
+\n\n```.alive```\
+\nUsage: Returns userbot's system stats and some general information.\
+\n\n```.help <optional_module_name>```\
+\nUsage: Returns help strings for various modules of this userbot.\
+\n\n```.restart```\
+\nUsage: Restarts the userbot.\
 \n\n```.share <module_name>```\
 \nUsage: Share any loaded module.\
 \n\n```.nuke <module_name>```\
