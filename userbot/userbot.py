@@ -87,14 +87,13 @@ class Userbot(TelegramClient):
         mod.humanbytes = humanbytes
         mod.progress = progress
         mod.time_formatter = time_formatter
-        mod.modcount = 0
+        mod.modcount = 1 # Dafault mod count is one to account for _core.py
         for i in os.listdir("/app/plugins"):
             mod.modcount += 1
         mod.build = f"@The_TG_Bot-30{mod.modcount}"
         mod.command = command
         mod.bot = self
         mod.logger = logging.getLogger(shortname)
-        mod.storage = self.storage(f"{self._name}/{shortname}")
         mod.Config = self.config
         spec.loader.exec_module(mod)
         self._plugins[shortname] = mod

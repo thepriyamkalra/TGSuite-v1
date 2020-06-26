@@ -36,13 +36,14 @@ async def _(event):
         return
     reply_message = await event.get_reply_message()
     sticker_emoji = "🔥"
+    pack_id = 1
     input_str = event.pattern_match.group(1)
     if input_str:
         input_str = input_str.split()
         try:
             pack_id = int(input_str[0])
         except:
-            pack_id = 1
+            pass
         try:
             sticker_emoji = input_str[1]
         except:
