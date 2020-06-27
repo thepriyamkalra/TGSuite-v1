@@ -14,7 +14,10 @@ from userbot import util, syntax
 from telethon import __version__
 
 DELETE_TIMEOUT = 5
-os.mkdir(Config.DOWNLOAD_DIRECTORY)
+try:
+    os.mkdir(Config.DOWNLOAD_DIRECTORY)
+except:
+    logger.warn(f"{Config.DOWNLOAD_DIRECTORY} already exists, skipping folder creation.")
 
 
 @bot.on(command(pattern="reload (?P<shortname>\w+)$"))  # pylint:disable=E0602
