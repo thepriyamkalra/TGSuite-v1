@@ -3,7 +3,6 @@
 
 import asyncio
 import datetime
-from telethon import events
 from telethon.tl import functions, types
 from userbot import syntax
 
@@ -11,10 +10,10 @@ from userbot import syntax
 bot.storage.USER_AFK = {}  # pylint:disable=E0602
 bot.storage.afk_time = None  # pylint:disable=E0602
 bot.storage.last_afk_message = {}  # pylint:disable=E0602
-@bot.on(events.NewMessage(outgoing=True))  # pylint:disable=E0602
+@bot.on(command(outgoing=True))  # pylint:disable=E0602
 async def set_not_afk(event):
     current_message = event.message.message
-    if ".afk" not in current_message and "yes" in bot.storage.USER_AFK:  # pylint:disable=E0602
+    if f"{Config.COMMAND_HANDLER}afk" not in current_message and "yes" in bot.storage.USER_AFK:  # pylint:disable=E0602
         try:
             status = "Set AFK mode to False"
             await log(status)
@@ -57,10 +56,7 @@ async def _(event):
             logger.warn(str(e))  # pylint:disable=E0602
 
 
-@bot.on(events.NewMessage(  # pylint:disable=E0602
-    incoming=True,
-    func=lambda e: bool(e.mentioned or e.is_private)
-))
+@bot.on(command(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)))
 async def on_afk(event):
     if event.fwd_from:
         return
