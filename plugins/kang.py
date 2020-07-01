@@ -116,6 +116,10 @@ async def _(event):
             await silently_send_message(bot_conv, "/cancel")
             await silently_send_message(bot_conv, "/addsticker")
             await silently_send_message(bot_conv, packshortname)
+            response = await bot_conv.get_response()
+            if "Whoa!" in response.text:
+                await event.edit(f"{packname} is full, try .kang <optional_emoji> {pack_id+1}")
+                return
             await bot_conv.send_file(
                 file=uploaded_sticker,
                 allow_cache=False,
