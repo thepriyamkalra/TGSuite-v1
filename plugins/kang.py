@@ -59,7 +59,7 @@ async def _(event):
         packshortname = f"thetgbot_kang_pack_vol{pack_id}_{userid}"
     else:
         packname = f"{Config.STICKER_PACK} {pack_id}"
-        packshortname = f"Uniborg_Pack{Config.STICKER_PACK}{pack_id}_{userid}"
+        packshortname = f"Uniborg_Pack{pack_id}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@The_TG_Bot_Sticker.png"
