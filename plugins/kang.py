@@ -32,8 +32,9 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.is_reply:
-        await event.edit("Reply to a photo to add to my personal sticker pack.")
+        await event.edit("Reply to a photo/sticker to kang it.")
         return
+    await event.edit("```Using a crack in the fabric of time to kang this sticker...```")
     reply_message = await event.get_reply_message()
     sticker_emoji = "🔥"
     pack_id = 1
@@ -53,18 +54,22 @@ async def _(event):
     botuser = await bot.get_me()
     botuser = f"@{botuser.username}"
     userid = event.from_id
-    packname = f"{botuser}'s kang pack vol.{pack_id}"
-    packshortname = f"thetgbot_kang_pack_vol{pack_id}_{userid}"
+    if Config.STICKER_PACK is None:
+        packname = f"{botuser}'s kang pack vol.{pack_id}"
+        packshortname = f"thetgbot_kang_pack_vol{pack_id}_{userid}"
+    else:
+        packname = f"{Config.STICKER_PACK} {pack_id}"
+        packshortname = f"Uniborg_Pack{Config.STICKER_PACK}{pack_id}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
     file_ext_ns_ion = "@The_TG_Bot_Sticker.png"
     file = await bot.download_file(reply_message.media)
     uploaded_sticker = None
     if is_a_s:
-        file_ext_ns_ion = "AnimatedSticker.tgs"
+        file_ext_ns_ion = "@The_TG_Bot_ANIMATED.tgs"
         uploaded_sticker = await bot.upload_file(file, file_name=file_ext_ns_ion)
-        packname = f"{botuser}'s animated kang pack vol.{pack_id}"
-        packshortname = f"thetgbot_animated_kang_pack_vol{pack_id}"
+        packname = f"{packname} [ANIMATED]"
+        packshortname = f"{packshortname}_animated"
     elif not is_message_image(reply_message):
         await event.edit("Invalid message type")
         return
@@ -73,8 +78,6 @@ async def _(event):
             resize_image(mem_file, sticker)
             sticker.seek(0)
             uploaded_sticker = await bot.upload_file(sticker, file_name=file_ext_ns_ion)
-
-    await event.edit("```Using a crack in the fabric of time to kang this sticker...```")
 
     async with bot.conversation("@Stickers") as bot_conv:
         now = datetime.datetime.now()
@@ -352,5 +355,6 @@ syntax.update({
     "kang": "\
 ```.kang <optional_emoji> <optional_pack_number>```\
 \nUsage: Adds sticker to your own sticker pack!\
+\nTo use a custom kang pack name, set env variable `STICKER_PACK`.\
 "
 })

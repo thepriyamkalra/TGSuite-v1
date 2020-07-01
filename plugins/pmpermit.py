@@ -6,7 +6,6 @@ from userbot import syntax
 import asyncio
 import json
 from sqlhelpers.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
-from telethon import events
 from telethon.tl import functions, types
 
 bot.storage.PM_WARNS = {}
@@ -14,12 +13,16 @@ bot.storage.PREV_REPLY_MESSAGE = {}
 BAALAJI_TG_USER_BOT = "```My Master hasn't approved you to PM.```"
 TG_COMPANION_USER_BOT = "```Wait for my masters response.\nDo not spam his pm if you do not want to get blocked.```"
 THETGBOT_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
-THETGBOT_USER_BOT_NO_WARN = """```
-Bleep blop! This is a bot. Don't fret.\nMy master hasn't approved you to PM.\nPlease wait for my master to look in, he mostly approves PMs.\nAs far as I know, he doesn't usually approve retards though.
-\nIf you continue sending messages you will be blocked.```"""
+THETGBOT_USER_BOT_NO_WARN = "\
+```Bleep blop! This is a bot. Don't fret.\
+\nMy master hasn't approved you to PM.\
+\nPlease wait for my master to look in, he mostly approves PMs.\
+\nAs far as I know, he doesn't usually approve retards though.\
+\nIf you continue sending messages you will be blocked.```\
+"
 
 
-@bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
+@bot.on(command(incoming=True, func=lambda e: e.is_private))
 async def monito_p_m_s(event):
     sender = await event.get_sender()
     current_message_text = event.message.message.lower()

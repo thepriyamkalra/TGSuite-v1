@@ -3,7 +3,6 @@
 
 import asyncio
 import datetime
-from telethon import events
 from telethon.tl import functions, types
 from userbot import syntax
 
@@ -11,10 +10,10 @@ from userbot import syntax
 bot.storage.USER_AFK = {}  # pylint:disable=E0602
 bot.storage.afk_time = None  # pylint:disable=E0602
 bot.storage.last_afk_message = {}  # pylint:disable=E0602
-@bot.on(events.NewMessage(outgoing=True))  # pylint:disable=E0602
+@bot.on(command(outgoing=True))  # pylint:disable=E0602
 async def set_not_afk(event):
     current_message = event.message.message
-    if ".afk" not in current_message and "yes" in bot.storage.USER_AFK:  # pylint:disable=E0602
+    if f"{Config.COMMAND_HANDLER}afk" not in current_message and "yes" in bot.storage.USER_AFK:  # pylint:disable=E0602
         try:
             status = "Set AFK mode to False"
             await log(status)
@@ -57,10 +56,7 @@ async def _(event):
             logger.warn(str(e))  # pylint:disable=E0602
 
 
-@bot.on(events.NewMessage(  # pylint:disable=E0602
-    incoming=True,
-    func=lambda e: bool(e.mentioned or e.is_private)
-))
+@bot.on(command(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)))
 async def on_afk(event):
     if event.fwd_from:
         return
@@ -101,10 +97,10 @@ async def on_afk(event):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
-        message_to_reply = f"**My Master is AFK since** {afk_since} " + \
-            f"**cuz {reason}**" \
+        message_to_reply = f"**I have been is AFK since** {afk_since} " + \
+            f"**cuz {reason}, feel free to chat with this bot as long as you like, it will keep repeating itself tho.**" \
             if reason \
-            else f"**My Master is AFK since** {afk_since}"
+            else f"**I have been AFK since** {afk_since}, feel free to chat with this bot as long as you like, it will keep repeating itself tho."
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in bot.storage.last_afk_message:  # pylint:disable=E0602
@@ -120,7 +116,7 @@ async def log(text):
 syntax.update({
     "afk": "\
 ```.afk <optional_reason>```\
-\nUsage: Changed afk mode to **true**.\
+\nUsage: Automatically replies to pms and mentions while your away.\
 \nTIP: You need to set `LOGGER_GROUP` ENV variable for proper fucntioning.\
 "
 })

@@ -18,12 +18,20 @@ else:
         from development import Config
 
 
-def command(pattern=None, allow_sudo=False, **args):
+def command(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
+    """
+    Simpler function to handle events without having to import telethon.events
+    also enables command_handler functionality
+    """
     args["func"] = lambda e: e.via_bot_id is None
+    if func is not None:
+        args["func"] = func
     if pattern is not None:
         args["pattern"] = re.compile(Config.COMMAND_HANDLER + pattern)
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
+    if incoming:
+        args["incoming"] = True
     else:
         args["outgoing"] = True
     args["blacklist_chats"] = True
