@@ -81,12 +81,12 @@ await var.edit("Hello World!") #await var.reply("Hello World!")
 ```
 This is used to edit or reply to the event (message) on telegram
 
-You can learn alot more by reading some of the preinstalled plugins, enjoy making your own stuff :P
+You can learn alot more by reading the telethon documentory [https://docs.telethon.dev/en/latest/] some of the preinstalled plugins, enjoy making your own stuff :P
 
 
 ## Credits
 Repositories from which I have taken code to make things work:
-(Remind me if I forgot some) 
-* https://github.com/SpEcHiDe/UniBorg
-* https://github.com/friendly-telegram/modules-repo
-* https://github.com/RaphielGang/Telegram-Paperplane
+* Telethon: https://github.com/LonamiWebs/Telethon (Obviously)
+* UniBorg: https://github.com/SpEcHiDe/UniBorg
+* FTG: https://github.com/friendly-telegram/modules-repo
+* PPE: https://github.com/RaphielGang/Telegram-Paperplane
