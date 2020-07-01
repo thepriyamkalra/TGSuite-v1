@@ -31,3 +31,4 @@ class Config(object):
     IPABOX_FOLDER = os.environ.get("IPABOX_FOLDER", None)
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     TG_APP_NAME = os.environ.get("TG_APP_NAME", None)
+    STICKER_PACK = os.environ.get("STICKER_PACK", None)

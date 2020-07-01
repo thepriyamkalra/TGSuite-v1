@@ -101,7 +101,7 @@ async def _(event):
 
 
 syntax.update({
-    "reactions": "\
+    "reactions": f"\
 Just some funny little animations ;)\
 \nList of reactions:\
 \n.oof\

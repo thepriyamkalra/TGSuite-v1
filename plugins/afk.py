@@ -97,10 +97,10 @@ async def on_afk(event):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
-        message_to_reply = f"**My Master is AFK since** {afk_since} " + \
-            f"**cuz {reason}**" \
+        message_to_reply = f"**I have been is AFK since** {afk_since} " + \
+            f"**cuz {reason}, feel free to chat with this bot as long as you like, it will keep repeating itself tho.**" \
             if reason \
-            else f"**My Master is AFK since** {afk_since}"
+            else f"**I have been AFK since** {afk_since}, feel free to chat with this bot as long as you like, it will keep repeating itself tho."
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in bot.storage.last_afk_message:  # pylint:disable=E0602
@@ -116,7 +116,7 @@ async def log(text):
 syntax.update({
     "afk": "\
 ```.afk <optional_reason>```\
-\nUsage: Changed afk mode to **true**.\
+\nUsage: Automatically replies to pms and mentions while your away.\
 \nTIP: You need to set `LOGGER_GROUP` ENV variable for proper fucntioning.\
 "
 })
