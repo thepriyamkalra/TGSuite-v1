@@ -117,8 +117,7 @@ async def _(event):
             await silently_send_message(bot_conv, "/addsticker")
             response = await silently_send_message(bot_conv, packshortname)
             if "Whoa!" in response.text:
-                new_pack_id = str(pack_id + 1)
-                await event.edit(f"{packname} is full, try .kang <optional_emoji> {new_pack_id}")
+                await event.edit(f"{packname} is full, try .kang <optional_emoji> {int(pack_id) + 1}")
                 return
             await bot_conv.send_file(
                 file=uploaded_sticker,

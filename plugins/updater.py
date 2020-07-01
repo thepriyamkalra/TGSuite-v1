@@ -63,11 +63,11 @@ async def updater(message):
 
     if Config.HEROKU_API_KEY is not None:
         import heroku3
-        logger.info("Heroku API Key: "+Config.HEROKU_API_KEY)
+        logger.info("Heroku API Key: " + Config.HEROKU_API_KEY)
         heroku = heroku3.from_key(Config.HEROKU_API_KEY)
         heroku_applications = heroku.apps()
         if len(heroku_applications) >= 1:
-            logger.info("Heroku APP: "+Config.TG_APP_NAME)
+            logger.info("Heroku APP: " + f"{Config.TG_APP_NAME}")
             heroku_app = None
             for i in heroku_applications:
                 if i.name == Config.TG_APP_NAME:
@@ -76,6 +76,7 @@ async def updater(message):
                 try:
                     for i in heroku_applications:
                         heroku_app = i
+                        break
                 except:
                     await message.edit(INVALID_APP_NAME)
                     return
