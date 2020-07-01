@@ -115,8 +115,7 @@ async def _(event):
         else:
             await silently_send_message(bot_conv, "/cancel")
             await silently_send_message(bot_conv, "/addsticker")
-            await silently_send_message(bot_conv, packshortname)
-            response = await bot_conv.get_response()
+            response = await silently_send_message(bot_conv, packshortname)
             if "Whoa!" in response.text:
                 await event.edit(f"{packname} is full, try .kang <optional_emoji> {pack_id+1}")
                 return
