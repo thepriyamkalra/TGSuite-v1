@@ -35,3 +35,4 @@ pyGithub
 coffeehouse
 pymongo
 dropbox
+heroku3
