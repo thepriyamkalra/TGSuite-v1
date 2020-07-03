@@ -1,5 +1,4 @@
 # For The-TG-Bot-3.0
-# Syntax .pmpermit
 # Syntax (.approve, .block)
 
 from userbot import syntax
@@ -51,7 +50,7 @@ async def monito_p_m_s(event):
                     await bot.storage.PREV_REPLY_MESSAGE[chat.id].delete()
                 bot.storage.PREV_REPLY_MESSAGE[chat.id] = r
                 return
-            r = await event.reply(f"{THETGBOT_USER_BOT_NO_WARN}\n`Messages remaining: {int(Config.MAX_PM_FLOOD - bot.storage.PM_WARNS[chat.id])}`")
+            r = await event.reply(f"{THETGBOT_USER_BOT_NO_WARN}\n`Messages remaining: {int(Config.MAX_PM_FLOOD - bot.storage.PM_WARNS[chat.id])} out of {int(Config.MAX_PM_FLOOD)}`")
             bot.storage.PM_WARNS[chat.id] += 1
             if chat.id in bot.storage.PREV_REPLY_MESSAGE:
                 await bot.storage.PREV_REPLY_MESSAGE[chat.id].delete()
