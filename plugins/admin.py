@@ -1,12 +1,38 @@
 # For The-TG-Bot-3.0
-# Syntax (.promote <optional_rank>, .demote, .ban, .unban, .mute, .unmute, .kick as a reply to a user's msg)
+# Syntax (.pin <loud (optional)>, .promote <optional_rank>, .demote, .ban, .unban, .mute, .unmute, .kick as a reply to a user's msg)
 
 from telethon.tl.functions.channels import EditAdminRequest, EditBannedRequest
+from telethon.tl.functions.messages import UpdatePinnedMessageRequest
 from telethon.tl.types import ChatAdminRights, ChatBannedRights
 from datetime import datetime
 import sys
 from userbot import syntax
 
+@bot.on(command("pin ?(.*)"))
+async def _(event):
+    if event.fwd_from:
+        return
+    silent = True
+    cmd = event.pattern_match.group(0)
+    if "ping" in cmd:
+        return
+    input_str = event.pattern_match.group(1)
+    if input_str == "loud":
+        silent = False
+    if event.message.reply_to_msg_id is not None:
+        message_id = event.message.reply_to_msg_id
+        try:
+            await bot(UpdatePinnedMessageRequest(
+                event.chat_id,
+                message_id,
+                silent
+            ))
+        except Exception as e:
+            await event.edit(str(e))
+        else:
+            await event.delete()
+    else:
+        await event.edit("Reply to a message to pin it.")
 
 @bot.on(command(pattern="promote ?(.*)"))
 async def _(event):
@@ -178,29 +204,6 @@ async def _(event):
             await event.edit(f"Successfully taped ```{to_ban_id}```!")
 
 
-@bot.on(command("pinmsg ?(.*)"))
-async def _(event):
-    if event.fwd_from:
-        return
-    silent = True
-    input_str = event.pattern_match.group(1)
-    if input_str == "loud":
-        silent = False
-    if event.message.reply_to_msg_id is not None:
-        message_id = event.message.reply_to_msg_id
-        try:
-            await bot(functions.messages.UpdatePinnedMessageRequest(
-                event.chat_id,
-                message_id,
-                silent
-            ))
-        except Exception as e:
-            await event.edit(str(e))
-        else:
-            await event.delete()
-    else:
-        await event.edit("Reply to a message to pin it.")
-
 unmuted_rights = ChatBannedRights(
     until_date=None,
     view_messages=None,
@@ -362,7 +365,7 @@ syntax.update({
 \nUsage: demotes target user.\
 \n\n```.kick <userid>``` (or as a reply to a message of targer user)\
 \nUsage: kicks target user.\
-\n\n```.pinmsg``` (as a reply to a message)\
+\n\n```.pin``` (as a reply to a message)\
 \nUsage: pins target msg.\
 "
 })
