@@ -17,7 +17,7 @@ IS_SELECTED_DIFFERENT_BRANCH = (
 )
 OFFICIAL_UPSTREAM_REPO = "https://github.com/PriyamKalra/The-TG-Bot-3.0/"
 BOT_IS_UP_TO_DATE = "`The-TG-Bot is up-to-date.\nEnjoy!`"
-NEW_BOT_UP_DATE_FOUND = "`The-TG-Bot update is on its way!\nThis can take a few minutes, please wait for atleast five minutes and then try to run .alive`"
+NEW_BOT_UP_DATE_FOUND = "`The-TG-Bot update is on its way!\nThis should take about 2 minutes, please wait and then try to run .alive`"
 REPO_REMOTE_NAME = "temponame"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
