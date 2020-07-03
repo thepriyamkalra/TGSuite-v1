@@ -33,16 +33,17 @@ G_DRIVE_F_PARENT_ID = None
 G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 
 
-@bot.on(command(pattern="drive ?(.*)", allow_sudo=True))
+@bot.on(command(pattern="drive ?(.*)"))
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.reply("Uploading file to Google Drive...")
+    mone = await event.reply("Uploading file to Google Drive..")
+    await event.delete()
     if CLIENT_ID is None or CLIENT_SECRET is None:
         await mone.edit("This module requires credentials from https://da.gd/so63O. Aborting!")
         return
     if Config.LOGGER_GROUP is None:
-        await event.edit("Please set the required environment variable `LOGGER_GROUP` for this plugin to work")
+        await event.edit("Please set the required environment variable `LOGGER_GROUP` for this plugin to work.")
         return
     input_str = event.pattern_match.group(1)
     if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
@@ -67,16 +68,16 @@ async def _(event):
             end = datetime.now()
             ms = (end - start).seconds
             required_file_name = downloaded_file_name
-            await mone.edit("Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms))
+            await mone.edit("Downloaded file to `{}` in {} seconds.".format(downloaded_file_name, ms))
     elif input_str:
         input_str = input_str.strip()
         if os.path.exists(input_str):
             end = datetime.now()
             ms = (end - start).seconds
             required_file_name = input_str
-            await mone.edit("Found `{}` in {} seconds.".format(input_str, ms))
+            # await mone.edit("Found `{}` in {} seconds.".format(input_str, ms))
         else:
-            await mone.edit("File Not found in local server. Give me a file path :((")
+            await mone.edit("404: File not found!")
             return False
     if required_file_name:
         if Config.DRIVE_AUTH_TOKEN_DATA is not None:
