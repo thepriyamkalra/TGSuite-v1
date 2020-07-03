@@ -37,8 +37,7 @@ G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 async def _(event):
     if event.fwd_from:
         return
-    mone = await event.reply("Uploading file to Google Drive..")
-    await event.delete()
+    mone = await event.edit("Uploading file to Google Drive..")
     if CLIENT_ID is None or CLIENT_SECRET is None:
         await mone.edit("This module requires credentials from https://da.gd/so63O. Aborting!")
         return
