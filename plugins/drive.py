@@ -31,7 +31,7 @@ OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 G_DRIVE_F_PARENT_ID = None
 G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
-
+TELEGRAPH_LINK = "https://da.gd/drive"
 
 @bot.on(command(pattern="drive ?(.*)"))
 async def _(event):
@@ -39,12 +39,12 @@ async def _(event):
         return
     mone = await event.edit("Uploading file to Google Drive..")
     if CLIENT_ID is None or CLIENT_SECRET is None:
-        await mone.edit("This module requires credentials from https://da.gd/so63O. Aborting!")
+        await mone.edit(f"This module requires credentials from https://da.gd/so63O. Aborting!\nVisit {TELEGRAPH_LINK} for more info.")
         return
     if Config.LOGGER_GROUP is None:
         await event.edit("Please set the required environment variable `LOGGER_GROUP` for this plugin to work.")
         return
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(1) 
     if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
         os.makedirs(Config.DOWNLOAD_DIRECTORY)
     required_file_name = None
@@ -192,9 +192,10 @@ async def upload_file(http, file_path, file_name, mime_type, event, parent_id):
     download_url = file.get("webContentLink")
     return download_url
 
-syntax.update({"drive": "\
+syntax.update({"drive": f"\
 ```.drive (as a reply to a file on telegram)```\
 \nUsage: Upload a file on telegram to your google drive.\
 \n\nYou need DRIVE_CLIENT_ID and DRIVE_CLIENT_SECRET env variables for this to work.\
-\nGet them client id and secret from https://console.developers.google.com/.\
+\nGet them client id and secret from https://console.developers.google.com/\
+\nVisit {TELEGRAPH_LINK} for more information about how to set this up.\
 "})
