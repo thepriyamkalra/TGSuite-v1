@@ -14,21 +14,6 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 from userbot import syntax
 
 
-@bot.on(command(pattern="directdl ?(.*)"))
-async def _(event):
-    if event.fwd_from:
-        return
-    args = event.pattern_match.group(1)
-    args_split = args.split("/")
-    name = args_split[-1]
-    await event.edit(f"Trying to download {name} from {args}..\nThere is no progress bar to ensure fastest downloaded speeds & no telegram account limitations\nYou can run a speedtest and estimate the download time.")
-    request = requests.get(args)
-    path = Config.DOWNLOAD_DIRECTORY + name
-    with open(path, "wb") as f:
-        f.write(request.content)
-        await event.edit(f"Downloaded {name} to {path}.")
-
-
 @bot.on(command(pattern="localdl ?(.*)"))
 async def _(event):
     if event.fwd_from:
@@ -107,7 +92,5 @@ syntax.update({
     "download": "\
 ```.localdl (as a reply to a telegram media file)```\
 \nUsage: Downloads the file to thelocal download directory.\
-```.directdl <direct_dl_link>```\
-\nUsage: Attempts to download media from the provided link.\
 "
 })
