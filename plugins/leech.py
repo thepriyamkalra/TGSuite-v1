@@ -554,9 +554,9 @@ syntax.update({
 \nUsage: Mirrors the torrent to gdrive.\
 \n\n```.l2d setup```\
 \nUsage: Get gdrive setup guide.\
-```.leech <magnet-link> (or as a reply to a magnet link)```\
+\n\n```.leech <magnet-link> (or as a reply to a magnet link)```\
 \nUsage: Downloads the torrent to the local machine.\
-```.l2tg <magnet-link> (or as a reply to a magnet link)```\
+\n\n```.l2tg <magnet-link> (or as a reply to a magnet link)```\
 \nUsage: Uploads the torrent to telegram (TG API limitations might cause problems, don't blame me :P)..\
 "
 })
