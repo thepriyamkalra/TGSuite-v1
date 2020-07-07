@@ -7,7 +7,7 @@ from userbot import syntax
 
 @bot.on(command(func=lambda e: e.is_group))
 async def watch(event):
-    if event.chat_id not in Config.UNLOCKED_CHATS:
+    if event.chat_id not in str(Config.UNLOCKED_CHATS):
         return
     if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
         os.makedirs(Config.DOWNLOAD_DIRECTORY)
