@@ -5,7 +5,7 @@ import os
 from userbot import syntax
 
 
-@bot.on(command())  # outgoing=True by default
+@bot.on(command(func=lambda e: e.is_group))
 async def watch(event):
     if event.chat_id not in Config.UNLOCKED_CHATS:
         return
@@ -36,7 +36,7 @@ syntax.update({
     "unlocks": "\
 Usage: Worksaround userbot/tg bot \"admin-only\" locks in chats.\
 \nWhat can be sent in chats where its locked (for now):\
-- stickers (only if sending pictures is allowed)\
+\n- stickers (only if sending pictures is allowed)\
 \n\nYou need to add a chat to `UNLOCKED_CHATS` enviroment variables for this to take effect in those chats.\
 "
 })
