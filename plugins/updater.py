@@ -18,11 +18,11 @@ IS_SELECTED_DIFFERENT_BRANCH = (
 OFFICIAL_UPSTREAM_REPO = "https://github.com/PriyamKalra/The-TG-Bot-3.0/"
 BOT_IS_UP_TO_DATE = "`The-TG-Bot is up-to-date.\nEnjoy!`"
 NEW_BOT_UP_DATE_FOUND = "`The-TG-Bot update is on its way!\nThis should take about 2 minutes, please wait and then try to run .alive`"
-REPO_REMOTE_NAME = "temponame"
-IFFUCI_ACTIVE_BRANCH_NAME = "master"
+REPO_REMOTE_NAME = "updater"
+ACTIVE_BRANCH_NAME = "v3"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "`No heroku application found, invalid key provided.`"
-HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
+HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/v3"
 INVALID_HEROKU_API_KEY = "INVALID API KEY: To get a valid API key, goto https://dashboard.heroku.com/account \nOn the this website open API key tab.. \nThen click on **REVEAL** button and you will see your **HEROKU API key** \n**Copy and paste that in ENV variable `HEROKU_API_KEY`**"
 INVALID_APP_NAME = "INVALID APP NAME: Please set the name of your bot in ENV variable `TG_APP_NAME`"
 # -- Constants End -- #
@@ -37,11 +37,11 @@ async def updater(message):
         repo = git.Repo.init()
         origin = repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
         origin.fetch()
-        repo.create_head(IFFUCI_ACTIVE_BRANCH_NAME, origin.refs.master)
-        repo.heads.master.checkout(True)
+        repo.create_head(ACTIVE_BRANCH_NAME, origin.refs.v3)
+        repo.heads.v3.checkout(True)
 
     active_branch_name = repo.active_branch.name
-    if active_branch_name != IFFUCI_ACTIVE_BRANCH_NAME:
+    if active_branch_name != ACTIVE_BRANCH_NAME:
         await message.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
             branch_name=active_branch_name
         ))
@@ -56,11 +56,6 @@ async def updater(message):
     temp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     temp_upstream_remote.fetch(active_branch_name)
 
-    await message.edit(NEW_BOT_UP_DATE_FOUND)
-
-    temp_upstream_remote.fetch(active_branch_name)
-    repo.git.reset("--hard", "FETCH_HEAD")
-
     if Config.HEROKU_API_KEY is not None:
         import heroku3
         logger.info("Heroku API Key: " + Config.HEROKU_API_KEY)
@@ -74,9 +69,7 @@ async def updater(message):
                     heroku_app = i
             if heroku_app is None:
                 try:
-                    for i in heroku_applications:
-                        heroku_app = i
-                        break
+                    heroku_app = heroku_applications[0]
                 except:
                     await message.edit(INVALID_APP_NAME)
                     return
@@ -89,6 +82,7 @@ async def updater(message):
                 remote.set_url(heroku_git_url)
             else:
                 remote = repo.create_remote("heroku", heroku_git_url)
+            await message.edit(NEW_BOT_UP_DATE_FOUND)    
             asyncio.get_event_loop().create_task(
                 deploy_start(bot, message, HEROKU_GIT_REF_SPEC, remote))
         else:

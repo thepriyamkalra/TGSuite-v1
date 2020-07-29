@@ -6,10 +6,11 @@ from userbot import syntax
 
 
 @bot.on(command("purge ?(.*)"))
-async def _(event):
+async def purge(event):
     if event.fwd_from:
         return
     if event.reply_to_msg_id:
+        reply = await event.get_reply_message()
         i = 1
         msgs = []
         from_user = None
@@ -27,6 +28,7 @@ async def _(event):
             if len(msgs) == 100:
                 await bot.delete_messages(event.chat_id, msgs)
                 msgs = []
+        msgs.append(reply)        
         if len(msgs) <= 100:
             await bot.delete_messages(event.chat_id, msgs)
             msgs = []
