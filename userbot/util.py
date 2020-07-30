@@ -18,7 +18,7 @@ else:
         from development import Config
 
 
-def command(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
+def register(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
     """
     Simpler function to handle events without having to import telethon.events
     also enables command_handler functionality
@@ -61,7 +61,7 @@ async def is_read(userbot, entity, message, is_out=None):
 
 async def progress(current, total, event, start, type_of_ps):
     """Generic progress_callback for both
-    upload.py and download.py"""
+    uploads and downloads"""
     now = time.time()
     diff = now - start
     if round(diff % 10.00) == 0 or current == total:
@@ -109,7 +109,7 @@ def humanbytes(size):
 
 
 def time_formatter(milliseconds: int) -> str:
-    """Inputs time in milliseconds, to get beautified time,
+    """Input time in milliseconds, to get beautified time,
     as string"""
     seconds, milliseconds = divmod(int(milliseconds), 1000)
     minutes, seconds = divmod(seconds, 60)

@@ -39,7 +39,7 @@ if Config.SESSION is not None:
     session_name = str(Config.SESSION)
     userbot = Userbot(
         StringSession(session_name),
-        plugin_path="plugins/",
+        module_path="modules/",
         api_config=Config,
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH
@@ -49,7 +49,7 @@ elif len(sys.argv) == 2:
     session_name = str(sys.argv[1])
     userbot = Userbot(
         session_name,
-        plugin_path="plugins/",
+        module_path="modules/",
         connection_retries=None,
         api_config=Config,
         api_id=Config.APP_ID,
@@ -57,7 +57,6 @@ elif len(sys.argv) == 2:
     )
     userbot.run_until_disconnected()
 else:
-    # throw error
     logging.error("USAGE EXAMPLE:\n"
                   "python3 -m thetgbot <SESSION_NAME>"
                   "\nPlease follow the above format to run your userbot."

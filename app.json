@@ -1,5 +1,5 @@
 {
-  "name": "The-TG-Bot v3.0",
+  "name": "The-TG-Bot v3",
   "description": "Modular Telegram userbot!",
   "logo": "https://telegra.ph/file/dbb990b02b9375fafd29a.png",
   "keywords": [
@@ -9,9 +9,9 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/PriyamKalra/The-TG-Bot-3.0",
+  "repository": "https://github.com/justaprudev/The-TG-Bot/",
   "website": "",
-  "success_url": "https://t.me/A_FRICKING_GAMER",
+  "success_url": "https://t.me/justaprudev",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable environment variables.",
