@@ -6,6 +6,7 @@ class Config(object):
     MAX_MESSAGE_SIZE_LIMIT = 4095  # TG API Limit
     LOAD = []
     NO_LOAD = []
+    HELPER = {}
     DB_URI = os.environ.get("DATABASE_URL", None)
     APP_ID = int(os.environ.get("APP_ID", 1))
     API_HASH = str(os.environ.get("API_HASH", "None"))
@@ -25,7 +26,7 @@ class Config(object):
     DRIVE_AUTH_TOKEN_DATA = os.environ.get("DRIVE_AUTH_TOKEN_DATA", None)
     LYDIA_API = os.environ.get("LYDIA_API", None)
     GITHUB_REPO_LINK = os.environ.get(
-        "GITHUB_REPO_LINK", "https://github.com/PriyamKalra/The-TG-Bot-3.0")
+        "GITHUB_REPO_LINK", "https://github.com/justaprudev/The-TG-Bot")
     DROPBOX_TOKEN = os.environ.get("DROPBOX_TOKEN", None)
     DRIVE_ACCOUNT = os.environ.get("DRIVE_ACCOUNT", None)
     IPABOX_FOLDER = os.environ.get("IPABOX_FOLDER", None)
