@@ -26,7 +26,6 @@ from telethon.tl.types import (
 )
 
 
-
 @client.on(register(pattern="kang ?(.*)"))
 async def handler(event):
     if event.fwd_from:
@@ -37,7 +36,7 @@ async def handler(event):
     await event.edit("```Using a crack in the fabric of time to kang this sticker...```")
     reply_message = await event.get_reply_message()
     sticker_emoji = "🔥"
-    pack_id = 1
+    pack_id = ""
     input_str = event.pattern_match.group(1)
     if input_str:
         input_str = input_str.split()
@@ -55,10 +54,14 @@ async def handler(event):
     botuser = f"@{botuser.username}"
     userid = event.from_id
     if Config.STICKER_PACK is None:
+        if not pack_id:
+            pack_id = 1
         packname = f"{botuser}'s kang pack vol.{pack_id}"
         packshortname = f"thetgbot_kang_pack_vol{pack_id}_{userid}"
     else:
-        packname = f"{Config.STICKER_PACK} {pack_id}"
+        if pack_id:
+            pack_id = f" {pack_id}"
+        packname = f"{Config.STICKER_PACK}{pack_id}"
         packshortname = f"Uniborg_Pack{pack_id}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
