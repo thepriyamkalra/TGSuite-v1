@@ -43,7 +43,7 @@
       "description": "Set to True if you want to block users that are spamming your PMs.",
       "value": "True"
     },
-    "MAX_FLOOD_PM": {
+    "MAX_PM_FLOOD": {
       "description": "Define the number of consecutive messages a new user can send to your P.M. This should be a valid Integer.",
       "required": false
     },
