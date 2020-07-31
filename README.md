@@ -39,7 +39,7 @@ pip install virtualenv
 ## Connecting to your Telegram Account
 
 ```
-git clone https://github.com/PriyamKalra/The-TG-Bot
+git clone https://github.com/justaprudev/The-TG-Bot
 cd The-TG-Bot
 python3 -m session
 ```
@@ -53,7 +53,7 @@ python3 -m session
 
 #### The Easy Way
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/justaprudev/The-TG-Bot/tree/v3)
 
 - Hit the "Deploy to Heroku" button and enter APP ID, API HASH and phone number conntected to your telegram account
 - Enter the session copied while connecting your telegram account
@@ -62,12 +62,12 @@ python3 -m session
 
 #### The Legacy Way
 
-- Enter APP ID, API HASH, SESSION in config.py
+- Enter APP ID, API HASH, SESSION in production.py
 - Run the code given below in terminal
 - After the process is completed, try running .alive on telegram
 
 ```
-git clone https://github.com/PriyamKalra/The-TG-Bot
+git clone https://github.com/justaprudev/The-TG-Bot
 cd The-TG-Bot
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
@@ -98,9 +98,7 @@ async def handler(event):
 
 ## Credits
 
-Repositories from which I have taken code to make things work:
-
-- Telethon: https://github.com/LonamiWebs/Telethon (Obviously)
-- UniBorg: https://github.com/SpEcHiDe/UniBorg (The core)
-- FTG: https://github.com/friendly-telegram/modules-repo
-- PPE: https://github.com/RaphielGang/Telegram-Paperplane
+- [Telethon](https://github.com/LonamiWebs/Telethon) (Obviously)
+- [Uniborg](https://github.com/SpEcHiDe/UniBorg) (The core)
+- [FTG modules repo](https://github.com/friendly-telegram/modules-repo)
+- [PPE](https://github.com/RaphielGang/Telegram-Paperplane)

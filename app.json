@@ -1,7 +1,7 @@
 {
   "name": "The-TG-Bot v3",
   "description": "Modular Telegram userbot!",
-  "logo": "https://telegra.ph/file/dbb990b02b9375fafd29a.png",
+  "logo": "https://raw.githubusercontent.com/justaprudev/The-TG-Bot/v3/logo.png",
   "keywords": [
     "telegram",
     "userbot",
@@ -88,14 +88,12 @@
   "addons": [{
     "plan": "heroku-postgresql",
     "options": {
-      "version": "9.5"
+      "version": "9.6"
     }
   }],
   "buildpacks": [{
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    "url": "heroku/python"
   }, {
     "url": "https://github.com/amivin/aria2-heroku"
-    }, {
-    "url": "heroku/python"
   }]
 }
