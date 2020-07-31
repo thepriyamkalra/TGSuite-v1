@@ -1,4 +1,4 @@
-# For The-TG-Bot v3
+ # For The-TG-Bot v3
 # Orignally made for PaperPlane Extended by @Three_Cube_TeKnoways
 # Modified by Priyam Kalra on 6/21/2020
 
@@ -84,7 +84,7 @@ async def updater(message):
                 remote = repo.create_remote("heroku", heroku_git_url)
             await message.edit(NEW_BOT_UP_DATE_FOUND)    
             asyncio.get_event_loop().create_task(
-                deploy_start(bot, message, HEROKU_GIT_REF_SPEC, remote))
+                deploy_start(client, message, HEROKU_GIT_REF_SPEC, remote))
         else:
             await message.edit(NO_HEROKU_APP_CFGD)
     else:
@@ -99,7 +99,7 @@ def generate_change_log(git_repo, diff_marker):
     return out_put_str
 
 
-async def deploy_start(bot, message, refspec, remote):
+async def deploy_start(client, message, refspec, remote):
     try:
         await remote.push(refspec=refspec)
     except TypeError:
