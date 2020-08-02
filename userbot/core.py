@@ -1,5 +1,4 @@
-# This Source C
-# ode Form is subject to the terms of the Mozilla Public
+# This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
@@ -148,7 +147,7 @@ async def alive(event):
     username = f"\nUser: `{user}\n"
     memory = psutil.virtual_memory()
     specs = f"`System: {uname.system}\nRelease: {uname.release}\nVersion: {uname.version}\nProcessor: {uname.processor}\nMemory [RAM]: {get_size(memory.total)}`"
-    help_string = f"**// The-TG-Bot v3 is running //**\n\n**General Info:**\n`Build Version: {build} {username}`Github Repository: `{Config.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Contact developer:** [justaprudev](https://t.me/justaprudev) \n**Update channel:** [Join](https://t.me/The_TG_Bot) \n**Support group:** [Join](https://t.me/The_TG_Bot_Support)"
+    help_string = f"**// The-TG-Bot v3 is running //**\n\n**General Info:**\n`Build Version: {build} {username}`Github Repository: `{Config.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Contact developer:** [Priyam Kalra](https://t.me/justaprudev) \n**Update channel:** [Join](https://t.me/The_TG_Bot) \n**Support group:** [Join](https://t.me/The_TG_Bot_Support)"
     await client.send_file(
         event.chat_id,
         caption=help_string,
@@ -182,9 +181,5 @@ Config.HELPER.update({
 \nUsage: Restarts the userbot.\
 \n\n```.share <module_name>```\
 \nUsage: Share any loaded module.\
-\n\n```.nuke <module_name>```\
-\nUsage: Nuke any module, loaded or unloaded.\
-\n\n```.recovery <module_name>```\
-\nUsage: Recover and load any nuked module.\
 "
 })

@@ -6,23 +6,20 @@ import datetime
 from telethon.tl import functions, types
 
 
-
 client.storage.USER_AFK = {}  # pylint:disable=E0602
 client.storage.afk_time = None  # pylint:disable=E0602
 client.storage.last_afk_message = {}  # pylint:disable=E0602
 @client.on(register(outgoing=True))  # pylint:disable=E0602
 async def set_not_afk(event):
     current_message = event.message.message
-    if f"{Config.COMMAND_HANDLER}afk" not in current_message and "yes" in client.storage.USER_AFK:  # pylint:disable=E0602
+    if "afk" not in current_message.lower() and "yes" in client.storage.USER_AFK:  # pylint:disable=E0602
         try:
             status = "Set AFK mode to False"
             await log(status)
         except Exception as e:  # pylint:disable=C0103,W0703
             await client.send_message(  # pylint:disable=E0602
                 event.chat_id,
-                "**AFK LOGGER " + \
-                "turned" + \
-                "off**",
+                "**Please set** `LOGGER_GROUP` **env variable for proper functioning**",
                 reply_to=event.message.id,
                 silent=True
             )
