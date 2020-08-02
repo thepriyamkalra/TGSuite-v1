@@ -2,7 +2,7 @@
 # By Priyam Kalra
 
 import os
-
+from PIL import Image
 
 
 @client.on(register(func=lambda e: e.is_group))
@@ -22,14 +22,18 @@ async def watch(event):
             downloaded_file_name
         )
         if os.path.exists(downloaded_file_name):
+            image = Image.open(downloaded_file_name)
+            sticker = image.resize((461, 499))
+            sticker.save(file_name)
             await client.send_file(
                 event.chat_id,
-                downloaded_file_name,
+                file_name,
                 force_document=False,
                 supports_streaming=False,
                 allow_cache=False,
                 reply_to=reply,
             )
+            os.remove(file_name)
             os.remove(downloaded_file_name)
 
 Config.HELPER.update({
