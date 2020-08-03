@@ -1,7 +1,7 @@
 # For The-TG-Bot v3
 # Syntax (.approve, .block)
 
-
+import os
 import asyncio
 import json
 from modules.sql.pmpermit_sql import is_approved, approve, disapprove, get_all_approved
@@ -104,20 +104,30 @@ async def approve_p_m(event):
         else:
             APPROVED_PMs += f"* [{a_user.chat_id}](tg://user?id={a_user.chat_id})\n"
     if len(APPROVED_PMs) > Config.MAX_MESSAGE_SIZE_LIMIT:
-        with io.BytesIO(str.encode(APPROVED_PMs)) as out_file:
-            out_file.name = "approved.pms.text"
-            await client.send_file(
-                event.chat_id,
-                out_file,
-                force_document=True,
-                allow_cache=False,
-                caption="Current Approved PMs",
-                reply_to=event
-            )
-            await event.delete()
+        #fix by authoritydmc
+
+        out_file_name = "approved_pms.txt"
+        output_file_ref=None
+        with open(out_file_name,"w") as f:
+            f.write(APPROVED_PMs)
+            output_file_ref=f.name
+        #first save the file ..then send it and then delete it ..
+        #very simple
+
+        await client.send_file(
+            event.chat_id,
+            output_file_ref,
+            force_document=True,
+            allow_cache=False,
+            caption="Current Approved PMs",
+            
+        )
+        await event.delete()
+        os.remove(output_file_ref)
+
+
     else:
         await event.edit(APPROVED_PMs)
-
 
 Config.HELPER.update({
     "pmpermit": "\
