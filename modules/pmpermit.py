@@ -13,7 +13,7 @@ BAALAJI_TG_USER_BOT = "```My Master hasn't approved you to PM.```"
 TG_COMPANION_USER_BOT = "```Wait for my masters response.\nDo not spam his pm if you do not want to get blocked.```"
 THETGBOT_USER_BOT_WARN_ZERO = "```Blocked! Thanks for the spam.```"
 THETGBOT_USER_BOT_NO_WARN = "\
-```Bleep blop! This is a client. Don't fret.\
+```Bleep blop! This is a bot. Don't fret.\
 \nMy master hasn't approved you to PM.\
 \nPlease wait for my master to look in, he mostly approves PMs.\
 \nAs far as I know, he doesn't usually approve retards though.\

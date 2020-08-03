@@ -72,6 +72,7 @@ async def install_module(event):
                 else:
                     client.remove_module(module.file.name[:-3])
                     os.remove(f"modules/" + str(module.file.name))
+                    os.remove(downloaded_file_name)
                     await event.edit("`Module already exists, overwriting..`")
                     asyncio.sleep(0.25)
             except Exception as e:  # pylint:disable=C0103,W0703
@@ -142,7 +143,6 @@ async def help(event):
 async def alive(event):
     if event.fwd_from:
         return
-    await event.delete()    
     uname = platform.uname()
     username = f"\nUser: `{user}\n"
     memory = psutil.virtual_memory()
@@ -155,6 +155,7 @@ async def alive(event):
         force_document=False,
         allow_cache=False
     )
+    await event.delete()
 
 
 def get_size(bytes, suffix="B"):

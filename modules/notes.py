@@ -10,7 +10,7 @@ import time
 
 
 @client.on(register(pattern="notes ?(.*)"))
-async def _(svd):
+async def notes(svd):
     if svd.fwd_from:
         return
     notes = get_notes(svd.chat_id)
@@ -23,13 +23,13 @@ async def _(svd):
 
 
 @client.on(register(pattern="clear ?(.*)"))
-async def _(clr):
+async def clear(clr):
     if clr.fwd_from:
         return
     notes = get_notes(clr.chat_id)
     notelist = ""
     for note in notes:
-        notelist = note.keyword
+        notelist = notelist + note.keyword
     notename = clr.pattern_match.group(1)
     status = f"**Note {notename} not found.**"
     if notename in notelist:
@@ -39,7 +39,7 @@ async def _(clr):
 
 
 @client.on(register(pattern="save ?(.*)"))
-async def _(fltr):
+async def save(fltr):
     if fltr.fwd_from:
         return
     notename = fltr.pattern_match.group(1)
@@ -54,7 +54,7 @@ async def _(fltr):
 
 
 @client.on(register(pattern="get ?(.*)"))
-async def _(getnt):
+async def get(getnt):
     if getnt.fwd_from:
         return
     notename = getnt.pattern_match.group(1)
@@ -68,7 +68,7 @@ async def _(getnt):
 
 
 @client.on(register(pattern="clearall ?(.*)"))
-async def _(prg):
+async def clearall(prg):
     if prg.fwd_from:
         return
     if not prg.text[0].isalpha():
@@ -93,6 +93,8 @@ Config.HELPER.update({
 \nUsage: Saves target message as a note with the name <notename>\
 \n\n```.clear <notename>```\
 \nUsage: Deletes the note with name <notename>.\
+\n\n```.clearall <notename>```\
+\nUsage: Deletes all the notes saved in the current chat.\
 \n\n```.notes <notename>```\
 \nUsage: Prints the list of notes saved in the current chat.\
 "

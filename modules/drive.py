@@ -20,7 +20,6 @@ from apiclient.errors import ResumableUploadError
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
 from oauth2client import file, tools
-from oauth2client import client as oauthclient
 import httplib2
 
 
@@ -54,7 +53,7 @@ async def handler(event):
         reply_message = await event.get_reply_message()
         try:
             c_time = time.time()
-            downloaded_file_name = await oauthclient.download_media(
+            downloaded_file_name = await client.download_media(
                 reply_message,
                 Config.DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
