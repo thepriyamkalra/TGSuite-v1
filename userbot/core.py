@@ -143,6 +143,7 @@ async def help(event):
 async def alive(event):
     if event.fwd_from:
         return
+    await event.edit("**// The-TG-Bot v3 is running //**\n**// Fetching userbot information //**")    
     uname = platform.uname()
     username = f"\nUser: `{user}\n"
     memory = psutil.virtual_memory()
