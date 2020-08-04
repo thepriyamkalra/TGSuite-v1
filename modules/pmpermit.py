@@ -124,11 +124,11 @@ async def disapprove_pm(event):
 
 
 
-@client.on(register("getpms"))
+@client.on(register("listpms?"))
 async def approve_p_m(event):
     if event.fwd_from:
         return
-    await event.edit("Fetching all approved pm list..wait")
+    await event.edit("Fetching approved PMs list...")
     approved_users = get_all_approved()
     APPROVED_PMs = "Current Approved PMs\n"
     for a_user in approved_users:
