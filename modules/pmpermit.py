@@ -27,7 +27,7 @@ async def auto_approve(event):
     #sanity check here
     #if any outgoing text contain bot module invocator then do not autoapprove
     #for eg if outgoing text has .xyz then due to . current chat wont be auto approved
-    if event.text[0]==Config.COMMAND_HANDLER[1]:
+    if "block" in event.text or "disapprove" in event.text:
         return False
     reason = "auto_approve"
     chat = await event.get_chat()
