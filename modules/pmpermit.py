@@ -21,8 +21,14 @@ THETGBOT_USER_BOT_NO_WARN = "\
 "
 
 
+
 @client.on(register(outgoing=True, func=lambda e: e.is_private))
 async def auto_approve(event):
+    #sanity check here
+    #if any outgoing text contain bot module invocator then do not autoapprove
+    #for eg if outgoing text has .xyz then due to . current chat wont be auto approved
+    if "block" in event.text or "disapprove" in event.text:
+        return False
     reason = "auto_approve"
     chat = await event.get_chat()
     if Config.ANTI_PM_SPAM:
@@ -86,6 +92,21 @@ async def approve_pm(event):
                 await asyncio.sleep(3)
                 await event.delete()
 
+@client.on(register("block ?(.*)"))
+async def approve_p_m(event):
+    if event.fwd_from:
+        return
+    reason = event.pattern_match.group(1)
+    chat = await event.get_chat()
+    if Config.ANTI_PM_SPAM:
+        if event.is_private:
+            if is_approved(chat.id):
+                disapprove(chat.id)
+            await event.edit("Blocked PM.")
+            await asyncio.sleep(3)
+            await client(functions.contacts.BlockRequest(chat.id))
+            logger.info("Blocked user: " + str(chat.id))
+
 
 @client.on(register("disapprove ?(.*)"))
 async def disapprove_pm(event):
@@ -99,12 +120,15 @@ async def disapprove_pm(event):
                 disapprove(chat.id)
                 await event.edit("Disapproved PM.")
                 await asyncio.sleep(3)
+                logger.info("Disapproved user: " + str(chat.id))
 
 
-@client.on(register("getpms"))
+
+@client.on(register("listpms?"))
 async def approve_p_m(event):
     if event.fwd_from:
         return
+    await event.edit("Fetching approved PMs list...")
     approved_users = get_all_approved()
     APPROVED_PMs = "Current Approved PMs\n"
     for a_user in approved_users:
@@ -138,6 +162,8 @@ Config.HELPER.update({
 \nUsage: Approve a user in PMs.\
 \n\n```.block```\
 \nUsage: Block a user from your PMs.\
+\n\n```.disapprove```\
+\nUsage: Remove a user from your approved PMs list.\
 \n\n```.getpms```\
 \nUsage: Get approved PMs.\
 "
