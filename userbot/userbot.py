@@ -9,9 +9,12 @@ from pathlib import Path
 from telethon import TelegramClient
 import telethon.utils
 import telethon.events
+from subprocess import run
 from datetime import datetime
 from .storage import Storage
-from .util import register, humanbytes, progress, time_formatter
+from shutil import rmtree
+from production import Config
+from .util import register, humanbytes, progress, time_formatter, run_async
 import os
 
 
@@ -34,7 +37,7 @@ class Userbot(TelegramClient):
         kwargs = {
             "api_id": 6,
             "api_hash": "eb06d4abfb49dc3eeb1aeb98ae0f581e",
-            "device_model": "GNU/Linux nonUI",
+            "device_model": "Userbot",
             "app_version": "@The-TG-Bot v3",
             "lang_code": "en",
             **kwargs
@@ -77,15 +80,13 @@ class Userbot(TelegramClient):
         name = f"_UserbotModules.{self._name}.{shortname}"
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
+        mod.run_async = run_async
         mod.register = register
         mod.client = self
         mod.humanbytes = humanbytes
         mod.progress = progress
         mod.time_formatter = time_formatter
-        mod.modcount = 1  # Dafault mod count is one to account for core module
-        for i in os.listdir("modules"):
-            mod.modcount += 1 if i != "sql" else 0
-        mod.build = f"The-TG-Bot-v3b{''.join(datetime.today().strftime('%D').split('/'))[:-2]}{mod.modcount}"
+        mod.build = f"The-TG-Bot-v3{str(run(f'git ls-remote {Config.GITHUB_REPO_LINK} HEAD', capture_output=True, shell=True).stdout)[2:][:7]}"
         mod.user = f"@{self.me.username}"
         mod.logger = logging.getLogger(shortname)
         mod.Config = self.config

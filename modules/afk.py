@@ -6,25 +6,15 @@ import datetime
 from telethon.tl import functions, types
 
 
-client.storage.USER_AFK = {}  # pylint:disable=E0602
-client.storage.afk_time = None  # pylint:disable=E0602
-client.storage.last_afk_message = {}  # pylint:disable=E0602
-@client.on(register(outgoing=True))  # pylint:disable=E0602
+client.storage.USER_AFK = {}
+client.storage.afk_time = None
+client.storage.last_afk_message = {}
+@client.on(register(outgoing=True))
 async def set_not_afk(event):
     current_message = event.message.message
-    if "afk" not in current_message.lower() and "yes" in client.storage.USER_AFK:  # pylint:disable=E0602
-        try:
-            status = "Set AFK mode to False"
-            await log(status)
-        except Exception as e:  # pylint:disable=C0103,W0703
-            await client.send_message(  # pylint:disable=E0602
-                event.chat_id,
-                "**Please set** `LOGGER_GROUP` **env variable for proper functioning**",
-                reply_to=event.message.id,
-                silent=True
-            )
-        client.storage.USER_AFK = {}  # pylint:disable=E0602
-        client.storage.afk_time = None  # pylint:disable=E0602
+    if "afk" not in current_message.lower() and "yes" in client.storage.USER_AFK:
+        client.storage.USER_AFK = {}
+        client.storage.afk_time = None
 
 
 @client.on(register(pattern="afk ?(.*)"))
@@ -32,25 +22,20 @@ async def handler(event):
     if event.fwd_from:
         return
     reason = event.pattern_match.group(1)
-    if not client.storage.USER_AFK:  # pylint:disable=E0602
-        last_seen_status = await client(  # pylint:disable=E0602
+    if not client.storage.USER_AFK:
+        last_seen_status = await client(
             functions.account.GetPrivacyRequest(
                 types.InputPrivacyKeyStatusTimestamp()
             )
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
-            client.storage.afk_time = datetime.datetime.now()  # pylint:disable=E0602
-        client.storage.USER_AFK.update({"yes": reason})  # pylint:disable=E0602
+            client.storage.afk_time = datetime.datetime.now()
+        client.storage.USER_AFK.update({"yes": reason})
         if reason:
             await event.edit(f"**I'm goin' afk cuz {reason}.**")
         else:
             await event.edit(f"**I'm goin' afk.**")
         await asyncio.sleep(5)
-        try:
-            status = f"Set AFK mode to True, and Reason is {reason}"
-            await log(status)
-        except Exception as e:  # pylint:disable=C0103,W0703
-            logger.warn(str(e))  # pylint:disable=E0602
 
 
 @client.on(register(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)))
@@ -60,14 +45,12 @@ async def on_afk(event):
     afk_since = "**a while ago**"
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text:
-        # userbot's should not reply to other userbot's
-        # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
         return False
-    if client.storage.USER_AFK and not (await event.get_sender()).bot:  # pylint:disable=E0602
-        reason = client.storage.USER_AFK["yes"]  # pylint:disable=E0602
-        if client.storage.afk_time:  # pylint:disable=E0602
+    if client.storage.USER_AFK and not (await event.get_sender()).bot:
+        reason = client.storage.USER_AFK["yes"]
+        if client.storage.afk_time:
             now = datetime.datetime.now()
-            datime_since_afk = now - client.storage.afk_time  # pylint:disable=E0602
+            datime_since_afk = now - client.storage.afk_time
             time = float(datime_since_afk.seconds)
             days = time // (24 * 3600)
             time = time % (24 * 3600)
@@ -100,14 +83,9 @@ async def on_afk(event):
             else f"**I have been AFK since** {afk_since}, feel free to chat with this bot as long as you like, it will keep repeating itself tho."
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
-        if event.chat_id in client.storage.last_afk_message:  # pylint:disable=E0602
-            await client.storage.last_afk_message[event.chat_id].delete()  # pylint:disable=E0602
-        client.storage.last_afk_message[event.chat_id] = msg  # pylint:disable=E0602
-
-
-async def log(text):
-    LOGGER = Config.LOGGER_GROUP
-    await client.send_message(LOGGER, text)
+        if event.chat_id in client.storage.last_afk_message:
+            await client.storage.last_afk_message[event.chat_id].delete()
+        client.storage.last_afk_message[event.chat_id] = msg
 
 
 Config.HELPER.update({

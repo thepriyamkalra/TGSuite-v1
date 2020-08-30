@@ -2,7 +2,24 @@
 
 ![LOGO](https://raw.githubusercontent.com/justaprudev/The-TG-Bot/v3/logo.png)
 
-The-TG-Bot is back with the ultimate v3!!
+
+## Disclaimer
+
+```
+///
+    Your Telegram account may get banned.
+    I am not responsible for any improper use of this bot
+    This bot is intended for the purpose of having fun with memes,
+    as well as efficiently managing groups.
+    You ended up spamming groups, getting reported left and right,
+    and you ended up in a Finale Battle with Telegram and at the end
+    Telegram Team deleted your account?
+    And after that, you pointed your fingers at us
+    for getting your acoount deleted?
+    I will be rolling on the floor laughing at you.
+///
+```
+
 
 ## Requirements
 
@@ -58,7 +75,12 @@ python3 -m session
 - Hit the "Deploy to Heroku" button and enter APP ID, API HASH and phone number conntected to your telegram account
 - Enter the session copied while connecting your telegram account
 - Click on the "Deploy" button on the next page
-- After the process is completed, try running .alive on telegram
+- After the process is completed, click on "View app"
+- Now click on the "Resources" tab
+- Then click on the edit/pencil icon
+- Finally toggle the switch and hit confirm
+- Your bot is now up and running!
+- Send .alive in any chat to test it
 
 #### The Legacy Way
 
@@ -101,4 +123,5 @@ async def handler(event):
 - [Telethon](https://github.com/LonamiWebs/Telethon) (Obviously)
 - [Uniborg](https://github.com/SpEcHiDe/UniBorg) (The core)
 - [FTG modules repo](https://github.com/friendly-telegram/modules-repo)
+- [Userge modules repo](https://github.com/UsergeTeam/Userge-Plugins)
 - [PPE](https://github.com/RaphielGang/Telegram-Paperplane)

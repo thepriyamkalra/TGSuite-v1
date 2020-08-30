@@ -8,7 +8,6 @@ from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 
 
-
 @client.on(register("whois ?(.*)"))
 async def handler(event):
     if event.fwd_from:
@@ -105,6 +104,10 @@ async def get_full_user(event):
             input_str = event.pattern_match.group(1)
         except IndexError as e:
             return None, e
+        try:
+            input_str = int(input_str)
+        except:
+            pass
         if event.message.entities is not None:
             mention_entity = event.message.entities
             probable_user_mention_entity = mention_entity[0]
@@ -129,7 +132,7 @@ async def get_full_user(event):
                 return None, e
         else:
             try:
-                user_object = await event.client.get_entity(int(input_str))
+                user_object = await event.client.get_entity(input_str)
                 user_id = user_object.id
                 replied_user = await event.client(GetFullUserRequest(user_id))
                 return replied_user, None

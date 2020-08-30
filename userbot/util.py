@@ -5,6 +5,7 @@
 import re
 import math
 import os
+import asyncio
 import time
 from telethon import events
 from telethon.tl.functions.messages import GetPeerDialogsRequest
@@ -39,6 +40,10 @@ def register(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
     if len(black_list_chats) > 0:
         args["chats"] = black_list_chats
     return events.NewMessage(**args)
+
+
+def run_async(func, *args, **kwargs):
+    return asyncio.get_event_loop().create_task(func(*args, **kwargs))
 
 
 async def is_read(userbot, entity, message, is_out=None):

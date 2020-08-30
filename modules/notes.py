@@ -8,7 +8,6 @@ import asyncio
 import time
 
 
-
 @client.on(register(pattern="notes ?(.*)"))
 async def notes(svd):
     if svd.fwd_from:
@@ -18,7 +17,7 @@ async def notes(svd):
     if notes:
         message = "**Notes saved in this chat:** \n\n"
         for note in notes:
-            message = message + "**~** " + note.keyword + "\n"
+            message = message + "**~** `" + note.keyword + "`\n"
     await svd.edit(message)
 
 

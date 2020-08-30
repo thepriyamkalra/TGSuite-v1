@@ -18,32 +18,32 @@ if not os.path.exists(Config.DOWNLOAD_DIRECTORY):
     os.mkdir(Config.DOWNLOAD_DIRECTORY)
 
 
-@client.on(register(pattern="reload (?P<shortname>\w+)$"))  # pylint:disable=E0602
+@client.on(register(pattern="reload (?P<shortname>\w+)$"))
 async def reload_module(event):
     await event.delete()
     shortname = event.pattern_match["shortname"]
     try:
-        if shortname in client._modules:  # pylint:disable=E0602
-            client.remove_module(shortname)  # pylint:disable=E0602
-        client.load_module(shortname)  # pylint:disable=E0602
+        if shortname in client._modules:
+            client.remove_module(shortname)
+        client.load_module(shortname)
         msg = await event.respond(f"Successfully reloaded {shortname}")
         await asyncio.sleep(DELETE_TIMEOUT)
         await msg.delete()
-    except Exception as e:  # pylint:disable=C0103,W0703
+    except Exception as e:
         trace_back = traceback.format_exc()
-        # pylint:disable=E0602
+
         logger.warn(f"Failed to (re)load {shortname}: {trace_back}")
         await event.respond(f"Failed to (re)load {shortname}: {e}")
 
 
-@client.on(register(pattern="(?:unload) (?P<shortname>\w+)$"))  # pylint:disable=E0602
+@client.on(register(pattern="(?:unload) (?P<shortname>\w+)$"))
 async def remove_module(event):
     await event.delete()
     shortname = event.pattern_match["shortname"]
     if shortname == "_core":
         msg = await event.respond(f"{shortname} can not be removed!")
-    elif shortname in client._modules:  # pylint:disable=E0602
-        client.remove_module(shortname)  # pylint:disable=E0602
+    elif shortname in client._modules:
+        client.remove_module(shortname)
         msg = await event.respond(f"Unloaded {shortname}")
     else:
         msg = await event.respond(f"{shortname} is not loaded!")
@@ -51,7 +51,7 @@ async def remove_module(event):
     await msg.delete()
 
 
-@client.on(register(pattern="load"))  # pylint:disable=E0602
+@client.on(register(pattern="load"))
 async def install_module(event):
     if event.fwd_from:
         return
@@ -60,13 +60,13 @@ async def install_module(event):
         loaded = False
         while not loaded:
             try:
-                downloaded_file_name = await client.download_media(  # pylint:disable=E0602
+                downloaded_file_name = await client.download_media(
                     module,
-                    client._module_path  # pylint:disable=E0602
+                    client._module_path
                 )
                 if "(" not in downloaded_file_name:
                     client.load_module_from_file(
-                        downloaded_file_name)  # pylint:disable=E0602
+                        downloaded_file_name)
                     await event.edit("Loaded `{}`".format(os.path.basename(downloaded_file_name)))
                     loaded = True
                 else:
@@ -74,10 +74,10 @@ async def install_module(event):
                     os.remove(f"modules/" + str(module.file.name))
                     os.remove(downloaded_file_name)
                     await event.edit("`Module already exists, overwriting..`")
-                    asyncio.sleep(0.25)
-            except Exception as e:  # pylint:disable=C0103,W0703
-                await event.edit(str(e))
+                    await asyncio.sleep(0.25)
+            except Exception as e:
                 os.remove(downloaded_file_name)
+                return await event.edit(str(e))
     await asyncio.sleep(DELETE_TIMEOUT)
     await event.delete()
 
@@ -104,11 +104,12 @@ async def share_module(event):
             )
         )
         end = datetime.now()
-        # os.remove(input_str)
         ms = (end - start).seconds
         await mone.edit(f"Uploaded {input_str} in {ms} seconds.")
     else:
         await mone.edit("404: Module not found")
+        await asyncio.sleep(2)
+        await mone.delete()
 
 
 @client.on(register(pattern="help ?(.*)"))
@@ -116,6 +117,7 @@ async def help(event):
     if event.fwd_from:
         return
     key = event.pattern_match.group(1)
+    modcount = 1
     if not key:
         msg = "The-TG-Bot v3 Modules:"
         title = ""
@@ -127,6 +129,7 @@ async def help(event):
                 title = new_title
             msg += f"{title}~ {key}"
             title = new_title
+            modcount += 1
         msg += f"\n\nNumber of modules: **{modcount}**\nSend .help <module_name> to get help regarding a module."
         await event.edit(msg)
     else:
@@ -143,7 +146,7 @@ async def help(event):
 async def alive(event):
     if event.fwd_from:
         return
-    await event.edit("**// The-TG-Bot v3 is running //**\n**// Fetching userbot information //**")    
+    await event.edit("**// The-TG-Bot v3 is running //**\n**// Fetching userbot information //**")
     uname = platform.uname()
     username = f"\nUser: `{user}\n"
     memory = psutil.virtual_memory()
@@ -154,7 +157,6 @@ async def alive(event):
         caption=help_string,
         file="logo.png",
         force_document=False,
-        allow_cache=False
     )
     await event.delete()
 

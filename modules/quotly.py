@@ -4,8 +4,7 @@
 
 from io import BytesIO
 from PIL import Image
-from telethon import events 
-
+from telethon import events
 
 
 @client.on(register(pattern="quotly ?(.*)"))
@@ -22,8 +21,8 @@ async def handler(event):
         return
     username = "@QuotLyBot"
     await event.edit(f"```Quoting this message...```")
-    async with client.conversation(username) as bot_conv:
-        if True:  # lazy indentation workaround xD
+    async with client.conversation(username, timeout=10) as bot_conv:
+        try:
             if input_str:
                 response = await silently_send_message(bot_conv, quote)
             elif reply:
@@ -37,6 +36,8 @@ async def handler(event):
                 return
             await event.reply(response)
             await event.delete()
+        except:
+            return await event.edit("`@QuotLyBot doesn't want to talk to me, try again later.`")
 
 
 async def silently_send_message(conv, text):

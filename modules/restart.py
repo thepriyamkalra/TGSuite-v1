@@ -9,7 +9,7 @@ import asyncio
 @client.on(register(pattern="restart ?(.*)", allow_sudo=True))
 async def handler(message):
     await message.edit("The-TG-Bot v3 has been restarted.\nTry .alive or .ping to check if its alive.")
-    asyncio.get_event_loop().create_task(restart())
+    run_async(restart)
 
 
 async def restart():

@@ -3,14 +3,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # For The-TG-Bot v3
 # Modified by @authoritydmc
-# Modified by Priyam Kalra 6/21/2020
-# Syntax .search <text>
+# Modified by @justaprudev 30/08/2020
+# Syntax .ud <text>
 
 import asyncurban
 
 
-
-@client.on(register("search (.*)"))
+@client.on(register("ud (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -25,7 +24,7 @@ async def handler(event):
 
 
 Config.HELPER.update({
-    "search": "\
-```.search <keyword>```\
+    "ud": "\
+```.ud <keyword>```\
 \nUsage: Search UrbanDictionary for a selected keyword.\
 "})

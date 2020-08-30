@@ -4,8 +4,9 @@
 from telethon.tl.functions.channels import EditAdminRequest, EditBannedRequest
 from telethon.tl.functions.messages import UpdatePinnedMessageRequest
 from telethon.tl.types import ChatAdminRights, ChatBannedRights
-from datetime import datetime
-import sys
+
+SUDO_STR = "**That guy is my friend, not going to touch him!**"
+NO_USER = "Who do you want me to {0}?!"
 
 
 @client.on(register("pin ?(.*)"))
@@ -51,16 +52,21 @@ async def handler(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    if input_str != "":
-        admin_rank = input_str
-    else:
-        admin_rank = "admeme"
-    start = datetime.now()
+    admin_rank = "admeme"
     to_promote_id = None
-    reply_msg_id = event.message.id
+    reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
         r_mesg = await event.get_reply_message()
         to_promote_id = r_mesg.sender_id
+        admin_rank = input_str
+    elif input_str:
+        to_promote_id = input_str
+    else:
+        await event.edit(NO_USER.format("promote"))
+    try:
+        to_promote_id = int(to_promote_id)
+    except:
+        pass
     try:
         await client(EditAdminRequest(event.chat_id, to_promote_id, admin_rights, admin_rank))
     except (Exception) as exc:
@@ -84,29 +90,29 @@ banned_rights = ChatBannedRights(
 
 @client.on(register("(ban) ?(.*)"))
 async def handler(event):
-
     if event.fwd_from:
         return
-    start = datetime.now()
     to_ban_id = None
     rights = None
     input_cmd = event.pattern_match.group(1)
     if input_cmd == "ban":
         rights = banned_rights
-
     input_str = event.pattern_match.group(2)
     reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
         r_mesg = await event.get_reply_message()
         to_ban_id = r_mesg.from_id
-    elif input_str and "all" not in input_str:
-        to_ban_id = int(input_str)
+    elif input_str in input_str:
+        to_ban_id = input_str
     else:
-        return False
+        await event.edit(NO_USER.format("ban"))
     if to_ban_id in Config.SUDO_USERS:
-        await event.edit("**Wait! WHAT?!\nDid you just try to ban my creator?!?!\nBYE!**")
-        sys.exit()
+        return await event.edit(SUDO_STR)
     else:
+        try:
+            to_ban_id = int(to_ban_id)
+        except:
+            pass
         try:
             await client(EditBannedRequest(event.chat_id, to_ban_id, rights))
         except (Exception) as exc:
@@ -133,26 +139,27 @@ async def handler(event):
 
     if event.fwd_from:
         return
-    start = datetime.now()
     to_ban_id = None
     rights = None
     input_cmd = event.pattern_match.group(1)
     if input_cmd == "demote":
         rights = demoted_rights
-
     input_str = event.pattern_match.group(2)
     reply_msg_id = event.reply_to_msg_id
     if reply_msg_id:
         r_mesg = await event.get_reply_message()
         to_ban_id = r_mesg.from_id
-    elif input_str and "all" not in input_str:
-        to_ban_id = int(input_str)
+    elif input_str:
+        to_ban_id = input_str
     else:
-        return False
+        await event.edit(NO_USER.format("demote"))
     if to_ban_id in Config.SUDO_USERS:
-        await event.edit("**Wait! WHAT?!\nDid you just try to demote my creator?!?!\nBYE!**")
-        sys.exit()
+        return await event.edit(SUDO_STR)
     else:
+        try:
+            to_ban_id = to_ban_id
+        except:
+            pass
         try:
             await client(EditBannedRequest(event.chat_id, to_ban_id, rights))
         except (Exception) as exc:
@@ -178,7 +185,6 @@ async def handler(event):
 
     if event.fwd_from:
         return
-    start = datetime.now()
     to_ban_id = None
     rights = None
     input_cmd = event.pattern_match.group(1)
@@ -190,14 +196,17 @@ async def handler(event):
     if reply_msg_id:
         r_mesg = await event.get_reply_message()
         to_ban_id = r_mesg.from_id
-    elif input_str and "all" not in input_str:
-        to_ban_id = int(input_str)
+    elif input_str:
+        to_ban_id = input_str
     else:
-        return False
+        await event.edit(NO_USER.format("mute"))
     if to_ban_id in Config.SUDO_USERS:
-        await event.edit("**Wait! WHAT?!\nDid you just try to mute my creator?!?!\nBYE!**")
-        sys.exit()
+        return await event.edit(SUDO_STR)
     else:
+        try:
+            to_ban_id = int(to_ban_id)
+        except:
+            pass
         try:
             await client(EditBannedRequest(event.chat_id, to_ban_id, rights))
         except (Exception) as exc:
@@ -223,7 +232,6 @@ unmuted_rights = ChatBannedRights(
 async def handler(event):
     if event.fwd_from:
         return
-    start = datetime.now()
     to_ban_id = None
     rights = None
     input_cmd = event.pattern_match.group(1)
@@ -234,11 +242,14 @@ async def handler(event):
     if reply_msg_id:
         r_mesg = await event.get_reply_message()
         to_ban_id = r_mesg.from_id
-    elif input_str and "all" not in input_str:
-        to_ban_id = int(input_str)
+    elif input_str:
+        to_ban_id = input_str
     else:
-        return False
-
+        await event.edit(NO_USER.format("unmute"))
+    try:
+        to_ban_id = int(to_ban_id)
+    except:
+        pass
     try:
         await client(EditBannedRequest(event.chat_id, to_ban_id, rights))
     except (Exception) as exc:
@@ -261,10 +272,8 @@ unbanned_rights = ChatBannedRights(
 
 @client.on(register("(unban) ?(.*)"))
 async def handler(event):
-
     if event.fwd_from:
         return
-    start = datetime.now()
     to_ban_id = None
     rights = None
     input_cmd = event.pattern_match.group(1)
@@ -275,10 +284,14 @@ async def handler(event):
     if reply_msg_id:
         r_mesg = await event.get_reply_message()
         to_ban_id = r_mesg.from_id
-    elif input_str and "all" not in input_str:
-        to_ban_id = int(input_str)
+    elif input_str:
+        to_ban_id = input_str
     else:
-        return False
+        await event.edit(NO_USER.format("unban"))
+    try:
+        to_ban_id = int(to_ban_id)
+    except:
+        pass
     try:
         await client(EditBannedRequest(event.chat_id, to_ban_id, rights))
     except (Exception) as exc:
@@ -286,66 +299,35 @@ async def handler(event):
     else:
         await event.edit(f"Well, ```{to_ban_id}``` can join now!")
 
-kicked_rights1 = ChatBannedRights(
-    until_date=None,
-    view_messages=True,
-    send_messages=True,
-    send_media=True,
-    send_stickers=True,
-    send_gifs=True,
-    send_games=True,
-    send_inline=True,
-    embed_links=True
-)
-
-kicked_rights2 = ChatBannedRights(
-    until_date=None,
-    view_messages=None,
-    send_messages=None,
-    send_media=None,
-    send_stickers=None,
-    send_gifs=None,
-    send_games=None,
-    send_inline=None,
-    embed_links=None
-)
-
 
 @client.on(register("(kick) ?(.*)"))
 async def handler(event):
-
     if event.fwd_from:
         return
-    start = datetime.now()
-    to_ban_id = None
-    rights = None
-    input_cmd = event.pattern_match.group(1)
-    if input_cmd == "kick":
-        rights = kicked_rights1
-        rights2 = kicked_rights2
-    input_str = event.pattern_match.group(2)
-    reply_msg_id = event.reply_to_msg_id
-    if reply_msg_id:
-        r_mesg = await event.get_reply_message()
-        to_ban_id = r_mesg.from_id
-    elif input_str and "all" not in input_str:
-        to_ban_id = int(input_str)
+    cmd = event.pattern_match.group(0)
+    if "me" in cmd:
+        user = "me"
+    input = event.pattern_match.group(1)
+    reply = await event.get_reply_message()
+    if reply:
+        user = reply.from_id
+    elif input:
+        user = input
     else:
-        return False
-    if to_ban_id in Config.SUDO_USERS:
-        await event.edit("**Wait! WHAT?!\nDid you just try to kick my creator?!?!\nBYE!**")
-        sys.exit()
+        await event.edit(NO_USER.format("kick"))
+    if user in Config.SUDO_USERS:
+        return await event.edit(SUDO_STR)
     else:
         try:
-            await client(EditBannedRequest(event.chat_id, to_ban_id, rights))
-        except (Exception) as exc:
-            await event.edit(str(exc))
+            user = int(user)
+        except:
+            pass
         try:
-            await client(EditBannedRequest(event.chat_id, to_ban_id, rights2))
+            await client.kick_participant(event.chat_id, user)
+            await event.edit(f"`{user}` has been yeeted!")
         except (Exception) as exc:
             await event.edit(str(exc))
-        else:
-            await event.edit(f"```{to_ban_id}``` has been yeeted!")
+
 
 Config.HELPER.update({
     "admin": "\

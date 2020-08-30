@@ -2,7 +2,7 @@
 # General Public License, v.3.0. If a copy of the GPL was not distributed with this
 # file, You can obtain one at https://www.gnu.org/licenses/gpl-3.0.en.html
 # For The-TG-Bot v3
-# Syntax .file <location>, .dir <location>
+# Syntax .ufile <location>, .udir <location>
 
 import asyncio
 import os
@@ -26,14 +26,13 @@ def get_lst_of_files(input_directory, output_lst):
 
 
 thumb_image_path = Config.DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-@client.on(register("senddir (.*)"))
+@client.on(register("udir (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
     if os.path.exists(input_str):
         start = datetime.now()
-        # await event.edit("Processing...")
         lst_of_files = sorted(get_lst_of_files(input_str, []))
         logger.info(lst_of_files)
         u = 0
@@ -47,7 +46,6 @@ async def handler(event):
             thumb = thumb_image_path
         for single_file in lst_of_files:
             if os.path.exists(single_file):
-                # https://stackoverflow.com/a/678242/4723940
                 caption_rts = os.path.basename(single_file)
                 force_document = True
                 supports_streaming = False
@@ -109,9 +107,6 @@ async def handler(event):
                         reply_to=event.message.id,
                         thumb=thumb,
                         attributes=document_attributes,
-                        # progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        #     progress(d, t, event, c_time, "trying to upload")
-                        # )
                     )
                 except Exception as e:
                     await client.send_message(
@@ -119,26 +114,22 @@ async def handler(event):
                         "{} caused `{}`".format(caption_rts, str(e)),
                         reply_to=event.message.id
                     )
-                    # some media were having some issues
                     continue
                 os.remove(single_file)
                 u = u + 1
-                # await event.edit("Uploaded {} / {} files.".format(u, len(lst_of_files)))
-                # @ControllerBot was having issues,
-                # if both edited_updates and update events come simultaneously.
                 await asyncio.sleep(5)
         end = datetime.now()
         ms = (end - start).seconds
         await event.edit("Uploaded {} files in {} seconds.".format(u, ms))
     else:
-        await event.edit("404: Directory Not Found")
+        await event.edit("404: Directory not found.")
 
 
-@client.on(register(pattern="sendfile (.*)", allow_sudo=True))
+@client.on(register(pattern="ufile (.*)", allow_sudo=True))
 async def handler(event):
     if event.fwd_from:
         return
-    mone = await event.edit("Searching for required file")
+    mone = await event.edit("Searching for required file..")
     input_str = event.pattern_match.group(1)
     thumb = None
     if os.path.exists(thumb_image_path):
@@ -159,32 +150,17 @@ async def handler(event):
             )
         )
         end = datetime.now()
-        # os.remove(input_str)
         ms = (end - start).seconds
         await mone.edit(f"Uploaded {input_str} in {ms} seconds.")
     else:
-        await mone.edit("404: File Not Found")
-
-
-def get_video_thumb(file, output=None, width=90):
-    metadata = extractMetadata(createParser(file))
-    p = subprocess.Popen([
-        'ffmpeg', '-i', file,
-        '-ss', str(int((0, metadata.get('duration').seconds)
-                       [metadata.has('duration')] / 2)),
-        '-filter:v', 'scale={}:-1'.format(width),
-        '-vframes', '1',
-        output,
-    ], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-    if not p.returncode and os.path.lexists(file):
-        return output
+        await mone.edit("404: File not found.")
 
 
 Config.HELPER.update({
     "upload": "\
-```.sendfile <file_location>```\
+```.ufile <file_location>```\
 \nUsage: Upload a file from your local machine.\
-\n\n```.senddir <dir_location>```\
+\n\n```.udir <dir_location>```\
 \nUsage: Upload a directory from your local machine.\
 "
 })

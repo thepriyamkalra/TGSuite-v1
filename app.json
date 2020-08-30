@@ -7,10 +7,11 @@
     "userbot",
     "plugin",
     "modular",
-    "productivity"
+    "productivity",
+    "python"
   ],
   "repository": "https://github.com/justaprudev/The-TG-Bot/",
-  "website": "",
+  "website": "https://justaprudev.github.io",
   "success_url": "https://t.me/justaprudev",
   "env": {
     "ENV": {
@@ -81,7 +82,7 @@
       "required": false
     },
     "GITHUB_REPO_LINK": {
-      "description": "Set the link to your github repository here, default is https://github.com/PriyamKalra/The-TG-Bot-3.0",
+      "description": "Set the link to your github repository here, default is https://github.com/justaprudev/The-TG-Bot",
       "required": false
     }
   },
