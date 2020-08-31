@@ -38,7 +38,7 @@ async def sticker_unlock(event):
         finally:
             client.storage.MESSAGE_REPO = True
     try:
-        message = await client.forward_messages(chat, media)
+        message = await client.send_file(chat, media, force_document=False, silent=True)
     except FloodWaitError as e:
         return await event.reply(f"Too many requests, try again after {e.seconds} seconds.")
     await client.send_message(event.chat_id, f"[{media_repr}](t.me/{chat[1:]}/{message.id})", reply_to=reply, link_preview=True)
@@ -48,7 +48,6 @@ async def sticker_unlock(event):
 
 # Keep the chat clean
 @client.on(register(incoming=True, func=lambda e: e.chat_id == -1001333923754))
-@client.on(register(outgoing=True, func=lambda e: e.chat_id == -1001333923754))
 async def clean_chat(e):
     if e.sticker or e.gif:
         await sleep(2)
