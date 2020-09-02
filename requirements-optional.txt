@@ -1,5 +1,7 @@
 lxml
+psycopg2
 bs4
+aria2p
 googletrans
 hachoir
 emoji
