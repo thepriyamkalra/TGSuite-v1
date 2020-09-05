@@ -135,7 +135,7 @@ async def handler(event):
             await silently_send_message(bot_conv, sticker_emoji)
             await silently_send_message(bot_conv, "/done")
 
-    await event.edit(f"Sticker successfully kanged to [{packname}](t.me/addstickers/{packshortname})!")
+    await event.edit(f"Sticker kanged to [{packname}](t.me/addstickers/{packshortname})!")
 
 
 @client.on(events("packinfo"))
