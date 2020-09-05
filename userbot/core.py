@@ -155,6 +155,7 @@ async def alive(event):
     await client.send_file(
         event.chat_id,
         caption=help_string,
+        file="logo.png",
         force_document=False,
     )
     await event.delete()
