@@ -77,10 +77,10 @@ async def on_afk(event):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
         msg = None
-        message_to_reply = f"**I have been AFK since** {afk_since} " + \
-            f"**cuz {reason}, feel free to chat with this bot as long as you like, it will keep repeating itself tho.**" \
+        message_to_reply = f"**My master is AFK since** {afk_since} " + \
+            f"**cuz {reason}, feel free to chat with me as long as you like, but i'll keep repeating myself tho.**" \
             if reason \
-            else f"**I have been AFK since** {afk_since}, feel free to chat with this bot as long as you like, it will keep repeating itself tho."
+            else f"**My master is AFK since** {afk_since}, feel free to chat with me as long as you like, but i'll keep repeating myself tho."
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in client.storage.last_afk_message:
