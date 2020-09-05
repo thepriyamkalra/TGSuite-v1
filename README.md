@@ -70,7 +70,7 @@ python3 -m session
 
 #### The Easy Way
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/justaprudev/The-TG-Bot/tree/v3)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/justaprudev/The-TG-Bot/tree/heroku)
 
 - Hit the "Deploy to Heroku" button and enter APP ID, API HASH and phone number conntected to your telegram account
 - Enter the session copied while connecting your telegram account
@@ -101,21 +101,22 @@ python3 -m thetgbot
 
 Here are the most useful "global" variables that can be used on any module you create:
 
-- Config: The class which allows access to enviroment variables defined in production.py
+- ENV: A global object which allows access to enviroment variables defined in env.py
 - client: A modified version of the telegram client.
-- register: Use this with the telegram client to make your life a little easier, example:
-
-```
-@client.on(register("hello"))
-async def handler(event):
-	await event.reply("world")
-```
-
+- client.storage: A global storage object for the current session.
+- events: A simple function that returns a events.NewMessage object.
 - progress: Generic progress callback for both uploads and downloads.
 - time_formatter: Input time in milliseconds, to get beautified time, as string.
 - humanbytes: Input size in bytes, outputs in a human readable format.
-- storage: A global storage dictionary for the current session.
 - You can learn alot just by reading the telethon [documentory](https://docs.telethon.dev/en/latest/)
+- Here is a simple module that adds " world" to the message if you send ".hello".
+
+```
+@client.on(events("hello"))
+async def handler(event):
+	await event.edit(event.text[1:] + " world.")
+```
+
 - Enjoy creating your own modules :P
 
 ## Credits

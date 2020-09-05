@@ -6,7 +6,7 @@ import asyncio
 
 
 
-@client.on(register(pattern="link ?(.*)"))
+@client.on(events(pattern="link ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -19,7 +19,7 @@ async def handler(event):
     await event.edit(output)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "hyperlink": "\
 ```.link <text> <paste_link_here>```\
 \nUsage: Generate a hyperlink using the provided link.\

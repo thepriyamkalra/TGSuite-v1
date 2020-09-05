@@ -16,7 +16,7 @@ import time
 
 
 
-@client.on(register("rename (.*)"))
+@client.on(events("rename (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -24,13 +24,13 @@ async def handler(event):
     await event.edit(f"Downloading file to local machine..\nThis may take a while depending on the file size.")
     time.sleep(1)
     input_str = event.pattern_match.group(1)
-    if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(ENV.DOWNLOAD_DIRECTORY):
+        os.makedirs(ENV.DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
         start = datetime.now()
         file_name = input_str
         reply_message = await event.get_reply_message()
-        to_download_directory = Config.DOWNLOAD_DIRECTORY
+        to_download_directory = ENV.DOWNLOAD_DIRECTORY
         await event.edit(f"Download complete!\nRenaming downloaded file to {input_str}..")
         time.sleep(0.25)
         downloaded_file_name = os.path.join(to_download_directory, file_name)
@@ -68,7 +68,7 @@ async def handler(event):
         await event.edit("Syntax // .rnupload file.name as reply to a Telegram media")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "rename": "\
 ```.rename <new_file_name>``` [as a reply to a target file]\
 \nUsage: Renames the target file to <new_file_name>.\

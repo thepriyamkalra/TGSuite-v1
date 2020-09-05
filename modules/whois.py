@@ -8,7 +8,7 @@ from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 
 
-@client.on(register("whois ?(.*)"))
+@client.on(events("whois ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -140,7 +140,7 @@ async def get_full_user(event):
                 return None, e
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "whois": "\
 ```.whois``` [as a reply to a message of a user]\
 \nUsage: Get statistics of the a user.\

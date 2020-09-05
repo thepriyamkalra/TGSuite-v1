@@ -4,7 +4,7 @@
 from datetime import datetime
 
 
-@client.on(register("ping"))
+@client.on(events("ping"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -15,7 +15,7 @@ async def handler(event):
     await event.edit("Pong!\n{}".format(ms))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "ping": "\
 ```.ping```\
 \nUsage: Check your internet connection's ping speed.\

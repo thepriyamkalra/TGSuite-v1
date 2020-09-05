@@ -5,7 +5,7 @@ from telethon.utils import pack_bot_file_id
 
 
 
-@client.on(register(pattern="id"))
+@client.on(events(pattern="id"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -21,7 +21,7 @@ async def handler(event):
         await event.edit("Current Chat ID: `{}`".format(str(event.chat_id)))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "id": "\
 ```.id (as a reply to target user)```\
 \nUsage: Prints the current chat id and target user id.\

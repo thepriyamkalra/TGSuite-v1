@@ -7,7 +7,7 @@ import json
 
 
 
-@client.on(register(pattern="shorten (.*)"))
+@client.on(events(pattern="shorten (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -20,7 +20,7 @@ async def handler(event):
         await event.edit("Error! Please try again later")
 
 
-@client.on(register(pattern="unshorten (.*)"))
+@client.on(events(pattern="unshorten (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -34,7 +34,7 @@ async def handler(event):
         await event.edit("Input URL {} returned status_code {}".format(input_str, r.status_code))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "dagd": "\
 ```.shorten <input_link>```\
 \nUsage: Create a da.gd link using <input_link>.\

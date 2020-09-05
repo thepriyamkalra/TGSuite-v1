@@ -11,7 +11,7 @@ themes = [
 ]
 
 
-@client.on(register("carbon ?(.*)"))
+@client.on(events("carbon ?(.*)"))
 async def carbonize(e):
     await e.edit("`Cooking a carbon..`")
     args = e.pattern_match.group(1)
@@ -33,7 +33,7 @@ async def carbonize(e):
         await e.edit("`API is down! Try again later.`")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "carbon": f"\
 ```.carbon <input_text_here> (option: <theme_name>)```\
 \nUsage: Make your code look nice.\

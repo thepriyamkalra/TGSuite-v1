@@ -12,7 +12,7 @@ import math
 import os
 import time
 from datetime import datetime
-from telethon import events
+import telethon
 from mimetypes import guess_type
 from apiclient.discovery import build
 from apiclient.http import MediaFileUpload
@@ -23,9 +23,9 @@ from oauth2client import file, tools
 import httplib2
 
 
-G_DRIVE_TOKEN_FILE = Config.DOWNLOAD_DIRECTORY + "/auth_token.txt"
-CLIENT_ID = Config.DRIVE_CLIENT_ID
-CLIENT_SECRET = Config.DRIVE_CLIENT_SECRET
+G_DRIVE_TOKEN_FILE = ENV.DOWNLOAD_DIRECTORY + "/auth_token.txt"
+CLIENT_ID = ENV.DRIVE_CLIENT_ID
+CLIENT_SECRET = ENV.DRIVE_CLIENT_SECRET
 OAUTH_SCOPE = "https://www.googleapis.com/auth/drive.file"
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 G_DRIVE_F_PARENT_ID = None
@@ -33,7 +33,7 @@ G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 TELEGRAPH_LINK = "https://da.gd/drive"
 
 
-@client.on(register(pattern="drive ?(.*)"))
+@client.on(events(pattern="drive ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -41,12 +41,12 @@ async def handler(event):
     if CLIENT_ID is None or CLIENT_SECRET is None:
         await mone.edit(f"This module requires credentials from https://da.gd/so63O. Aborting!\nVisit {TELEGRAPH_LINK} for more info.")
         return
-    if Config.LOGGER_GROUP is None:
+    if ENV.LOGGER_GROUP is None:
         await event.edit("Please set the required environment variable `LOGGER_GROUP` for this plugin to work.")
         return
     input_str = event.pattern_match.group(1)
-    if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(ENV.DOWNLOAD_DIRECTORY):
+        os.makedirs(ENV.DOWNLOAD_DIRECTORY)
     required_file_name = None
     start = datetime.now()
     if event.reply_to_msg_id and not input_str:
@@ -55,7 +55,7 @@ async def handler(event):
             c_time = time.time()
             downloaded_file_name = await client.download_media(
                 reply_message,
-                Config.DOWNLOAD_DIRECTORY,
+                ENV.DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 )
@@ -79,9 +79,9 @@ async def handler(event):
             await mone.edit("404: File not found!")
             return False
     if required_file_name:
-        if Config.DRIVE_AUTH_TOKEN_DATA is not None:
+        if ENV.DRIVE_AUTH_TOKEN_DATA is not None:
             with open(G_DRIVE_TOKEN_FILE, "w") as t_file:
-                t_file.write(Config.DRIVE_AUTH_TOKEN_DATA)
+                t_file.write(ENV.DRIVE_AUTH_TOKEN_DATA)
         storage = None
         if not os.path.isfile(G_DRIVE_TOKEN_FILE):
             storage = await create_token_file(G_DRIVE_TOKEN_FILE, event)
@@ -113,11 +113,11 @@ async def create_token_file(token_file, event):
         redirect_uri=REDIRECT_URI
     )
     authorize_url = flow.step1_get_authorize_url()
-    async with event.client.conversation(Config.LOGGER_GROUP) as conv:
+    async with event.client.conversation(ENV.LOGGER_GROUP) as conv:
         await conv.send_message(f"Go to the following link in your browser: {authorize_url} and reply the code")
-        response = conv.wait_event(events.NewMessage(
+        response = conv.wait_event(telethon.events.NewMessage(
             outgoing=True,
-            chats=Config.LOGGER_GROUP
+            chats=ENV.LOGGER_GROUP
         ))
         response = await response
         code = response.message.message.strip()
@@ -192,7 +192,7 @@ async def upload_file(http, file_path, file_name, mime_type, event, parent_id):
     download_url = file.get("webContentLink")
     return download_url
 
-Config.HELPER.update({"drive": f"\
+ENV.HELPER.update({"drive": f"\
 ```.drive (as a reply to a file on telegram)```\
 \nUsage: Upload a file on telegram to your google drive.\
 \n\nYou need DRIVE_CLIENT_ID and DRIVE_CLIENT_SECRET env variables for this to work.\

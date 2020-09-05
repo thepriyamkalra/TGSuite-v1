@@ -8,7 +8,7 @@ from time import sleep
 
 
 
-@client.on(register(pattern="spam ?(.*)"))
+@client.on(events(pattern="spam ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -35,7 +35,7 @@ async def handler(event):
     sleep(2)
     await event.delete()
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "spam": "\
 ```.spam <number of msgs> <text>```\
 \nUsage: Spams the given text.\

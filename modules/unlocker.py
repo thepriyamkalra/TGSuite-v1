@@ -14,7 +14,7 @@ if not hasattr(client.storage, "MESSAGE_REPO"):
 async def authorize(event):
     chat = await event.get_chat()
     tag = f"@{chat.username}"
-    if tag in Config.UNLOCKED_CHATS:
+    if tag in ENV.UNLOCKED_CHATS:
         if event.sticker:
             return True
         elif event.gif:
@@ -22,7 +22,7 @@ async def authorize(event):
     return False
 
 
-@client.on(register(outgoing=True, func=authorize))
+@client.on(events(outgoing=True, func=authorize))
 async def sticker_unlock(event):
     chat = "@msgrepo"
     reply = await event.get_reply_message()
@@ -47,13 +47,13 @@ async def sticker_unlock(event):
     await message.delete()
 
 # Keep the chat clean
-@client.on(register(incoming=True, func=lambda e: e.chat_id == -1001333923754))
+@client.on(events(incoming=True, func=lambda e: e.chat_id == -1001333923754))
 async def clean_chat(e):
     if e.sticker or e.gif:
         await sleep(2)
     await e.delete()
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "unlocker": "\
 Usage: Worksaround bot \"admin-only\" locks in chats.\
 \nNote: This will only work if links arent filtred.\

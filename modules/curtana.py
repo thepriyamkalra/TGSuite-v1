@@ -5,7 +5,7 @@
 
 
 
-@client.on(register(pattern="curtana ?(.*)"))
+@client.on(events(pattern="curtana ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -34,7 +34,7 @@ async def handler(event):
         silent=True
     )
 
-Config.HELPER.update({"curtana": "\
+ENV.HELPER.update({"curtana": "\
 ```.curtana <rom_name>```\
 \nUsage: Returns the latest build for a custom rom.\
 \n```.curtana <kernel_name>```\

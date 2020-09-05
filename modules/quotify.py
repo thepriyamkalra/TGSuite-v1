@@ -8,8 +8,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 
-sticker = f"{Config.DOWNLOAD_DIRECTORY}/quotify.webp"
-@client.on(register(pattern="quotify ?(.*)"))
+sticker = f"{ENV.DOWNLOAD_DIRECTORY}/quotify.webp"
+@client.on(events(pattern="quotify ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -57,7 +57,7 @@ def get_sticker(text):
     return result
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "quotify": "\
 ```.quotify <text_to_quotify>```\
 \nUsage: Quotify the input text ^_^.\

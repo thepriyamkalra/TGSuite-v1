@@ -9,7 +9,7 @@ from telethon.tl import functions, types
 client.storage.USER_AFK = {}
 client.storage.afk_time = None
 client.storage.last_afk_message = {}
-@client.on(register(outgoing=True))
+@client.on(events(outgoing=True))
 async def set_not_afk(event):
     current_message = event.message.message
     if "afk" not in current_message.lower() and "yes" in client.storage.USER_AFK:
@@ -17,7 +17,7 @@ async def set_not_afk(event):
         client.storage.afk_time = None
 
 
-@client.on(register(pattern="afk ?(.*)"))
+@client.on(events(pattern="afk ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -38,7 +38,7 @@ async def handler(event):
         await asyncio.sleep(5)
 
 
-@client.on(register(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)))
+@client.on(events(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)))
 async def on_afk(event):
     if event.fwd_from:
         return
@@ -88,7 +88,7 @@ async def on_afk(event):
         client.storage.last_afk_message[event.chat_id] = msg
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "afk": "\
 ```.afk <optional_reason>```\
 \nUsage: Automatically replies to pms and mentions while your away.\

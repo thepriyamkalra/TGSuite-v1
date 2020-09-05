@@ -25,8 +25,8 @@ def get_lst_of_files(input_directory, output_lst):
     return output_lst
 
 
-thumb_image_path = Config.DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
-@client.on(register("udir (.*)"))
+thumb_image_path = ENV.DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+@client.on(events("udir (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -125,7 +125,7 @@ async def handler(event):
         await event.edit("404: Directory not found.")
 
 
-@client.on(register(pattern="ufile (.*)", allow_sudo=True))
+@client.on(events(pattern="ufile (.*)", allow_sudo=True))
 async def handler(event):
     if event.fwd_from:
         return
@@ -156,7 +156,7 @@ async def handler(event):
         await mone.edit("404: File not found.")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "upload": "\
 ```.ufile <file_location>```\
 \nUsage: Upload a file from your local machine.\

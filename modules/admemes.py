@@ -4,7 +4,7 @@
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 
 
-@client.on(register("admemes ?(.*)"))
+@client.on(events("admemes ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -40,7 +40,7 @@ async def handler(event):
         await event.edit(mentions)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "admemes": "\
 ```.admemes [OPTIONAL argument: loud, this will notify the admins.]```\
 \nUsage: Mention admins in the current chat.\

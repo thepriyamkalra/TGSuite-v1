@@ -3,7 +3,6 @@
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
 
-from telethon import events
 import re
 from requests import get
 from bs4 import BeautifulSoup
@@ -13,7 +12,7 @@ DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/' \
                'certified-android-devices/master/devices.json'
 
 
-@client.on(register("magisk ?(.*)"))
+@client.on(events("magisk ?(.*)"))
 async def magisk(event):
     if event.fwd_from:
         return
@@ -32,7 +31,7 @@ async def magisk(event):
     await event.edit(releases)
 
 
-@client.on(register(pattern="twrp ?(.*)"))
+@client.on(events(pattern="twrp ?(.*)"))
 async def twrp(event):
     if event.fwd_from:
         return
@@ -63,7 +62,7 @@ async def twrp(event):
     await event.edit(reply)
 
 
-Config.HELPER.update({"android": "\
+ENV.HELPER.update({"android": "\
 **Requested module --> Android**\
 \n\n```.magisk```\
 \nUsage: Get latest Magisk releases\

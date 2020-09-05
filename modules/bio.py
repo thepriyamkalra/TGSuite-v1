@@ -10,7 +10,7 @@ from telethon.tl import functions
 
 
 DEL_TIME_OUT = 70
-@client.on(register(pattern="bio ?(.*)"))
+@client.on(events(pattern="bio ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -35,13 +35,13 @@ async def handler(event):
         # else:
             # logger.info(r.stringify())
             # await client.send_message(  # pylint:disable=E0602
-            #     Config.LOGGER_GROUP,  # pylint:disable=E0602
+            #     ENV.LOGGER_GROUP,  # pylint:disable=E0602
             #     "Changed Profile Picture"
             # )
         await asyncio.sleep(DEL_TIME_OUT)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "bio": "\
 ```.bio <text>```\
 \nUsage: Updates the user's bio to <text> with the date and time of modification.\

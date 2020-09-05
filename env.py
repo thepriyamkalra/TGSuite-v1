@@ -1,7 +1,7 @@
 import os
 
 
-class Config(object):
+class ENV(object):
     LOGGER = True
     MAX_MESSAGE_SIZE_LIMIT = 4095  # TG API Limit
     LOAD = []
@@ -34,3 +34,8 @@ class Config(object):
     TG_APP_NAME = os.environ.get("TG_APP_NAME", None)
     STICKER_PACK = os.environ.get("STICKER_PACK", None)
     UNLOCKED_CHATS = os.environ.get("UNLOCKED_CHATS", [])
+
+
+class _ENV(ENV):
+    pass
+    # Add values here to use for development

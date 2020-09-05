@@ -7,14 +7,14 @@ import heroku3
 import requests
 
 # ================= CONSTANTS =================
-Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
+Heroku = heroku3.from_key(ENV.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
-HEROKU_APP_NAME = f" for **{Config.TG_APP_NAME}**" if Config.TG_APP_NAME is not None else ""
-HEROKU_API_KEY = Config.HEROKU_API_KEY
+HEROKU_APP_NAME = f" for **{ENV.TG_APP_NAME}**" if ENV.TG_APP_NAME is not None else ""
+HEROKU_API_KEY = ENV.HEROKU_API_KEY
 # ================= CONSTANTS =================
 
 
-@client.on(register("usage"))
+@client.on(events("usage"))
 async def usage(message):
     await message.edit("`Calling Heroku's CEO..`")
     await asyncio.sleep(0.5)
@@ -69,7 +69,7 @@ async def usage(message):
                        f"**|**  [`{percentage}`**%**]")
 
                        
-Config.HELPER.update({"usage": "\
+ENV.HELPER.update({"usage": "\
 ```.usage```\
 \nUsage: Findout if your bot is going to die soon or not.\
 \n\n**`HEROKU_API_KEY` ENV variable is mandatory:**\

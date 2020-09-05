@@ -14,11 +14,11 @@ from userbot import util
 from telethon import __version__
 
 DELETE_TIMEOUT = 5
-if not os.path.exists(Config.DOWNLOAD_DIRECTORY):
-    os.mkdir(Config.DOWNLOAD_DIRECTORY)
+if not os.path.exists(ENV.DOWNLOAD_DIRECTORY):
+    os.mkdir(ENV.DOWNLOAD_DIRECTORY)
 
 
-@client.on(register(pattern="reload (?P<shortname>\w+)$"))
+@client.on(events(pattern="reload (?P<shortname>\w+)$"))
 async def reload_module(event):
     await event.delete()
     shortname = event.pattern_match["shortname"]
@@ -36,7 +36,7 @@ async def reload_module(event):
         await event.respond(f"Failed to (re)load {shortname}: {e}")
 
 
-@client.on(register(pattern="(?:unload) (?P<shortname>\w+)$"))
+@client.on(events(pattern="(?:unload) (?P<shortname>\w+)$"))
 async def remove_module(event):
     await event.delete()
     shortname = event.pattern_match["shortname"]
@@ -51,7 +51,7 @@ async def remove_module(event):
     await msg.delete()
 
 
-@client.on(register(pattern="load"))
+@client.on(events(pattern="load"))
 async def install_module(event):
     if event.fwd_from:
         return
@@ -82,7 +82,7 @@ async def install_module(event):
     await event.delete()
 
 
-@client.on(register(pattern="share (.*)"))
+@client.on(events(pattern="share (.*)"))
 async def share_module(event):
     if event.fwd_from:
         return
@@ -112,7 +112,7 @@ async def share_module(event):
         await mone.delete()
 
 
-@client.on(register(pattern="help ?(.*)"))
+@client.on(events(pattern="help ?(.*)"))
 async def help(event):
     if event.fwd_from:
         return
@@ -121,7 +121,7 @@ async def help(event):
     if not key:
         msg = "The-TG-Bot v3 Modules:"
         title = ""
-        for key in sorted(Config.HELPER):
+        for key in sorted(ENV.HELPER):
             new_title = f"\n\n{key[0].upper()}\n\n"
             if new_title == title:
                 title = "\n"
@@ -136,22 +136,22 @@ async def help(event):
         msg = ""
         msg += f"Available commands for **{key}** module:\n\n"
         try:
-            msg += Config.HELPER[key]
+            msg += ENV.HELPER[key]
         except KeyError:
             msg = f"**{key}** module doesnt exist!"
         await event.edit(msg)
 
 
-@client.on(register(pattern="alive ?(.*)", allow_sudo=True))
+@client.on(events(pattern="alive ?(.*)", allow_sudo=True))
 async def alive(event):
     if event.fwd_from:
         return
     await event.edit("**// The-TG-Bot v3 is running //**\n**// Fetching userbot information //**")
     uname = platform.uname()
-    username = f"\nUser: `{user}\n"
+    username = f"\nUser: `@{me.username}\n"
     memory = psutil.virtual_memory()
     specs = f"`System: {uname.system}\nRelease: {uname.release}\nVersion: {uname.version}\nProcessor: {uname.processor}\nMemory [RAM]: {get_size(memory.total)}`"
-    help_string = f"**// The-TG-Bot v3 is running //**\n\n**General Info:**\n`Build Version: {build} {username}`Github Repository: `{Config.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Contact developer:** [Priyam Kalra](https://t.me/justaprudev) \n**Update channel:** [Join](https://t.me/The_TG_Bot) \n**Support group:** [Join](https://t.me/The_TG_Bot_Support)"
+    help_string = f"**// The-TG-Bot v3 is running //**\n\n**General Info:**\n`Build Version: {build} {username}`Github Repository: `{ENV.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Contact developer:** [Priyam Kalra](https://t.me/justaprudev) \n**Update channel:** [Join](https://t.me/The_TG_Bot) \n**Support group:** [Join](https://t.me/The_TG_Bot_Support)"
     await client.send_file(
         event.chat_id,
         caption=help_string,
@@ -169,7 +169,7 @@ def get_size(bytes, suffix="B"):
         bytes /= factor
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "core": "\
 ```.load <as_a_reply_to_a_module_file>```\
 \nUsage: Load a specified module.\

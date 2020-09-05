@@ -32,7 +32,7 @@ for art in ascii:
     unpacked_ascii += f"`{art}`\n"
 
 
-@client.on(register(pattern="oof ?(.*)"))
+@client.on(events(pattern="oof ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -52,7 +52,7 @@ async def handler(event):
     await event.edit(output)
 
 
-@client.on(register(pattern="hek ?(.*)"))
+@client.on(events(pattern="hek ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -63,7 +63,7 @@ async def handler(event):
     await event.edit(";_;")
 
 
-@client.on(register(pattern="sed ?(.*)"))
+@client.on(events(pattern="sed ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -75,7 +75,7 @@ async def handler(event):
     await event.edit(":/")
 
 
-@client.on(register(pattern="emoji ?(.*)"))
+@client.on(events(pattern="emoji ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -87,7 +87,7 @@ async def handler(event):
         await event.edit("Emoji not found!")
 
 
-@client.on(register(pattern="ascii ?(.*)"))
+@client.on(events(pattern="ascii ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -99,7 +99,7 @@ async def handler(event):
         await event.edit("ASCII art not found!")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "reactions": f"\
 Just some funny little animations ;)\
 \nList of reactions:\

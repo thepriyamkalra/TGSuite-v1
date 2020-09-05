@@ -5,7 +5,7 @@ import asyncio
 
 
 
-@client.on(register(pattern="type (.*)", outgoing=True))
+@client.on(events(pattern="type (.*)", outgoing=True))
 async def handler(event):
     if event.fwd_from:
         return
@@ -25,7 +25,7 @@ async def handler(event):
         await asyncio.sleep(DELAY_BETWEEN_EDITS)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "type": "\
 ```.type <text_to_type>```\
 \nUsage: Type text with a fancy typing animation.\

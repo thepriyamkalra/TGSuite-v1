@@ -5,7 +5,7 @@ from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsBots
 
 
 
-@client.on(register("bots ?(.*)"))
+@client.on(events("bots ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -35,7 +35,7 @@ async def handler(event):
     await event.edit(mentions)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "bots": "\
 ```.bots```\
 \nUsage: Returns all the bots in the current chat.\

@@ -5,7 +5,7 @@ from telethon.tl.types import User, Chat, Channel
 
 
 
-@client.on(register(pattern="stat", outgoing=True))
+@client.on(events(pattern="stat", outgoing=True))
 async def handler(event):
     if event.fwd_from:
         return
@@ -40,7 +40,7 @@ async def handler(event):
     await event.edit(f"**Your stats obtained in {ms} second(s).\nYou have {pm} private messages.\nYou are in {grps} groups.\nYou are in {supergrps} super groups.\nYou are in {chnls} channels.\nYou have chats with {bots} bots.**")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "stat": "\
 ```.stat```\
 \nUsage: Print your own use statistics.\

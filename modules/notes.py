@@ -8,7 +8,7 @@ import asyncio
 import time
 
 
-@client.on(register(pattern="notes ?(.*)"))
+@client.on(events(pattern="notes ?(.*)"))
 async def notes(svd):
     if svd.fwd_from:
         return
@@ -21,7 +21,7 @@ async def notes(svd):
     await svd.edit(message)
 
 
-@client.on(register(pattern="clear ?(.*)"))
+@client.on(events(pattern="clear ?(.*)"))
 async def clear(clr):
     if clr.fwd_from:
         return
@@ -37,7 +37,7 @@ async def clear(clr):
     await clr.edit(status)
 
 
-@client.on(register(pattern="save ?(.*)"))
+@client.on(events(pattern="save ?(.*)"))
 async def save(fltr):
     if fltr.fwd_from:
         return
@@ -52,7 +52,7 @@ async def save(fltr):
     await fltr.edit(message)
 
 
-@client.on(register(pattern="get ?(.*)"))
+@client.on(events(pattern="get ?(.*)"))
 async def get(getnt):
     if getnt.fwd_from:
         return
@@ -66,7 +66,7 @@ async def get(getnt):
             await getnt.edit(f"**Note** ```{notename}``` **not found!**")
 
 
-@client.on(register(pattern="clearall ?(.*)"))
+@client.on(events(pattern="clearall ?(.*)"))
 async def clearall(prg):
     if prg.fwd_from:
         return
@@ -81,10 +81,10 @@ async def clearall(prg):
 
 
 async def log(text):
-    LOGGER = Config.LOGGER_GROUP
+    LOGGER = ENV.LOGGER_GROUP
     await client.send_message(LOGGER, text)
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "notes": "\
 ```.get <notename>```\
 \nUsage: Gets the note with name <notename>\

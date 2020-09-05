@@ -6,7 +6,7 @@
 import requests
 
 
-@client.on(register("lmgtfy ?(.*)"))
+@client.on(events("lmgtfy ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -21,7 +21,7 @@ async def handler(event):
         await event.edit("`Something went wrong! Please try again later.`")
 
 
-Config.HELPER.update({"lmgtfy": "\
+ENV.HELPER.update({"lmgtfy": "\
 `.lmgtfy <query>`\
 \nUsage: A guide on how to search on google.\
 "})

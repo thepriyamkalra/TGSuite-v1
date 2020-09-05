@@ -9,7 +9,7 @@
 import asyncurban
 
 
-@client.on(register("ud (.*)"))
+@client.on(events("ud (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -23,7 +23,7 @@ async def handler(event):
         await event.edit("No result found for **" + word + "**")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "ud": "\
 ```.ud <keyword>```\
 \nUsage: Search UrbanDictionary for a selected keyword.\

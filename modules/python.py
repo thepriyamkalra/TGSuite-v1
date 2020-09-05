@@ -12,7 +12,7 @@ import io
 
 
 
-@client.on(register(pattern="py"))
+@client.on(events(pattern="py"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -51,7 +51,7 @@ async def handler(event):
     final_output = "**CODE**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(
         cmd, evaluation)
 
-    if len(final_output) > Config.MAX_MESSAGE_SIZE_LIMIT:
+    if len(final_output) > ENV.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.text"
             await client.send_file(
@@ -75,7 +75,7 @@ async def aexec(code, event):
     return await locals()['__aexec'](event)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "python": "\
 ```.python <python_code>```\
 \nUsage: Evaluate python code.\

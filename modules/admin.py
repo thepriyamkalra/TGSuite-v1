@@ -9,7 +9,7 @@ SUDO_STR = "**That guy is my friend, not going to touch him!**"
 NO_USER = "Who do you want me to {0}?!"
 
 
-@client.on(register("pin ?(.*)"))
+@client.on(events("pin ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -47,7 +47,7 @@ admin_rights = ChatAdminRights(
 )
 
 
-@client.on(register(pattern="promote ?(.*)"))
+@client.on(events(pattern="promote ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -88,7 +88,7 @@ banned_rights = ChatBannedRights(
 )
 
 
-@client.on(register("(ban) ?(.*)"))
+@client.on(events("(ban) ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -106,7 +106,7 @@ async def handler(event):
         to_ban_id = input_str
     else:
         await event.edit(NO_USER.format("ban"))
-    if to_ban_id in Config.SUDO_USERS:
+    if to_ban_id in ENV.SUDO_USERS:
         return await event.edit(SUDO_STR)
     else:
         try:
@@ -134,7 +134,7 @@ demoted_rights = ChatBannedRights(
 )
 
 
-@client.on(register("(demote) ?(.*)"))
+@client.on(events("(demote) ?(.*)"))
 async def handler(event):
 
     if event.fwd_from:
@@ -153,7 +153,7 @@ async def handler(event):
         to_ban_id = input_str
     else:
         await event.edit(NO_USER.format("demote"))
-    if to_ban_id in Config.SUDO_USERS:
+    if to_ban_id in ENV.SUDO_USERS:
         return await event.edit(SUDO_STR)
     else:
         try:
@@ -180,7 +180,7 @@ muted_rights = ChatBannedRights(
 )
 
 
-@client.on(register("(mute) ?(.*)"))
+@client.on(events("(mute) ?(.*)"))
 async def handler(event):
 
     if event.fwd_from:
@@ -200,7 +200,7 @@ async def handler(event):
         to_ban_id = input_str
     else:
         await event.edit(NO_USER.format("mute"))
-    if to_ban_id in Config.SUDO_USERS:
+    if to_ban_id in ENV.SUDO_USERS:
         return await event.edit(SUDO_STR)
     else:
         try:
@@ -228,7 +228,7 @@ unmuted_rights = ChatBannedRights(
 )
 
 
-@client.on(register("(unmute) ?(.*)"))
+@client.on(events("(unmute) ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -270,7 +270,7 @@ unbanned_rights = ChatBannedRights(
 )
 
 
-@client.on(register("(unban) ?(.*)"))
+@client.on(events("(unban) ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -300,7 +300,7 @@ async def handler(event):
         await event.edit(f"Well, ```{to_ban_id}``` can join now!")
 
 
-@client.on(register("(kick) ?(.*)"))
+@client.on(events("(kick) ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -315,7 +315,7 @@ async def handler(event):
         user = input
     else:
         await event.edit(NO_USER.format("kick"))
-    if user in Config.SUDO_USERS:
+    if user in ENV.SUDO_USERS:
         return await event.edit(SUDO_STR)
     else:
         try:
@@ -329,7 +329,7 @@ async def handler(event):
             await event.edit(str(exc))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "admin": "\
 ```.ban <userid>``` (or as a reply to a message of targer user)\
 \nUsage: bans target user.\

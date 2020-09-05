@@ -6,7 +6,7 @@ import re
 
 
 
-@client.on(register("coinflip ?(.*)"))
+@client.on(events("coinflip ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -32,7 +32,7 @@ async def handler(event):
         await event.edit("¯\_(ツ)_/¯")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "coinflip": "\
 ```.coinflip <optional_choice>```\
 \nUsage: Flips a virtual coin and returns the outcome, test your luck!\

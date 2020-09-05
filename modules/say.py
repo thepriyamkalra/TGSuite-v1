@@ -6,7 +6,7 @@ import time
 
 
 
-@client.on(register(pattern="say ?(.*)"))
+@client.on(events(pattern="say ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -23,7 +23,7 @@ async def handler(event):
         await event.edit(output)
         time.sleep(0.25)
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "say": "\
 ```.say <text_to_print> (or as a reply to target message)```\
 \nUsage: Says anything you want it to say.\

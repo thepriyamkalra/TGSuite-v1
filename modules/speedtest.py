@@ -10,7 +10,7 @@ import speedtest
 
 
 
-@client.on(register(pattern="speedtest ?(.*)"))
+@client.on(events(pattern="speedtest ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -86,7 +86,7 @@ def convert_from_bytes(size):
     return f"{round(size, 2)} {units[n]}"
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "speedtest": "\
 ```.speedtest <mode>```\
 \nUsage: ```Get download and upload speed of your server.\

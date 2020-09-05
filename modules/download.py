@@ -14,14 +14,14 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 
 
-@client.on(register(pattern="localdl ?(.*)"))
+@client.on(events(pattern="localdl ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
     mone = await event.edit("Downloading...")
     input_str = event.pattern_match.group(1)
-    if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(ENV.DOWNLOAD_DIRECTORY):
+        os.makedirs(ENV.DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
         start = datetime.now()
         reply_message = await event.get_reply_message()
@@ -29,7 +29,7 @@ async def handler(event):
             c_time = time.time()
             downloaded_file_name = await client.download_media(
                 reply_message,
-                Config.DOWNLOAD_DIRECTORY,
+                ENV.DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 )
@@ -44,7 +44,7 @@ async def handler(event):
         start = datetime.now()
         url = input_str
         file_name = os.path.basename(url)
-        to_download_directory = Config.DOWNLOAD_DIRECTORY
+        to_download_directory = ENV.DOWNLOAD_DIRECTORY
         if "|" in input_str:
             url, file_name = input_str.split("|")
         url = url.strip()
@@ -88,7 +88,7 @@ async def handler(event):
         await mone.edit("Reply to a message to download to my local server.")
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "download": "\
 ```.localdl (as a reply to a telegram media file)```\
 \nUsage: Downloads the file to thelocal download directory.\

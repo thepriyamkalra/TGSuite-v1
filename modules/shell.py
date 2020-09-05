@@ -10,7 +10,7 @@ import asyncio
 import time
 
 
-@client.on(register(pattern="shell ?(.*)"))
+@client.on(events(pattern="shell ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -29,7 +29,7 @@ async def handler(event):
     for l in stderr.split("\\n"):
         e += f"{l}\n"
     OUTPUT = f"**Query:**\n`{cmd}`\n\n**Errors (stderr):** \n`{e}`\n**Output (stdout):**\n`{o}`"
-    if len(OUTPUT) > Config.MAX_MESSAGE_SIZE_LIMIT:
+    if len(OUTPUT) > ENV.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(OUTPUT)) as out_file:
             out_file.name = "shell.txt"
             await client.send_file(
@@ -44,7 +44,7 @@ async def handler(event):
     await event.edit(OUTPUT)
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "shell": "\
 ```.shell <code>```\
 \nUsage: Your own personal shell, all inouts are evaluated with subprocess.run().\

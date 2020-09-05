@@ -4,10 +4,10 @@
 
 from io import BytesIO
 from PIL import Image
-from telethon import events
+import telethon
 
 
-@client.on(register(pattern="quotly ?(.*)"))
+@client.on(events(pattern="quotly ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -26,7 +26,7 @@ async def handler(event):
             if input_str:
                 response = await silently_send_message(bot_conv, quote)
             elif reply:
-                response = bot_conv.wait_event(events.NewMessage(
+                response = bot_conv.wait_event(telethon.events.NewMessage(
                     incoming=True, from_users=1031952739))
                 await client.forward_messages(username, quote)
                 response = await response
@@ -47,7 +47,7 @@ async def silently_send_message(conv, text):
     return response
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "quotly": "\
 ```.quotly <text_to_quote> [or as a reply to a message to quote]```\
 \nUsage: Quotes the target message.\nUses @QuotLyBot.\

@@ -27,13 +27,13 @@ aria2_is_running = os.system(cmd)
 aria2 = aria2p.API(aria2p.Client(
     host="http://localhost", port=6800, secret=""))
 EDIT_SLEEP_TIME_OUT = 10
-thumb_image_path = Config.DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+thumb_image_path = ENV.DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob"
 G_DRIVE_F_PARENT_ID = None
 G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 
 
-@client.on(register(pattern="leech ?(.*)"))
+@client.on(events(pattern="leech ?(.*)"))
 async def magnet_download(event):
     if event.fwd_from:
         return
@@ -103,11 +103,11 @@ async def create_token_file(token_file, event):
         redirect_uri=REDIRECT_URI
     )
     authorize_url = flow.step1_get_authorize_url()
-    async with event.client.conversation(Config.LOGGER_GROUP) as conv:
+    async with event.client.conversation(ENV.LOGGER_GROUP) as conv:
         await conv.send_message(f"Go to the following link in your browser: {authorize_url} and reply the code")
         response = conv.wait_event(events.NewMessage(
             outgoing=True,
-            chats=Config.LOGGER_GROUP
+            chats=ENV.LOGGER_GROUP
         ))
         response = await response
         code = response.message.message.strip()
@@ -238,7 +238,7 @@ async def DoTeskWithDir(http, input_directory, event, parent_id):
 
 
 async def log(text):
-    LOGGER = Config.LOGGER_GROUP
+    LOGGER = ENV.LOGGER_GROUP
     await client.send_message(LOGGER, text)
 
 
@@ -281,7 +281,7 @@ async def progress_status(gid, event, previous):
             await log(str(e))
             return await event.delete()
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "leech": "\
 ```.leech <magnet-link> (or as a reply to a magnet link)```\
 \nUsage: Downloads the torrent to the local machine.\

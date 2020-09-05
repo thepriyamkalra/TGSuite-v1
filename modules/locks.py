@@ -2,15 +2,14 @@
 # Syntax .lock (msg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url)
 
 from modules.sql.locks_sql import update_lock, is_locked, get_locks
-from telethon import events
+import telethon
 from telethon.tl import functions, types
 
 
-
-@client.on(register("lock( (?P<target>\S+)|$)"))
+@client.on(events("lock( (?P<target>\S+)|$)"))
 async def handler(event):
-     # Space weirdness in regex required because argument is optional and other
-     # commands start with ".lock"
+    # Space weirdness in regex required because argument is optional and other
+    # commands start with ".lock"
     if event.fwd_from:
         return
     input_str = event.pattern_match.group("target")
@@ -81,7 +80,7 @@ async def handler(event):
             )
 
 
-@client.on(register("unlock ?(.*)"))
+@client.on(events("unlock ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -98,7 +97,7 @@ async def handler(event):
         )
 
 
-@client.on(register("curenabledlocks"))
+@client.on(events("curenabledlocks"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -133,8 +132,8 @@ async def handler(event):
     await event.edit(res)
 
 
-@client.on(events.MessageEdited())  # pylint:disable=E0602
-@client.on(events.NewMessage())  # pylint:disable=E0602
+@client.on(telethon.events.MessageEdited())  # pylint:disable=E0602
+@client.on(telethon.events.NewMessage())  # pylint:disable=E0602
 async def check_incoming_messages(event):
     # TODO: exempt admins from locks
     peer_id = event.chat_id
@@ -198,7 +197,7 @@ async def check_incoming_messages(event):
                 update_lock(peer_id, "url", False)
 
 
-@client.on(events.ChatAction())  # pylint:disable=E0602
+@client.on(telethon.events.ChatAction())  # pylint:disable=E0602
 async def handler(event):
     # TODO: exempt admins from locks
     # check for "lock" "bots"
@@ -232,4 +231,4 @@ async def handler(event):
                         break
 
 
-Config.HELPER.update({"locks": "```.lock <specify_item_to_lock>```\nUsage: Locks a specified lockable.\nList of items:\nmsg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url"})
+ENV.HELPER.update({"locks": "```.lock <specify_item_to_lock>```\nUsage: Locks a specified lockable.\nList of items:\nmsg, media, sticker, gif, gamee, ainline, gpoll, adduser, cpin, changeinfo, bots, commands, email, forward, url"})

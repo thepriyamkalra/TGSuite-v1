@@ -4,7 +4,7 @@
 
 
 
-@client.on(register(pattern="rmota ?(.*)"))
+@client.on(events(pattern="rmota ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -41,7 +41,7 @@ async def silently_send_message(conv, text):
     return response
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "rmota": "\
 ```.rmota <device_model>```\
 \nUsage: Returns latest update info for specified device.\nUses @Realme_3ProBot to get update information.\

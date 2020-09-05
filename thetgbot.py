@@ -16,33 +16,27 @@ logging.basicConfig(level=logging.INFO)
 
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
-    from production import Config
+    from env import ENV
 else:
-    if os.path.exists("development.py"):
-        from development import Config
-    else:
-        logging.warning("No config.py Found!")
-        logging.info(
-            "Please run the command, again, after creating config.py similar to README.md")
-        sys.exit(1)
+    from env import _ENV as ENV
 
 
-if Config.DB_URI is None:
-    logging.warning("No DB_URI Found!")
+if ENV.DB_URI is None:
+    logging.warning("No DATABASE_URL Found!")
     sys.exit(1)
 
 
-if len(Config.SUDO_USERS) >= 0:
-    Config.SUDO_USERS.add("me")
+if len(ENV.SUDO_USERS) >= 0:
+    ENV.SUDO_USERS.add("me")
 
-if Config.SESSION is not None:
-    session_name = str(Config.SESSION)
+if ENV.SESSION is not None:
+    session_name = str(ENV.SESSION)
     userbot = Userbot(
         StringSession(session_name),
         module_path="modules/",
-        api_config=Config,
-        api_id=Config.APP_ID,
-        api_hash=Config.API_HASH
+        enviroment=ENV,
+        api_id=ENV.APP_ID,
+        api_hash=ENV.API_HASH
     )
     userbot.run_until_disconnected()
 elif len(sys.argv) == 2:
@@ -51,9 +45,9 @@ elif len(sys.argv) == 2:
         session_name,
         module_path="modules/",
         connection_retries=None,
-        api_config=Config,
-        api_id=Config.APP_ID,
-        api_hash=Config.API_HASH
+        enviroment=ENV,
+        api_id=ENV.APP_ID,
+        api_hash=ENV.API_HASH
     )
     userbot.run_until_disconnected()
 else:

@@ -7,7 +7,7 @@
 import requests
 
 
-@client.on(register("github (.*)"))
+@client.on(events("github (.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -46,7 +46,7 @@ Profile Created: {}
         await event.edit("`{}`: {}".format(input_str, r.text))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "github": "\
 ```.github <username>```\
 \nUsage: Get information about any user on GitHub\

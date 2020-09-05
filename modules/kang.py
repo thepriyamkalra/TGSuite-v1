@@ -26,7 +26,7 @@ from telethon.tl.types import (
 )
 
 
-@client.on(register(pattern="kang ?(.*)"))
+@client.on(events(pattern="kang ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -53,7 +53,7 @@ async def handler(event):
     botuser = await client.get_me()
     botuser = f"@{botuser.username}"
     userid = event.from_id
-    if Config.STICKER_PACK is None:
+    if ENV.STICKER_PACK is None:
         if not pack_id:
             pack_id = 1
         packname = f"{botuser}'s kang pack vol.{pack_id}"
@@ -61,7 +61,7 @@ async def handler(event):
     else:
         if pack_id:
             pack_id = f" {pack_id}"
-        packname = f"{Config.STICKER_PACK}{pack_id}"
+        packname = f"{ENV.STICKER_PACK}{pack_id}"
         packshortname = f"Uniborg_Pack{pack_id}_{userid}"
 
     is_a_s = is_it_animated_sticker(reply_message)
@@ -138,7 +138,7 @@ async def handler(event):
     await event.edit(f"Sticker successfully kanged to [{packname}](t.me/addstickers/{packshortname})!")
 
 
-@client.on(register("packinfo"))
+@client.on(events("packinfo"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -175,13 +175,13 @@ async def handler(event):
                      f"**Emojis In Pack:** {' '.join(pack_emojis)}")
 
 
-@client.on(register("getsticker ?(.*)"))
+@client.on(events("getsticker ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(ENV.DOWNLOAD_DIRECTORY):
+        os.makedirs(ENV.DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         # https://gist.github.com/udf/e4e3dbb2e831c8b580d8fddd312714f7
@@ -201,7 +201,7 @@ async def handler(event):
             file_caption = "Forward the ZIP file to @AnimatedStickersRoBot to get lottIE JSON containing the vector information."
         sticker_set = await client(GetStickerSetRequest(sticker_attrib.stickerset))
         pack_file = os.path.join(
-            Config.DOWNLOAD_DIRECTORY, sticker_set.set.short_name, "pack.txt")
+            ENV.DOWNLOAD_DIRECTORY, sticker_set.set.short_name, "pack.txt")
         if os.path.isfile(pack_file):
             os.remove(pack_file)
         # Sticker emojis are retrieved as a mapping of
@@ -220,11 +220,11 @@ async def handler(event):
                     f"{{'image_file': '{file}','emojis':{emojis[sticker.id]}}},")
         pending_tasks = [
             asyncio.ensure_future(
-                download(document, emojis, Config.DOWNLOAD_DIRECTORY +
+                download(document, emojis, ENV.DOWNLOAD_DIRECTORY +
                          sticker_set.set.short_name, f"{i:03d}.{file_ext_ns_ion}")
             ) for i, document in enumerate(sticker_set.documents)
         ]
-        await event.edit(f"Downloading {sticker_set.set.count} sticker(s) to .{Config.DOWNLOAD_DIRECTORY}{sticker_set.set.short_name}...")
+        await event.edit(f"Downloading {sticker_set.set.count} sticker(s) to .{ENV.DOWNLOAD_DIRECTORY}{sticker_set.set.short_name}...")
         num_tasks = len(pending_tasks)
         while 1:
             done, pending_tasks = await asyncio.wait(pending_tasks, timeout=2.5,
@@ -238,7 +238,7 @@ async def handler(event):
                 break
         await event.edit("Downloading to my local completed")
         # https://gist.github.com/udf/e4e3dbb2e831c8b580d8fddd312714f7
-        directory_name = Config.DOWNLOAD_DIRECTORY + sticker_set.set.short_name
+        directory_name = ENV.DOWNLOAD_DIRECTORY + sticker_set.set.short_name
         zipf = zipfile.ZipFile(directory_name + ".zip",
                                "w", zipfile.ZIP_DEFLATED)
         zipdir(directory_name, zipf)
@@ -357,7 +357,7 @@ def zipdir(path, ziph):
             os.remove(os.path.join(root, file))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "kang": "\
 ```.kang <optional_emoji> <optional_pack_number>```\
 \nUsage: Adds sticker to your own sticker pack!\

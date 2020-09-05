@@ -21,23 +21,24 @@ THETGBOT_USER_BOT_NO_WARN = "\
 "
 
 
-
-@client.on(register(outgoing=True, func=lambda e: e.is_private))
+@client.on(events(outgoing=True, func=lambda e: e.is_private))
 async def auto_approve(event):
-    #sanity check here
-    #if any outgoing text contain bot module invocator then do not autoapprove
-    #for eg if outgoing text has .xyz then due to . current chat wont be auto approved
     if "block" in event.text or "disapprove" in event.text:
         return False
     reason = "auto_approve"
     chat = await event.get_chat()
-    if Config.ANTI_PM_SPAM:
+    if ENV.ANTI_PM_SPAM:
         if not is_approved(chat.id):
+            if chat.id in client.storage.PM_WARNS:
+                del client.storage.PM_WARNS[chat.id]
+            if chat.id in client.storage.PREV_REPLY_MESSAGE:
+                await client.storage.PREV_REPLY_MESSAGE[chat.id].delete()
+                del client.storage.PREV_REPLY_MESSAGE[chat.id]
             approve(chat.id, reason)
             logger.info("Auto approved user: " + str(chat.id))
-                  
-                  
-@client.on(register(incoming=True, func=lambda e: e.is_private))
+
+
+@client.on(events(incoming=True, func=lambda e: e.is_private))
 async def monitorpms(event):
     sender = await event.get_sender()
     current_message_text = event.message.message.lower()
@@ -47,18 +48,18 @@ async def monitorpms(event):
         # userbot's should not reply to other userbot's
         # https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots
         return False
-    if Config.ANTI_PM_SPAM and not sender.bot:
+    if ENV.ANTI_PM_SPAM and not sender.bot:
         chat = await event.get_chat()
         if not is_approved(chat.id) and chat.id != client.uid:
             logger.info(chat.stringify())
             logger.info(client.storage.PM_WARNS)
-            if chat.id in Config.SUDO_USERS:
+            if chat.id in ENV.SUDO_USERS:
                 await event.edit("Oh wait, that looks like my master!")
                 await event.edit("Approving..")
                 approve(chat.id, "SUDO_USER")
             if chat.id not in client.storage.PM_WARNS:
                 client.storage.PM_WARNS.update({chat.id: 0})
-            if client.storage.PM_WARNS[chat.id] == Config.MAX_PM_FLOOD:
+            if client.storage.PM_WARNS[chat.id] == ENV.MAX_PM_FLOOD:
                 r = await event.reply(THETGBOT_USER_BOT_WARN_ZERO)
                 await asyncio.sleep(3)
                 await client(functions.contacts.BlockRequest(chat.id))
@@ -66,20 +67,20 @@ async def monitorpms(event):
                     await client.storage.PREV_REPLY_MESSAGE[chat.id].delete()
                 client.storage.PREV_REPLY_MESSAGE[chat.id] = r
                 return
-            r = await event.reply(f"{THETGBOT_USER_BOT_NO_WARN}\n`Messages remaining: {int(Config.MAX_PM_FLOOD - client.storage.PM_WARNS[chat.id])} out of {int(Config.MAX_PM_FLOOD)}`")
+            r = await event.reply(f"{THETGBOT_USER_BOT_NO_WARN}\n`Messages remaining: {int(ENV.MAX_PM_FLOOD - client.storage.PM_WARNS[chat.id])} out of {int(ENV.MAX_PM_FLOOD)}`")
             client.storage.PM_WARNS[chat.id] += 1
             if chat.id in client.storage.PREV_REPLY_MESSAGE:
                 await client.storage.PREV_REPLY_MESSAGE[chat.id].delete()
             client.storage.PREV_REPLY_MESSAGE[chat.id] = r
 
 
-@client.on(register("approve ?(.*)"))
+@client.on(events("approve ?(.*)"))
 async def approve_pm(event):
     if event.fwd_from:
         return
     reason = event.pattern_match.group(1)
     chat = await event.get_chat()
-    if Config.ANTI_PM_SPAM:
+    if ENV.ANTI_PM_SPAM:
         if event.is_private:
             if not is_approved(chat.id):
                 if chat.id in client.storage.PM_WARNS:
@@ -92,13 +93,14 @@ async def approve_pm(event):
                 await asyncio.sleep(3)
                 await event.delete()
 
-@client.on(register("block ?(.*)"))
+
+@client.on(events("block ?(.*)"))
 async def approve_p_m(event):
     if event.fwd_from:
         return
     reason = event.pattern_match.group(1)
     chat = await event.get_chat()
-    if Config.ANTI_PM_SPAM:
+    if ENV.ANTI_PM_SPAM:
         if event.is_private:
             if is_approved(chat.id):
                 disapprove(chat.id)
@@ -108,13 +110,13 @@ async def approve_p_m(event):
             logger.info("Blocked user: " + str(chat.id))
 
 
-@client.on(register("disapprove ?(.*)"))
+@client.on(events("disapprove ?(.*)"))
 async def disapprove_pm(event):
     if event.fwd_from:
         return
     reason = event.pattern_match.group(1)
     chat = await event.get_chat()
-    if Config.ANTI_PM_SPAM:
+    if ENV.ANTI_PM_SPAM:
         if event.is_private:
             if is_approved(chat.id):
                 disapprove(chat.id)
@@ -123,8 +125,7 @@ async def disapprove_pm(event):
                 logger.info("Disapproved user: " + str(chat.id))
 
 
-
-@client.on(register("listpms?"))
+@client.on(events("listpms?"))
 async def approve_p_m(event):
     if event.fwd_from:
         return
@@ -136,27 +137,27 @@ async def approve_p_m(event):
             APPROVED_PMs += f"* [{a_user.chat_id}](tg://user?id={a_user.chat_id}) for {a_user.reason}\n"
         else:
             APPROVED_PMs += f"* [{a_user.chat_id}](tg://user?id={a_user.chat_id})\n"
-    if len(APPROVED_PMs) > Config.MAX_MESSAGE_SIZE_LIMIT:
+    if len(APPROVED_PMs) > ENV.MAX_MESSAGE_SIZE_LIMIT:
         # fixed by authoritydmc
         out_file_name = "approved_pms.txt"
-        output_file_ref=None
-        with open(out_file_name,"w") as f:
+        output_file_ref = None
+        with open(out_file_name, "w") as f:
             f.write(APPROVED_PMs)
-            output_file_ref=f.name
+            output_file_ref = f.name
         await client.send_file(
             event.chat_id,
             output_file_ref,
             force_document=True,
             allow_cache=False,
             caption="Current Approved PMs",
-            
+
         )
         await event.delete()
         os.remove(output_file_ref)
     else:
         await event.edit(APPROVED_PMs)
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "pmpermit": "\
 ```.approve```\
 \nUsage: Approve a user in PMs.\

@@ -10,7 +10,7 @@ if not hasattr(client.storage, "userObj"):
     client.storage.userObj = False
 
 
-@client.on(register("clone ?(.*)"))
+@client.on(events("clone ?(.*)"))
 async def clone(event):
     if event.fwd_from:
         return
@@ -77,7 +77,7 @@ async def getUserObj(event):
             return userObj
 
 
-Config.HELPER.update({"clone": "\
+ENV.HELPER.update({"clone": "\
 `.clone` (as a reply to a message of a user)\
 \nUsage: Steals the user's identity.\
 \n\n`.clone -r/-reset`\

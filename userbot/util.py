@@ -13,37 +13,37 @@ from telethon.tl.functions.messages import GetPeerDialogsRequest
 
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
-    from production import Config
+    from env import ENV
 else:
-    if os.path.exists("development.py"):
-        from development import Config
+    from env import _ENV as ENV
 
 
-def register(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
+def sync(self, func, *args, **kwargs):
+    """Simple function to run async functions as asyncio tasks"""
+    return asyncio.get_event_loop().create_task(func(*args, **kwargs))
+
+
+def _events(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
     """
     Simpler function to handle events without having to import telethon.events
-    also enables command_handler functionality
+    and also enables command_handler functionality
     """
     args["func"] = lambda e: e.via_bot_id is None
     if func is not None:
         args["func"] = func
     if pattern is not None:
-        args["pattern"] = re.compile(Config.COMMAND_HANDLER + pattern)
+        args["pattern"] = re.compile(ENV.COMMAND_HANDLER + pattern)
     if allow_sudo:
-        args["from_users"] = list(Config.SUDO_USERS)
+        args["from_users"] = list(ENV.SUDO_USERS)
     if incoming:
         args["incoming"] = True
     else:
         args["outgoing"] = True
     args["blacklist_chats"] = True
-    black_list_chats = list(Config.BLACK_LIST)
+    black_list_chats = list(ENV.BLACK_LIST)
     if len(black_list_chats) > 0:
         args["chats"] = black_list_chats
     return events.NewMessage(**args)
-
-
-def run_async(func, *args, **kwargs):
-    return asyncio.get_event_loop().create_task(func(*args, **kwargs))
 
 
 async def is_read(userbot, entity, message, is_out=None):

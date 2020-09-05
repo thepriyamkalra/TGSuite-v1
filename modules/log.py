@@ -5,7 +5,7 @@ import time
 
 
 
-@client.on(register(pattern="log ?(.*)"))
+@client.on(events(pattern="log ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -16,10 +16,10 @@ async def handler(event):
 
 
 async def log(text):
-    LOGGER = Config.LOGGER_GROUP
+    LOGGER = ENV.LOGGER_GROUP
     await client.send_message(LOGGER, text)
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "log": "\
 ```.log (as a reply to target message)```\
 \nUsage:  Simply log the replied msg to logger group.\

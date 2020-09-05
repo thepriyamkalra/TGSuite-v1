@@ -12,13 +12,13 @@ def progress(current, total):
         current, total, (current / total) * 100))
 
 
-@client.on(register("paste ?(.*)"))
+@client.on(events("paste ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
     start = datetime.now()
-    if not os.path.isdir(Config.DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.DOWNLOAD_DIRECTORY)
+    if not os.path.isdir(ENV.DOWNLOAD_DIRECTORY):
+        os.makedirs(ENV.DOWNLOAD_DIRECTORY)
     input_str = event.pattern_match.group(1)
     message = "SYNTAX: `.paste <long text to include>`"
     if input_str:
@@ -28,7 +28,7 @@ async def handler(event):
         if previous_message.media:
             downloaded_file_name = await client.download_media(
                 previous_message,
-                Config.DOWNLOAD_DIRECTORY,
+                ENV.DOWNLOAD_DIRECTORY,
                 progress_callback=progress
             )
             m_list = None
@@ -54,7 +54,7 @@ async def handler(event):
         await event.edit("Pasted to {} in {} seconds".format(url, ms))
 
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "pastebin": "\
 ```.paste (as a reply to the msg you want to paste)```\
 \nUsage: Pastes the target message to del.dog.\

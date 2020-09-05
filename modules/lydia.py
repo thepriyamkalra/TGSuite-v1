@@ -22,22 +22,22 @@ api_key = ""
 api_client = ""
 lydia = None
 session = None
-if Config.LYDIA_API is not None:
-    api_key = Config.LYDIA_API
+if ENV.LYDIA_API is not None:
+    api_key = ENV.LYDIA_API
     api_client = API(api_key)
     lydia = LydiaAI(api_client)
 
 
 
-@client.on(register(pattern="(enable|disable|list)ai"))
+@client.on(events(pattern="(enable|disable|list)ai"))
 async def lydia_disable_enable(event):
     if event.fwd_from:
         return
-    if Config.LYDIA_API is None:
+    if ENV.LYDIA_API is None:
         await event.edit("Please add required `LYDIA_API` enviroment variable.")
         return
     else:
-        api_key = Config.LYDIA_API
+        api_key = ENV.LYDIA_API
         api_client = API(api_key)
         lydia = LydiaAI(api_client)
 
@@ -69,7 +69,7 @@ async def lydia_disable_enable(event):
                     output_str += f"[user](tg://user?id={lydia_ai.user_id}) in chat `{lydia_ai.chat_id}`\n"
             else:
                 output_str = "No Lydia AI enabled users / chats. Start by replying `.enableai` to any user in any chat!"
-            if len(output_str) > Config.MAX_MESSAGE_SIZE_LIMIT:
+            if len(output_str) > ENV.MAX_MESSAGE_SIZE_LIMIT:
                 with io.BytesIO(str.encode(output_str)) as out_file:
                     out_file.name = "lydia_ai.text"
                     await borg.send_file(
@@ -88,11 +88,11 @@ async def lydia_disable_enable(event):
         await event.edit("Reply to a user's message to add / delete them from Lydia ai-chat.")
 
 
-@client.on(register(incoming=True))
+@client.on(events(incoming=True))
 async def on_new_message(event):
-    if event.chat_id in Config.BLACK_LIST:
+    if event.chat_id in ENV.BLACK_LIST:
         return
-    if Config.LYDIA_API is None:
+    if ENV.LYDIA_API is None:
         return
     if not event.media:
         user_id = event.from_id
@@ -123,7 +123,7 @@ async def on_new_message(event):
             except Exception as e:
                 logger.info(str(e))
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "lydia": "\
 ```.enableai (as a reply to target user)```\
 \nUsage: Enables LydiaAI for the target user in the current chat.\

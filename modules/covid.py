@@ -2,7 +2,7 @@
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-@client.on(register(pattern="covid ?(.*)"))
+@client.on(events(pattern="covid ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return 
@@ -27,7 +27,7 @@ async def silently_send_message(conv, text):
     await conv.mark_read(message=response)
     return response
 
-Config.HELPER.update({"covid": "\
+ENV.HELPER.update({"covid": "\
 `.covid <country>`\
 \n\nUsage: Fetches latest covid19 statistics for a specific country using @HarukaAyaBot\
 "})

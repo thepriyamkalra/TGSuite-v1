@@ -10,7 +10,7 @@ import time
 
 
 
-@client.on(register(pattern="insult ?(.*)"))
+@client.on(events(pattern="insult ?(.*)"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -49,7 +49,7 @@ async def handler(event):
         else:
             user_id = "Unknown user"
             noformat_userid = "Unknown user"
-        if noformat_userid in Config.SUDO_USERS:
+        if noformat_userid in ENV.SUDO_USERS:
             await event.edit("**Wait! WHAT?!\nDid you just try to insult my creator?!?!\nBYE!**")
             sys.exit()
             # probably not needed but meh
@@ -62,10 +62,10 @@ async def handler(event):
 
 
 async def log(text):
-    LOGGER = Config.LOGGER_GROUP
+    LOGGER = ENV.LOGGER_GROUP
     await client.send_message(LOGGER, text)
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "insult": "\
 ```.insult <optional_number_of_insults>``` [optionally as a reply to target user][default = 5]\
 \nUsage: Insults target user.\

@@ -48,7 +48,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
 
 
-@client.on(register(pattern="zombies ?(.*)"))
+@client.on(events(pattern="zombies ?(.*)"))
 async def handler(event):
     """ For .zombies command, list all the ghost/deleted/zombie accounts in a chat. """
 
@@ -108,7 +108,7 @@ async def handler(event):
     await sleep(2)
     await event.delete()
 
-Config.HELPER.update({
+ENV.HELPER.update({
     "zombies": "\
 ```.zombies```\
 \nUsage: Search for deleted accounts in the current chat.\
