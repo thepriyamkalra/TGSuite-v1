@@ -1,0 +1,100 @@
+{
+  "name": "The-TG-Bot v3",
+  "description": "Modular Telegram userbot!",
+  "logo": "https://raw.githubusercontent.com/justaprudev/The-TG-Bot/v3/logo.png",
+  "keywords": [
+    "telegram",
+    "userbot",
+    "plugin",
+    "modular",
+    "productivity",
+    "python"
+  ],
+  "repository": "https://github.com/justaprudev/The-TG-Bot/",
+  "website": "https://justaprudev.github.io",
+  "success_url": "https://t.me/justaprudev",
+  "env": {
+    "ENV": {
+      "description": "Setting this to ANYTHING will enable environment variables.",
+      "value": "ANYTHING"
+    },
+    "APP_ID": {
+      "description": "Get this value from my.telegram.org! Please do not steal",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Get this value from my.telegram.org! Please do not steal",
+      "value": ""
+    },
+    "SESSION": {
+      "description": "Get this value by running python3 session.py locally",
+      "value": ""
+    },
+    "LOGGER_GROUP": {
+      "description": "Send .get_id in any group to fill this value.",
+      "value": "-100",
+      "required": false
+    },
+    "DOWNLOAD_DIRECTORY": {
+      "description": "This is required for the plugins involving the file system.",
+      "value": "./DOWNLOADS/",
+      "required": false
+    },
+    "ANTI_PM_SPAM": {
+      "description": "Set to True if you want to block users that are spamming your PMs.",
+      "value": "True"
+    },
+    "MAX_PM_FLOOD": {
+      "description": "Define the number of consecutive messages a new user can send to your P.M. This should be a valid Integer.",
+      "required": false
+    },
+    "COMMAND_HANDLER": {
+      "description": "specify command handler that should be used for the plugins. This should be a valid \"regex\" pattern",
+      "required": false
+    },
+    "SUDO_USERS": {
+      "description": "List down the user IDs who should have permission to use you. Be Careful. You are granting access to your entire account to the people you mention in the below field, seperated by SPACE. Send .id in any private chat or as a reply to any user in any group, to fill this value",
+      "required": false
+    },
+    "BLACK_LIST": {
+      "description": "Set blacklist chats where you do not want userbot features",
+      "value": "",
+      "required": false
+    },
+    "DRIVE_CLIENT_ID": {
+      "description": "Get your credentials from https://da.gd/so63O",
+      "required": false
+    },
+    "DRIVE_CLIENT_SECRET": {
+      "description": "Get your credentials from https://da.gd/so63O",
+      "required": false
+    },
+    "LYDIA_API": {
+      "description": "Set a valid Lydia API key to use Lydia AI",
+      "required": false
+    },
+    "HEROKU_API_KEY": {
+      "description": "Required to update the userbot, get from https://dashboard.heroku.com/account",
+      "required": false
+    },
+    "TG_APP_NAME": {
+      "description": "Required to update the userbot if you have multiple heroku apps.",
+      "required": false
+    },
+    "GITHUB_REPO_LINK": {
+      "description": "Set the link to your github repository here, default is https://github.com/justaprudev/The-TG-Bot",
+      "required": false
+    }
+  },
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "options": {
+      "version": "9.6"
+    }
+  }],
+  "buildpacks": [{
+    "url": "heroku/python"
+  }, {
+    "url": "https://github.com/amivin/aria2-heroku"
+  }]
+}
