@@ -82,7 +82,7 @@ async def install_module(event):
     await event.delete()
 
 
-@client.on(events(pattern="share (.*)"))
+@client.on(events(pattern="share (.*)", allow_sudo=True))
 async def share_module(event):
     if event.fwd_from:
         return
@@ -112,7 +112,7 @@ async def share_module(event):
         await mone.delete()
 
 
-@client.on(events(pattern="help ?(.*)"))
+@client.on(events(pattern="help ?(.*)", allow_sudo=True))
 async def help(event):
     if event.fwd_from:
         return
@@ -161,6 +161,26 @@ async def alive(event):
     await event.delete()
 
 
+@client.on(events(pattern="restart ?(.*)", allow_sudo=True))
+async def _restart(message):
+    args = message.pattern_match.group(1)
+    if "-h" in args:
+        import heroku3
+        if ENV.HEROKU_API_KEY is None or ENV.TG_APP_NAME is None:
+            return await message.edit("Read `.help core` first!")
+        heroku = heroku3.from_key(ENV.HEROKU_API_KEY)
+        app = heroku.apps()[ENV.TG_APP_NAME]
+        app.restart()
+        return await message.edit("```The-TG-Bot v3 has been updated and the heroku app has been restarted, it should be back online in a few seconds.```")
+    await message.edit("```The-TG-Bot v3 has been restarted.\nTry .alive or .ping to check if its alive.```")
+    client.sync(restart)  # await restart() random crash workaround
+
+
+async def restart():
+    await client.disconnect()
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+
 def get_size(bytes, suffix="B"):
     factor = 1024
     for unit in ["", "K", "M", "G", "T", "P"]:
@@ -181,9 +201,19 @@ ENV.HELPER.update({
 \nUsage: Returns userbot's system stats and some general information.\
 \n\n```.help <optional_module_name>```\
 \nUsage: Returns help strings for various modules of this userbot.\
-\n\n```.restart```\
-\nUsage: Restarts the userbot.\
 \n\n```.share <module_name>```\
 \nUsage: Share any loaded module.\
+\n\n```.restart```\
+\nUsage: Restart the telegram client.\
+\n```.restart [-h/-heroku]```\
+\nUsage: Restart the heroku app and update the bot to the latest version.\
+\n\n**Requirements for bot updater:**\
+**`HEROKU_API_KEY` ENV variable is mandatory:**\
+\nTo get a valid API key, goto https://dashboard.heroku.com/account\
+\nThen open API key tab..\
+\nThen click on **REVEAL** button and you will see your **HEROKU API key**\
+\nCopy and paste that in ENV variable `HEROKU_API_KEY`\
+\n**`TG_APP_NAME` ENV variable is also mandatory:**\
+\nSimply copy and paste the bot app name in ENV variable TG_APP_NAME\
 "
 })
