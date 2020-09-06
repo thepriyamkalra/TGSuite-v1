@@ -137,7 +137,7 @@ async def log(text):
 
 ENV.HELPER.update({
     "insult": "\
-    ```.insult <type(optional), no. of insults(optional)>```[as a reply to target user]\n[types-> 1. soft insults{thanos}\n\t 2. hard insults{priyam}]\n[default (type, no. of insults) = (1,1)]\
+    ```.insult <type(optional), no. of insults(optional)>```[as a reply to target user]\n[types-> 1. soft insults\t 2. hard insults]\n[default (type, no. of insults) = (1,1)]\
 \nUsage: Insults target user.\
 "
 })
