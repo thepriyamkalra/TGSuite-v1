@@ -43,7 +43,7 @@ async def handler(event):
     else:
         try:
             await client.edit_admin(event.chat_id, user, is_admin=False)
-            await event.edit(f"Oh boy, `{await user_entity(user)}` has been demoted!")
+            await event.edit(f"Oh boy, {await user_entity(user)} has been demoted!")
         except (Exception) as exc:
             await event.edit(str(exc))
 
@@ -60,7 +60,7 @@ async def handler(event):
     else:
         try:
             await client.edit_permissions(event.chat_id, participant, view_messages=False)
-            await event.edit(f"Gone, `{await user_entity(participant)}` is gone!")
+            await event.edit(f"Gone, {await user_entity(participant)} is gone!")
         except (Exception) as exc:
             await event.edit(str(exc))
 
@@ -74,7 +74,7 @@ async def handler(event):
     else:
         try:
             await client.edit_permissions(event.chat_id, participant)
-            await event.edit(f"Well, `{await user_entity(participant)}` can join now!")
+            await event.edit(f"Well, {await user_entity(participant)} can join now!")
         except (Exception) as exc:
             await event.edit(str(exc))
 
@@ -91,7 +91,7 @@ async def handler(event):
     else:
         try:
             await client.edit_permissions(event.chat_id, participant, send_messages=False)
-            await event.edit(f"Successfully taped `{await user_entity(participant)}`!")
+            await event.edit(f"Successfully taped {await user_entity(participant)}!")
         except (Exception) as exc:
             await event.edit(str(exc))
 
@@ -105,7 +105,7 @@ async def handler(event):
     else:
         try:
             await client.edit_permissions(event.chat_id, participant)
-            await event.edit(f"Okay, `{await user_entity(participant)}` is no longer taped!")
+            await event.edit(f"Okay, {await user_entity(participant)} is no longer taped!")
         except (Exception) as exc:
             await event.edit(str(exc))
 
@@ -125,7 +125,7 @@ async def handler(event):
     else:
         try:
             await client.kick_participant(event.chat_id, participant)
-            await event.edit(f"`{await user(participant)}` has been yeeted!")
+            await event.edit(f"{await user(participant)} has been yeeted!")
         except (Exception) as exc:
             await event.edit(str(exc))
 
