@@ -12,14 +12,17 @@ if not hasattr(client.storage, "MESSAGE_REPO"):
 
 
 async def authorize(event):
-    chat = await event.get_chat()
-    tag = f"@{chat.username}"
-    if tag in ENV.UNLOCKED_CHATS:
-        if event.sticker:
-            return True
-        elif event.gif:
-            return True
-    return False
+	try:
+		chat = await event.get_chat()
+		tag = f"@{chat.username}"
+		if tag in ENV.UNLOCKED_CHATS:
+			if event.sticker:
+				return True
+			elif event.gif:
+				return True
+	except:
+		pass
+	return False
 
 
 @client.on(events(outgoing=True, func=authorize))
