@@ -32,7 +32,7 @@ def add_note(chat_id, keyword, reply):
         adder.reply = reply
     else:
         adder = Notes(str(chat_id), keyword, reply)
-    SESSION.add(adder)
+        SESSION.add(adder)
     SESSION.commit()
 
 
