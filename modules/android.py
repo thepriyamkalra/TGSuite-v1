@@ -1,15 +1,10 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
-#
 # Licensed under the Raphielscape Public License, Version 1.c (the "License");
 # you may not use this file except in compliance with the License.
 
 import re
 from requests import get
 from bs4 import BeautifulSoup
-
-GITHUB = 'https://github.com'
-DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/' \
-               'certified-android-devices/master/devices.json'
 
 
 @client.on(events("magisk ?(.*)"))
@@ -63,8 +58,7 @@ async def twrp(event):
 
 
 ENV.HELPER.update({"android": "\
-**Requested module --> Android**\
-\n\n```.magisk```\
+```.magisk```\
 \nUsage: Get latest Magisk releases\
 \n\n```.twrp <codename>```\
 \nUsage: Get latest twrp download for android device.\

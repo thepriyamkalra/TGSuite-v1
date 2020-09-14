@@ -165,7 +165,7 @@ ENV.HELPER.update({
 \nUsage: Block a user from your PMs.\
 \n\n```.disapprove```\
 \nUsage: Remove a user from your approved PMs list.\
-\n\n```.getpms```\
+\n\n```.listpms```\
 \nUsage: Get approved PMs.\
 "
 })
