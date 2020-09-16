@@ -1,8 +1,9 @@
-import subprocess
-import os
-GITHUB_REPO_LINK = os.environ.get("GITHUB_REPO_LINK", "https://github.com/justaprudev/The-TG-Bot")
+from git.Repo import clone_from as clone
+from shutil import copytree, rmtree
+from os.environ import get
+GITHUB_REPO_LINK = get("GITHUB_REPO_LINK", "https://github.com/justaprudev/The-TG-Bot")
 print("Downloading latest version of The-TG-Bot..")
-subprocess.run(f"git clone {GITHUB_REPO_LINK} git && mv git/* . && rm -rf git", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-print("Starting process with command `python3 -m thetgbot`")
-print("State changed from starting to up")
-subprocess.run("python3 -m thetgbot", shell=True)
+clone(GITHUB_REPO_LINK, "package")
+copytree("package", ".", dirs_exist_ok=True)
+rmtree("package")
+import thetgbot
