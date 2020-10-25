@@ -1,17 +1,19 @@
 from . import SESSION, BASE
-from sqlalchemy import Column, String, UnicodeText, Boolean, Integer, distinct, func
+from sqlalchemy import Column, String, UnicodeText
 
 
 class Filters(BASE):
     __tablename__ = "filter"
     chat_id = Column(String(14), primary_key=True)
     trigger = Column(UnicodeText, primary_key=True, nullable=False)
-    reply = Column(UnicodeText, nullable=False)
+    content = Column(UnicodeText, nullable=False)
+    file = Column(UnicodeText, nullable=True)
 
-    def __init__(self, chat_id, trigger, reply):
+    def __init__(self, chat_id, trigger, content, file):
         self.chat_id = str(chat_id)
         self.trigger = trigger
-        self.reply = reply
+        self.content = content
+        self.file = file
 
 Filters.__table__.create(checkfirst=True)
 
@@ -23,12 +25,13 @@ def get_filter(chat_id):
         SESSION.close()
 
 
-def add_filter(chat_id, trigger, reply):
+def add_filter(chat_id, trigger, content, file):
     existing = SESSION.query(Filters).get((str(chat_id), trigger))
     if existing:
-        existing.reply = reply
+        existing.content = content
+        existing.file = file
     else:
-        new = Filters(str(chat_id), trigger, reply)
+        new = Filters(str(chat_id), trigger, content, file)
         SESSION.add(new)
     SESSION.commit()
 

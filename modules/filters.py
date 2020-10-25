@@ -5,65 +5,28 @@ from datetime import datetime
 from modules.sql.filters_sql import get_filter, add_filter, rm_filter, rmrf_filter
 
 
-client.storage.LastTrigger = {}
+client.storage.LastTrigger = {}  # spam protection
 
 @client.on(events(incoming=True))
 async def filter(event):
     filters = get_filter(event.chat_id)
     for term in filters:
-        if term.trigger in event.raw_text.lower():
-            if new_trigger(term.trigger):
-                await client.send_message(
-                    event.chat_id,
-                    term.reply,
-                    reply_to=event,
-                    silent=True
-                )
-                client.storage.LastTrigger[term.trigger] = datetime.now()
+        if term.trigger in event.raw_text.lower() and not last_used(term.trigger):
+            text = term.content
+            if "{mention}" in text:
+                sender = await event.get_sender()
+                text = text.format(mention = f"[{sender.first_name}](tg://user?id={sender.id})")
+            media = (await client.get_messages(ENV.LOGGER_GROUP, ids=int(term.file))).media if term.file else None
+            await event.reply(
+                text, 
+                file=media, 
+                silent=True
+            )
+            break
+            client.storage.LastTrigger[term.trigger] = datetime.now()
             
 
-@client.on(events(pattern="addfilter ?(.*)"))
-async def addfilter(event):
-    if event.fwd_from:
-        return
-    reply = await event.get_reply_message()
-    input_str = event.pattern_match.group(1)
-    if input_str and reply:
-        trigger = input_str.lower()
-        title = await chat_title(event)
-        add_filter(event.chat_id, trigger, reply.text)
-        msg = f"**Saved filter** \"`{input_str}`\" **in {title}**"
-    else:
-        msg = "**Reply to something to add filter**"
-    await event.edit(msg)
-        
-        
-@client.on(events(pattern="stopfilter ?(.*)"))
-async def stopfilter(event):
-    if event.fwd_from:
-        return
-    input_str = event.pattern_match.group(1)
-    title = await chat_title(event)
-    if input_str:
-        if input_str == "--all":
-            rmrf_filter(event.chat_id)
-            return await event.edit(f"**All filters have been stopped in** `{title}`")
-        trigger = input_str.lower()
-        filters = get_filter(event.chat_id)
-        list = ""
-        for term in filters:
-            list += term.trigger
-        if trigger in list:
-            rm_filter(event.chat_id, trigger)
-            msg = f"**Stopped filtering** \"`{input_str}`\" **in {title}**"
-        else:
-            msg = f"**Filter \"`{input_str}`\" **doesn't exist!**"
-    else:
-        msg = "**Stopped the use of brain!**"
-    await event.edit(msg)
-    
-
-@client.on(events(pattern="filters"))
+@client.on(events("filters"))
 async def get_filters(event):
     if event.fwd_from:
         return
@@ -76,18 +39,76 @@ async def get_filters(event):
             list += "• `" + term.trigger + "`\n"
     await event.edit(list)
         
+
+@client.on(events("filter ?((.|\n)*)"))
+async def addfilter(event):
+    if event.fwd_from:
+        return
+    reply = await event.get_reply_message()
+    input_str = event.pattern_match.group(1)
+    file = None
+    if input_str and not reply:
+        if "\"" in input_str:
+            split = input_str.lstrip("\"").split("\"", maxsplit=1)
+        else:
+            split = input_str.split(maxsplit=1)
+        trigger = split[0].strip()
+        content = split[1].strip()
+    elif input_str and reply:
+        trigger = input_str
+        content = reply.text
+        if reply.media:
+            file = await log(reply.media, trigger)
+    else:
+        return await event.edit("**I need some content to add a filter!**")
+    add_filter(event.chat_id, trigger.lower(), content, file)
+    await event.edit(f"**Saved filter '`{trigger}`' in {await chat_title(event)}.**")
         
-def new_trigger(term):
+        
+@client.on(events("stopfilter ?(.*)"))
+async def stopfilter(event):
+    if event.fwd_from:
+        return
+    input_str = event.pattern_match.group(1)
+    title = await chat_title(event)
+    if input_str == "-a" or input_str == "-all":
+        for term in get_filter(event.chat_id):
+            if term.file:
+                file = await client.get_messages(ENV.LOGGER_GROUP, ids=int(term.file))
+                await file.delete()
+        rmrf_filter(event.chat_id)
+        msg = f"**All filters have been stopped in** `{title}`"
+    elif input_str:
+        trigger = input_str.lower()
+        msg = f"**Filter '`{input_str}`' doesn't exist!**"
+        for term in get_filter(event.chat_id):
+            if term.trigger == trigger:
+                if term.file:
+                    file = await client.get_messages(ENV.LOGGER_GROUP, ids=int(term.file))
+                    await file.delete()
+                rm_filter(event.chat_id, trigger)
+                msg = f"**Stopped filtering '`{trigger}`' in {title}**"
+    else:
+        msg = "**Stopped the use of brain!**"
+    await event.edit(msg)
+    
+
+async def log(media, trigger):
+    file = await client.send_file(ENV.LOGGER_GROUP, media, caption=f"Filter: {trigger.lower()}")
+    msg_id = file.id
+    return str(msg_id)
+
+def last_used(term):
     last = client.storage.LastTrigger.get(term)
     if last:
         now = datetime.now()
         if (now - last).seconds < 10:
             client.storage.LastTrigger[term] = datetime.now()
-            return False
-        else:
             return True
+        else:
+            return False
     else:
-        return True
+        return False
 
 async def chat_title(event):
     chat = await event.get_chat()
@@ -104,11 +125,18 @@ ENV.HELPER.update({
     "filters": "\
 `.filters`\
 \nUsage: Lists all active filters in a chat.\
-\n\n`.addfilter <trigger>`\
+\n\n`.filter [trigger] [content/reply]`\
 \nUsage: Adds a filter in a chat.\
-\n\n`.stopfilter <trigger>`\
+\n\n`.stopfilter [trigger]`\
 \nUsage: Stops a filter in a chat.\
-\n\n`.stopfilter --all`\
+\n\n`.stopfilter [-a / -all]`\
 \nUsage: Stops all the filters in a chat.\
+\n\n\n**EXAMPLES:**\
+\n•  To set a one-word filter:\
+\n__.filter hello Hey there, {mention}!__\
+\n\n•  To set a multi-word filter:\
+\n__.filter \"where are you\" I'm on my journey to Neptune!.__\
+\n\n•  To set a filter while replying: (quotes are not required)\
+\n__.filter how to deploy The-TG-Bot (as a reply to the readme)__\
 "
 })

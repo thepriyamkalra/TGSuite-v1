@@ -1,11 +1,8 @@
 # For The-TG-Bot v3
 # By Priyam Kalra
 
-import time
 
-
-
-@client.on(events(pattern="log ?(.*)"))
+@client.on(events(pattern="log$"))
 async def handler(event):
     if event.fwd_from:
         return
@@ -14,10 +11,10 @@ async def handler(event):
     await log(msg)
     await event.delete()
 
-
 async def log(text):
     LOGGER = ENV.LOGGER_GROUP
     await client.send_message(LOGGER, text)
+
 
 ENV.HELPER.update({
     "log": "\
