@@ -65,8 +65,8 @@ async def addfilter(event):
     await event.edit(f"**Saved filter '`{trigger}`' in {await chat_title(event)}.**")
         
         
-@client.on(events("stopfilter ?(.*)"))
-async def stopfilter(event):
+@client.on(events("rmfilter ?(.*)"))
+async def rmfilter(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
@@ -127,9 +127,9 @@ ENV.HELPER.update({
 \nUsage: Lists all active filters in a chat.\
 \n\n`.filter [trigger] [content/reply]`\
 \nUsage: Adds a filter in a chat.\
-\n\n`.stopfilter [trigger]`\
+\n\n`.rmfilter [trigger]`\
 \nUsage: Stops a filter in a chat.\
-\n\n`.stopfilter [-a / -all]`\
+\n\n`.rmfilter [-a / -all]`\
 \nUsage: Stops all the filters in a chat.\
 \n\n\n**EXAMPLES:**\
 \n•  To set a one-word filter:\
