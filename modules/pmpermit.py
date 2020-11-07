@@ -23,19 +23,22 @@ THETGBOT_USER_BOT_NO_WARN = "\
 
 @client.on(events(outgoing=True, func=lambda e: e.is_private))
 async def auto_approve(event):
-    if "block" in event.text or "disapprove" in event.text:
+    user = await event.get_chat()
+    if ("block" in event.text or "disapprove" in event.text or user.bot):
         return False
     reason = "auto_approve"
-    chat = await event.get_chat()
     if ENV.ANTI_PM_SPAM:
-        if not is_approved(chat.id):
-            if chat.id in client.storage.PM_WARNS:
-                del client.storage.PM_WARNS[chat.id]
-            if chat.id in client.storage.PREV_REPLY_MESSAGE:
-                await client.storage.PREV_REPLY_MESSAGE[chat.id].delete()
-                del client.storage.PREV_REPLY_MESSAGE[chat.id]
-            approve(chat.id, reason)
-            logger.info("Auto approved user: " + str(chat.id))
+        if not is_approved(user.id):
+            if user.id in client.storage.PM_WARNS:
+                del client.storage.PM_WARNS[user.id]
+            if user.id in client.storage.PREV_REPLY_MESSAGE:
+                await client.storage.PREV_REPLY_MESSAGE[user.id].delete()
+                del client.storage.PREV_REPLY_MESSAGE[user.id]
+            approve(user.id, reason)
+            msg = await client.send_message(event.chat_id, f"__Approved {user.first_name}, cuz outgoing message__", silent=True)
+            logger.info("Auto approved user: " + str(user.id))
+            await asyncio.sleep(2)
+            await msg.delete()
 
 
 @client.on(events(incoming=True, func=lambda e: e.is_private))

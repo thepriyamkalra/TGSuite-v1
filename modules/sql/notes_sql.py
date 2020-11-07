@@ -1,20 +1,21 @@
 # By RaphielGang (https://da.gd/HlfJ)
 
 from . import SESSION, BASE
-from sqlalchemy import Column, String, UnicodeText, Boolean, Integer, distinct, func
+from sqlalchemy import Column, String, UnicodeText
 
 
 class Notes(BASE):
     __tablename__ = "notes"
     chat_id = Column(String(14), primary_key=True)
     keyword = Column(UnicodeText, primary_key=True, nullable=False)
-    reply = Column(UnicodeText, nullable=False)
+    content = Column(UnicodeText, nullable=False)
+    file = Column(UnicodeText, nullable=True)
 
-    def __init__(self, chat_id, keyword, reply):
+    def __init__(self, chat_id, keyword, content, file):
         self.chat_id = str(chat_id)  # ensure string
         self.keyword = keyword
-        self.reply = reply
-
+        self.content = content
+        self.file = file
 
 Notes.__table__.create(checkfirst=True)
 
@@ -26,12 +27,13 @@ def get_notes(chat_id):
         SESSION.close()
 
 
-def add_note(chat_id, keyword, reply):
+def add_note(chat_id, keyword, content, file):
     adder = SESSION.query(Notes).get((str(chat_id), keyword))
     if adder:
-        adder.reply = reply
+        adder.content = content
+        adder.file = file
     else:
-        adder = Notes(str(chat_id), keyword, reply)
+        adder = Notes(str(chat_id), keyword, content, file)
         SESSION.add(adder)
     SESSION.commit()
 
