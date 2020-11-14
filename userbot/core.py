@@ -141,12 +141,11 @@ async def alive(event):
     if event.fwd_from:
         return
     await event.edit("**// The-TG-Bot v3 is running //**\n**// Fetching userbot information //**")
-    username = f"\nUser: `@{me.username}\n"
     try:
         build_type = ENV.GITHUB_REPO_LINK.split()[1]
     except:
-        build_type = "v3 (stable)"
-    help_string = f"**// The-TG-Bot v3 is running //**\n\n`Build Version: {build}\nBuild Type: {build_type} {username}`Github: `{ENV.GITHUB_REPO_LINK.split()[0]}\n\n**By** [Priyam Kalra](https://t.me/justaprudev)"
+        build_type = "stable"
+    help_string = f"**// The-TG-Bot v3 is running //**\n\n`User: {me.first_name or ''} {me.last_name or ''}\nGithub: `{ENV.GITHUB_REPO_LINK.split()[0]}\n\nBuild: {build} ({build_type})\n\n**By** [Priyam Kalra](https://t.me/justaprudev)"
     await client.send_file(
         event.chat_id,
         caption=help_string,
