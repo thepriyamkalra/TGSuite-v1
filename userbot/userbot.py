@@ -13,7 +13,7 @@ from subprocess import run
 from datetime import datetime
 from .storage import Storage
 from shutil import rmtree
-from .util import _events, humanbytes, progress, time_formatter, sync
+from .util import _events, humanbytes, progress, time_formatter, sync, shell
 import os
 import time
 
@@ -24,9 +24,6 @@ class Reverse(list):
 
 
 class Userbot(TelegramClient):
-
-    sync = sync
-
     def __init__(
             self, session, *, module_path="modules", storage=None,
             bot_token=None, enviroment=None, **kwargs):
@@ -36,6 +33,8 @@ class Userbot(TelegramClient):
         self._modules = {}
         self._on = self.on
         self._module_path = module_path
+        self.shell = shell
+        self.sync = sync
         self.env = enviroment
 
         kwargs = {

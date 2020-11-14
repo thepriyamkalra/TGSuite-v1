@@ -119,16 +119,10 @@ async def help(event):
     key = event.pattern_match.group(1)
     modcount = 1
     if not key:
-        msg = "The-TG-Bot v3 Modules:"
-        title = ""
+        msg = "The-TG-Bot v3 Modules:\n"
+        dividor = " // "
         for key in sorted(ENV.HELPER):
-            new_title = f"\n\n{key[0].upper()}\n\n"
-            if new_title == title:
-                title = "\n"
-            else:
-                title = new_title
-            msg += f"{title}~ {key}"
-            title = new_title
+            msg += f"{dividor}{key}"
             modcount += 1
         msg += f"\n\nNumber of modules: **{modcount}**\nSend .help <module_name> to get help regarding a module."
         await event.edit(msg)
@@ -147,15 +141,12 @@ async def alive(event):
     if event.fwd_from:
         return
     await event.edit("**// The-TG-Bot v3 is running //**\n**// Fetching userbot information //**")
-    uname = platform.uname()
     username = f"\nUser: `@{me.username}\n"
-    memory = psutil.virtual_memory()
-    specs = f"`System: {uname.system}\nRelease: {uname.release}\nVersion: {uname.version}\nProcessor: {uname.processor}\nMemory [RAM]: {get_size(memory.total)}`"
     help_string = f"**// The-TG-Bot v3 is running //**\n\n**General Info:**\n`Build Version: {build} {username}`Github Repository: `{ENV.GITHUB_REPO_LINK}\n\n**System Specifications:**\n{specs}\n```Python: {sys.version}```\n```Telethon: {__version__}```\n\n**Contact developer:** [Priyam Kalra](https://t.me/justaprudev) \n**Update channel:** [Join](https://t.me/The_TG_Bot) \n**Support group:** [Join](https://t.me/The_TG_Bot_Support)"
     await client.send_file(
         event.chat_id,
         caption=help_string,
-        file="logo.png",
+        file=ENV.ALIVE_LOGO or "logo.png",
         force_document=False,
     )
     await event.delete()
@@ -164,14 +155,6 @@ async def alive(event):
 @client.on(events(pattern="restart ?(.*)", allow_sudo=True))
 async def _restart(message):
     args = message.pattern_match.group(1)
-    if "-h" in args:
-        import heroku3
-        if ENV.HEROKU_API_KEY is None or ENV.TG_APP_NAME is None:
-            return await message.edit("Read `.help core` first!")
-        heroku = heroku3.from_key(ENV.HEROKU_API_KEY)
-        app = heroku.apps()[ENV.TG_APP_NAME]
-        app.restart()
-        return await message.edit("```The-TG-Bot v3 has been updated and the heroku app has been restarted, it should be back online in a few seconds.```")
     await message.edit("```The-TG-Bot v3 has been restarted.\nTry .alive or .ping to check if its alive.```")
     client.sync(restart)  # await restart() random crash workaround
 
@@ -205,15 +188,5 @@ ENV.HELPER.update({
 \nUsage: Share any loaded module.\
 \n\n```.restart```\
 \nUsage: Restart the telegram client.\
-\n```.restart [-h/-heroku]```\
-\nUsage: Restart the heroku app and update the bot to the latest version.\
-\n\n**Requirements for bot updater:**\
-**`HEROKU_API_KEY` ENV variable is mandatory:**\
-\nTo get a valid API key, goto https://dashboard.heroku.com/account\
-\nThen open API key tab..\
-\nThen click on **REVEAL** button and you will see your **HEROKU API key**\
-\nCopy and paste that in ENV variable `HEROKU_API_KEY`\
-\n**`TG_APP_NAME` ENV variable is also mandatory:**\
-\nSimply copy and paste the bot app name in ENV variable TG_APP_NAME\
 "
 })

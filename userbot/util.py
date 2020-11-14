@@ -22,8 +22,14 @@ def sync(self, func, *args, **kwargs):
     """Simple function to run async functions as asyncio tasks"""
     return asyncio.get_event_loop().create_task(func(*args, **kwargs))
 
+async def shell(cmd):
+    """Simple async shell"""
+    proc = await asyncio.create_subprocess_shell(cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE) 
+    stdout, stderr = await proc.communicate()
+    return (stdout.decode() or None, stderr.decode() or None)
 
-def _events(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
+
+def _events(pattern=None, allow_sudo=False, incoming=False, func=None, no_handler=False, **args):
     """
     Simpler function to handle events without having to import telethon.events
     and also enables command_handler functionality
@@ -32,7 +38,7 @@ def _events(pattern=None, allow_sudo=False, incoming=False, func=None, **args):
     if func is not None:
         args["func"] = func
     if pattern is not None:
-        args["pattern"] = re.compile(ENV.COMMAND_HANDLER + pattern)
+        args["pattern"] = pattern if no_handler else re.compile(ENV.COMMAND_HANDLER + pattern)
     if allow_sudo:
         args["from_users"] = list(ENV.SUDO_USERS)
     if incoming:

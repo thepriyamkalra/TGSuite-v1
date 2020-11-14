@@ -9,9 +9,7 @@ from googletrans import Translator
 async def handler(event):
     if event.fwd_from:
         return
-    if "trim" in event.raw_text:
-        return
-    args = event.pattern_match.group(1)
+    args = " ".join(event.text.split()[1:]) # event.pattern_match.group(1)
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         text = reply_message.message

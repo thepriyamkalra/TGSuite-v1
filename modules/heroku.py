@@ -6,38 +6,40 @@ import heroku3
 api_key = ENV.HEROKU_API_KEY
 app_name = ENV.TG_APP_NAME
 heroku = heroku3.from_key(api_key) if api_key and app_name else None
+try:
+    app = heroku.apps()[ENV.TG_APP_NAME]
+except KeyError:
+    app = None
 
-
-@client.on(events(pattern="shutdown", allow_sudo=True))
-async def scale_zero(e):
+@client.on(events(pattern="shutdown"))
+async def shutdown(e):
     if heroku is None:
-        return await e.edit("`Mind reading the help?`")
+        return await e.edit("`Mind reading .help heroku?`")
     await e.edit("`Scaling to worker@0`")
-    app = heroku.apps()[app_name]
+    if not app:
+        return await e.edit("The `TG_APP_NAME` is invalid!")
     app.process_formation()['worker'].scale(0)
     await e.edit(f"`Switched off\nTurn on the `[dynos switch](https://dashboard.heroku.com/apps/{app_name}/resources)` to restart The-TG-Bot`")
      
-     
-@client.on(events(pattern="restart ?(.*)", allow_sudo=True))
-async def _restart(message):
-    args = message.pattern_match.group(1)
-    if "-h" in args:
-        if heroku is None:
-            return await message.edit("Read `.help core` first!")
-        app = heroku.apps()[app_name]
+@client.on(events(pattern="update ?(.*)", allow_sudo=True))
+async def update(e):
+        if not heroku:
+            return await e.edit("Read `.help heroku` first!")
+        if not app:
+            return await e.edit("The `TG_APP_NAME` is invalid!")
         app.restart()
-        return await message.edit("`The-TG-Bot v3 has been updated and the heroku app has been restarted, it should be back online in a few seconds.`")
-    await message.edit("`The-TG-Bot v3 has been restarted.\nTry .alive or .ping to check if its alive.`")
-    client.sync(restart)  # await restart() random crash workaround
+        return await e.edit("```The-TG-Bot v3 has been updated, it should be back online in a few seconds.```")
 
 
 @client.on(events("env (get|set|del) (.*)"))
 async def env_variables(event):
     if heroku is None: 
-        return await event.edit("`Like I care.`")
+        return await event.edit("bruh, checkout `.help heroku`")
+    if not app:
+        return await event.edit("The `TG_APP_NAME` is invalid!")
     command = event.pattern_match.group(1)
     args = event.pattern_match.group(2)
-    env = heroku.apps()[app_name].config()
+    env = app.config()
     if command == "get":
         args = args.upper()
         if args in env:
@@ -47,7 +49,6 @@ async def env_variables(event):
     elif command == "set":
         configs = {}
         message = ""
-        # SYNTAX: key value ; key value ; key value ; etc.
         for config in args.split(";"):
             key = config.strip().split()[0]
             value = config.strip().split()[1]
@@ -60,36 +61,31 @@ async def env_variables(event):
         await event.edit(f"Deleted env variable `{args}`")
         
 
-@client.on(events("logs ?(.*)"))
+@client.on(events("logs ?(.*)", allow_sudo=True))
 async def heroku_logs(event):
     if heroku is None:
-        return await event.edit("`Can you set the required env vars for good?`")
+        return await event.edit("Stop trying to be a bigbrain, just read `.help heroku`!")
+    if not app:
+        return await event.edit("The `TG_APP_NAME` is invalid!")
     args = event.pattern_match.group(1)
     if args:
         try: lines = int(args)
         except: return await event.edit("`Count must be an integer`")
     else:
-        lines = 1500
-    logs = heroku.apps()[app_name].get_log(lines=lines, timeout=10)
+        lines = 100
+    logs = app.get_log(lines=lines, timeout=10)
     with open(f"{app_name}_logs.txt", "w") as f:
         f.write(logs)
     await event.reply(f"Recent logs for {app_name}", file=f.name, silent=True)
     await event.delete()
     os.remove(f.name)
-  
-
-async def restart():
-    await client.disconnect()
-    os.execl(sys.executable, sys.executable, *sys.argv)
    
         
         
 ENV.HELPER.update({
     "heroku": "\
-`.restart`\
-\nUsage: Restart the telegram client.\
-\n\n`.restart [-h/-heroku]`\
-\nUsage: Restart the heroku app and update the bot to the latest version.\
+```.update```\
+\nUsage: Updates the bot to the latest version (exclusive for heroku users).\
 \n\n`.shutdown`\
 \nUsage: Turns off the the bot by turning off dynos.\
 \n\n`.env get [key]`\
@@ -99,7 +95,7 @@ ENV.HELPER.update({
 \nSeperate with `;` to set multiple variables at once.\
 \n\n`.env del [key]`\
 \nUsage: Deletes an env variable.\
-\n\n`.logs [number of lines (optional)]`\
+\n\n`.logs [number of lines (optional), default: 100]`\
 \nUsage: Sends logs as a .txt file.\
 \n\n\n**NOTE:** This module requires the following env variables:\
 \n\n~ `HEROKU_API_KEY` :  __To get a valid API key, goto https://dashboard.heroku.com/account/__\

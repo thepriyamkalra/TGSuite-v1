@@ -34,6 +34,7 @@ class ENV(object):
     TG_APP_NAME = os.environ.get("TG_APP_NAME", None)
     STICKER_PACK = os.environ.get("STICKER_PACK", None)
     UNLOCKED_CHATS = os.environ.get("UNLOCKED_CHATS", [])
+    ALIVE_LOGO = os.environ.get("ALIVE_LOGO", None)
 
 
 class _ENV(ENV):
