@@ -145,7 +145,7 @@ async def alive(event):
         build_type = ENV.GITHUB_REPO_LINK.split()[1]
     except:
         build_type = "stable"
-    help_string = f"**// The-TG-Bot v3 is running //**\n\n`User: {me.first_name or ''} {me.last_name or ''}\nGithub: `{ENV.GITHUB_REPO_LINK.split()[0]}\n\nBuild: {build} ({build_type})\n\n**By** [Priyam Kalra](https://t.me/justaprudev)"
+    help_string = f"**// The-TG-Bot v3 is running //**\n\n`User: [{me.first_name or ''} {me.last_name or ''}](tg://user?id={me.id})\nGithub: `{ENV.GITHUB_REPO_LINK.split()[0]}\n\nBuild: {build} ({build_type})\n\n**By** [Priyam Kalra](https://t.me/justaprudev)"
     await client.send_file(
         event.chat_id,
         caption=help_string,
