@@ -119,10 +119,10 @@ async def help(event):
     key = event.pattern_match.group(1)
     modcount = 1
     if not key:
-        msg = "The-TG-Bot v3 Modules:\n"
-        dividor = " // "
+        dividor = "// "
+        msg = f"The-TG-Bot v3 Modules:\n{dividor}"
         for key in sorted(ENV.HELPER):
-            msg += f"{dividor}{key}"
+            msg += f"{key} {dividor}"
             modcount += 1
         msg += f"\n\nNumber of modules: **{modcount}**\nSend .help <module_name> to get help regarding a module."
         await event.edit(msg)
