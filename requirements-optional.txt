@@ -16,7 +16,7 @@ asyncurban
 oauth2client
 google-api-python-client
 httplib2==0.15.0
-pygit
+GitPython
 coffeehouse
 pymongo
 heroku3
