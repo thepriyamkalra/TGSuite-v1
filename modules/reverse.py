@@ -75,4 +75,9 @@ async def _(event):
             **locals()
         )
     await event.edit(OUTPUT_STR, parse_mode="HTML")
-
+ENV.HELPER.update({
+    "reverse": "\
+```.grs <in reply to image/sticker/gif>```\
+\nUsage: Reverse Searches the image on google.\
+"
+})
