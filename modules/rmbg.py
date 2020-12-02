@@ -94,3 +94,10 @@ def convert(webp):
     path = os.path.splitext(webp)[0] + ".png"
     os.rename(webp, path)
     return path
+
+ENV.HELPER.update({
+    "rmbg": "\
+```.rmbg <in reply to image/sticker>```\
+\nUsage: Removes the background of image/sticker.\
+"
+})
