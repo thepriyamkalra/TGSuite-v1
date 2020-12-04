@@ -15,6 +15,7 @@ sqlalchemy
 asyncurban
 oauth2client
 google-api-python-client
+google_images_download
 httplib2==0.15.0
 GitPython
 coffeehouse
